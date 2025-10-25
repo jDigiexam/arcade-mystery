@@ -60,6 +60,55 @@
         .modal-content {
             @apply bg-gray-900 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
         }
+        
+        /* --- NEW Puzzle Styles --- */
+        
+        /* For Prize Puzzle */
+        .prize-item {
+            @apply bg-gray-800 p-4 rounded-lg border-2 border-gray-700 hover:border-fuchsia-500 cursor-pointer transition-all text-center;
+        }
+        .prize-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* For Repair Puzzle */
+        .switch {
+            @apply w-16 h-8 bg-gray-700 rounded-full relative cursor-pointer transition-all;
+        }
+        .switch-knob {
+            @apply w-6 h-6 bg-white rounded-full absolute top-1 left-1 transition-all;
+        }
+        .switch[data-state="on"] .switch-knob {
+            transform: translateX(32px);
+            @apply bg-cyan-400;
+        }
+        .switch[data-state="on"] {
+            @apply bg-cyan-700;
+        }
+
+        /* For Versus Puzzle */
+        .combo-btn {
+            @apply w-16 h-16 bg-gray-700 rounded-lg flex items-center justify-center text-3xl hover:bg-gray-600 cursor-pointer transition-all border-2 border-gray-600;
+        }
+        #combo-display {
+            @apply w-full h-12 bg-gray-900 rounded-md border border-gray-700 flex items-center px-4 text-gray-400 text-2xl tracking-widest;
+        }
+
+        /* For Breakroom Puzzle */
+        .clock {
+            @apply w-32 h-32 bg-gray-200 rounded-full border-4 border-gray-400 relative m-auto;
+        }
+        .clock-hand-hour {
+            @apply w-1 h-10 bg-black absolute bottom-1/2 left-1/2 -ml-0.5 rounded-t-full origin-bottom;
+            transform: rotate(150deg); /* Points to 5 */
+        }
+        .clock-hand-minute {
+            @apply w-0.5 h-14 bg-black absolute bottom-1/2 left-1/2 -ml-px rounded-t-full origin-bottom;
+            transform: rotate(0deg); /* Points to 12 */
+        }
+        .clock-center {
+            @apply w-2 h-2 bg-black rounded-full absolute top-1/2 left-1/2 -mt-1 -ml-1;
+        }
 
     </style>
 </head>
@@ -165,54 +214,105 @@
         </div>
 
         <!-- =================================================================
-        NEW VIEWS FOR CLUES
+        NEW VIEWS FOR CLUES (PUZZLE VERSION)
         ================================================================== -->
 
         <!-- Prize Counter -->
         <div id="view-room-prize" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
-            <p class="text-gray-300 mb-6">The prize counter is full of cheap toys and candy. Liz Harding is here, nervously sorting tickets. "Please... just look around. Don't mind me."</p>
-            <p class="text-gray-300 mb-6">You see the ticket sorting machine, a cash register, and shelves of prizes.</p>
-            <div id="clue-prize-button">
-                <button onclick="findClue('8', 'view-room-prize', 'clue-prize-button')" class="btn-mystery-sm">Search the ticket sorter</button>
+            <p class="text-gray-300 mb-6">Liz is nervously sorting tickets. On the counter is a small riddle card next to a display of top prizes.</p>
+            <p class="text-fuchsia-400 italic text-lg mb-6 text-center">"I'm tall when I'm young and short when I'm old. You'll find me on a cake. What am I?"</p>
+            
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
+                    <span class="text-4xl">🎈</span>
+                    <p>Balloon</p>
+                </div>
+                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
+                    <span class="text-4xl">🧸</span>
+                    <p>Teddy Bear</p>
+                </div>
+                <div class="prize-item" onclick="checkPrizePuzzle(this, true)">
+                    <span class="text-4xl">🕯️</span>
+                    <p>Birthday Candle</p>
+                </div>
+                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
+                    <span class="text-4xl">👄</span>
+                    <p>Wax Lips</p>
+                </div>
+                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
+                    <span class="text-4xl">🤖</span>
+                    <p>Toy Robot</p>
+                </div>
             </div>
-            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">Tucked under the ticket counter, you find a crumpled sticky note. It has a number written on it: "8".</p>
+            
+            <div id="clue-prize-button" class="hidden"></div> <!-- For findClue logic -->
+            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the candle. Liz nods. "Oh... right." You look at the price tag for the candle. It's 800 tickets. The first digit, '8', is circled. </p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         <!-- Repair Shop -->
         <div id="view-room-repair" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
-            <p class="text-gray-300 mb-6">'Doc' Shaw's repair shop is a mess of wires and old arcade parts. "Don't touch anything!" he barks. "It's all delicately calibrated!"</p>
-            <p class="text-gray-300 mb-6">His main workbench is covered in tools and schematics.</p>
-            <div id="clue-repair-button">
-                <button onclick="findClue('3', 'view-room-repair', 'clue-repair-button')" class="btn-mystery-sm">Examine schematics</button>
+            <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
+            
+            <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
+                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
+                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
+                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
+                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
             </div>
-            <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You find a schematic for a custom-rigged power supply. In the corner, 'Doc' has scribbled a note: "Power req: 3 Amps".</p>
+            <div class="flex justify-center">
+                 <button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button>
+            </div>
+            
+            <div id="clue-repair-button" class="hidden"></div> <!-- For findClue logic -->
+            <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing a tiny number '3' etched next to it.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         <!-- Versus Corner -->
         <div id="view-room-versus" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
-            <p class="text-gray-300 mb-6">This is Trisha's domain, surrounded by 'Street Fighter' and 'Mortal Kombat' cabinets. She's practicing combos on a machine. "What do you want? I'm busy."</p>
-            <p class="text-gray-300 mb-6">Her game bag is sitting on a nearby stool.</p>
-            <div id="clue-versus-button">
-                <button onclick="findClue('1', 'view-room-versus', 'clue-versus-button')" class="btn-mystery-sm">Check her game bag</button>
+            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on her 'Street Fighter' machine shows a "Secret Move" with a 4-step combo, but the moves are scratched out. "Try it if you want, newb. You'll never get it."</p>
+            
+            <div id="combo-display" class="mb-4"></div>
+            <div class="flex justify-center space-x-4 mb-6">
+                <button class="combo-btn" onclick="enterCombo('U')">⬆️</button>
+                <button class="combo-btn" onclick="enterCombo('D')">⬇️</button>
+                <button class="combo-btn" onclick="enterCombo('L')">⬅️</button>
+                <button class="combo-btn" onclick="enterCombo('R')">➡️</button>
             </div>
-            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">Inside her bag, you find a notebook full of strategies. On the back page is a doodle of a trophy with a number: "1".</p>
+            
+            <div id="clue-versus-button" class="hidden"></div> <!-- For findClue logic -->
+            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You enter a simple combo: Up, Down, Left, Right. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Player 1 gets the clue: 1'</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         <!-- Staff Breakroom -->
         <div id="view-room-breakroom" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Staff Breakroom</h2>
-            <p class="text-gray-300 mb-6">The small, grimy staff breakroom. It smells like stale coffee. Lacey's jean jacket is slung over a chair.</p>
-            <p class="text-gray-300 mb-6">A locker unit stands against the far wall.</p>
-             <div id="clue-breakroom-button">
-                <button onclick="findClue('5', 'view-room-breakroom', 'clue-breakroom-button')" class="btn-mystery-sm">Check Lacey's jacket</button>
+            <p class="text-gray-300 mb-6">The grimy breakroom. Lacey's jacket is slung over a chair. You check the pocket and find a folded bar napkin from 'The Neon Poodle' lounge. It says: "Meet Ace - __ PM". The time is smudged and unreadable.</p>
+            <p class="text-gray-300 mb-6">You look around for a clue to the time and see a broken clock on the wall, its hands frozen.</p>
+            
+            <div class="clock my-8">
+                <div class="clock-hand-hour"></div>
+                <div class="clock-hand-minute"></div>
+                <div class="clock-center"></div>
             </div>
-            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">In her jacket pocket, you find a folded bar napkin from 'The Neon Poodle' lounge. A time is written on it: "Meet Ace - 5 PM".</p>
+            
+            <div class="flex justify-center" id="clue-breakroom-button">
+                <button onclick="findClue('5', 'view-room-breakroom', 'clue-breakroom-button')" class="btn-mystery-sm">"The clock is stopped at 5:00..."</button>
+            </div>
+            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">The clock is frozen at 5:00. The meeting time must have been 5 PM. The clue is '5'.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -330,6 +430,81 @@
                 updateClueLog();
             }
         }
+        
+        // --- NEW Puzzle Logic ---
+
+        // Prize Puzzle
+        function checkPrizePuzzle(selectedElement, isCorrect) {
+            if (foundClues.includes('8')) {
+                showMessage('Already Found', 'You already solved this puzzle.');
+                return;
+            }
+            
+            if (isCorrect) {
+                selectedElement.classList.add('border-green-500');
+                findClue('8', 'view-room-prize', 'clue-prize-button');
+            } else {
+                selectedElement.classList.add('border-red-500');
+                showMessage('Wrong Prize', 'That\'s not it. Try again.');
+                setTimeout(() => {
+                    selectedElement.classList.remove('border-red-500');
+                }, 1000);
+            }
+        }
+
+        // Repair Puzzle
+        function toggleSwitch(el) {
+            if (el.dataset.state === "off") {
+                el.dataset.state = "on";
+            } else {
+                el.dataset.state = "off";
+            }
+        }
+        
+        function checkRepairPuzzle() {
+            if (foundClues.includes('3')) {
+                showMessage('Already Found', 'You already solved this puzzle.');
+                return;
+            }
+            
+            const switches = document.querySelectorAll('#view-room-repair .switch');
+            const combo = Array.from(switches).map(s => s.dataset.state === 'on' ? '1' : '0').join('');
+            
+            // Correct combo is 0011 (binary for 3)
+            if (combo === '0011') {
+                findClue('3', 'view-room-repair', 'clue-repair-button');
+            } else {
+                showMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.');
+            }
+        }
+
+        // Versus Puzzle
+        let comboInput = "";
+        const correctCombo = "UDLR"; // Up, Down, Left, Right
+        
+        function enterCombo(move) {
+            if (foundClues.includes('1')) {
+                showMessage('Already Found', 'You already solved this puzzle.');
+                return;
+            }
+            
+            comboInput += move;
+            document.getElementById('combo-display').textContent = comboInput;
+            
+            if (comboInput.length >= 4) {
+                if (comboInput === correctCombo) {
+                    findClue('1', 'view-room-versus', 'clue-versus-button');
+                } else {
+                    showMessage('Wrong Combo', 'Trisha laughs. "Not even close!"');
+                }
+                comboInput = "";
+                setTimeout(() => {
+                     document.getElementById('combo-display').textContent = "";
+                }, 1000);
+            }
+        }
+
+        // Breakroom Puzzle logic is handled by the findClue button directly.
 
         // --- Clue Logic ---
         function findClue(clue, roomViewId, clueButtonId) {
@@ -346,12 +521,14 @@
                 // Disable button in room
                 const clueButtonElement = document.getElementById(clueButtonId);
                 if (clueButtonElement) {
+                    // For breakroom, we disable the button. For others, we just hide the puzzle interface (which findClue doesn't do, but that's ok)
                     clueButtonElement.innerHTML = '<button class="btn-disabled" disabled>Clue Found</button>';
                 }
                 
                 showMessage('Clue Found!', `You found a piece of the combination: ${clue}`);
             } else {
-                showMessage('Already Found', 'You\'ve already searched this spot.');
+                // This will trigger for the clock puzzle if clicked twice.
+                showMessage('Already Found', 'You\'ve already noted this clue.');
             }
         }
         
@@ -439,7 +616,7 @@
             solutionModal.classList.add('opacity-0');
             setTimeout(() => solutionModal.classList.add('hidden'), 300);
             
-            // Reset puzzle
+            // Reset safe
             document.getElementById('clue-locked').style.display = 'block';
             document.getElementById('clue-unlocked').style.display = 'none';
             document.getElementById('safe-code').value = '';
@@ -448,38 +625,30 @@
             foundClues = [];
             updateClueLog();
             
-            // Reset clue buttons and text
-            const clueButtons = [
-                'clue-prize-button', 
-                'clue-repair-button', 
-                'clue-versus-button', 
-                'clue-breakroom-button'
-            ];
-            const clueTexts = [
-                'clue-prize-text', 
-                'clue-repair-text', 
-                'clue-versus-text', 
-                'clue-breakroom-text'
-            ];
+            // --- UPDATED: Reset Puzzles ---
             
-            const clueButtonActions = [
-                "findClue('8', 'view-room-prize', 'clue-prize-button')",
-                "findClue('3', 'view-room-repair', 'clue-repair-button')",
-                "findClue('1', 'view-room-versus', 'clue-versus-button')",
-                "findClue('5', 'view-room-breakroom', 'clue-breakroom-button')"
-            ];
+            // 1. Prize Puzzle
+            document.querySelectorAll('.prize-item.border-green-500').forEach(el => el.classList.remove('border-green-500'));
+            document.getElementById('clue-prize-text').classList.add('hidden');
+            document.getElementById('clue-prize-button').innerHTML = ''; // Clear it
+            
+            // 2. Repair Puzzle
+            document.querySelectorAll('#view-room-repair .switch').forEach(el => el.dataset.state = 'off');
+            document.getElementById('clue-repair-text').classList.add('hidden');
+            document.getElementById('clue-repair-button').innerHTML = ''; // Clear it
 
-            const clueButtonTexts = [
-                "Search the ticket sorter",
-                "Examine schematics",
-                "Check her game bag",
-                "Check Lacey's jacket"
-            ];
-            
-            for (let i = 0; i < clueButtons.length; i++) {
-                document.getElementById(clueButtons[i]).innerHTML = `<button onclick="${clueButtonActions[i]}" class="btn-mystery-sm">${clueButtonTexts[i]}</button>`;
-                document.getElementById(clueTexts[i]).classList.add('hidden');
+            // 3. Versus Puzzle
+            comboInput = "";
+            if(document.getElementById('combo-display')) {
+                document.getElementById('combo-display').textContent = "";
             }
+            document.getElementById('clue-versus-text').classList.add('hidden');
+            document.getElementById('clue-versus-button').innerHTML = ''; // Clear it
+            
+            // 4. Breakroom Puzzle
+            document.getElementById('clue-breakroom-button').innerHTML = `<button onclick="findClue('5', 'view-room-breakroom', 'clue-breakroom-button')" class="btn-mystery-sm">"The clock is stopped at 5:00..."</button>`;
+            document.getElementById('clue-breakroom-text').classList.add('hidden');
+
 
             // Reset interview states
             interviewState = {
