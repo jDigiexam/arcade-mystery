@@ -45,6 +45,12 @@
             @apply bg-cyan-700/80 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-cyan-600 transition-all duration-300 ease-in-out cursor-pointer text-center border-2 border-cyan-500;
             text-shadow: 0 0 5px #cyan-300;
         }
+        
+        /* Disabled button for found clues */
+        .btn-disabled {
+            @apply bg-gray-700 text-gray-400 font-bold py-2 px-4 rounded-md shadow-md cursor-not-allowed border-2 border-gray-600;
+        }
+
 
         /* Custom modal for messages */
         .modal {
@@ -70,7 +76,7 @@
                 At 'The Pixel Palace', the town's most popular 90s arcade, owner 'Ace' Hargrave has been found murdered in his back office.
             </p>
             <p class="text-gray-400 mb-10 text-center">
-                As the detectives, you've been called to investigate. The arcade is locked down. Unravel the secrets of the staff, examine the evidence, and find the killer before they can '1-UP' you.
+                As the detectives, you've been called to investigate. The arcade is locked down. You must find 4 clues to unlock the office safe and find the killer.
             </p>
             <div class="flex justify-center">
                 <button onclick="showView('view-hub')" class="btn-mystery text-2xl">
@@ -85,76 +91,73 @@
         <div id="view-hub" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Arcade Floor</h2>
             <p class="text-gray-300 mb-8">
-                You stand on the main arcade floor, the neon lights of the games casting long shadows. The suspects are waiting by the prize counter, and the crime scene is in the back office.
-                <br>What's your next move?
+                You stand on the main arcade floor. The suspects are milling about. Where do you want to go?
             </p>
+            
+            <!-- Clue Log -->
+            <div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
+                <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">Clue Log:</h4>
+                <p id="clue-log-text" class="text-gray-400 italic">No clues found yet...</p>
+            </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showView('view-suspects')" class="btn-mystery-sm">View Suspects</button>
-                <button onclick="showView('view-scene')" class="btn-mystery-sm">Examine the Crime Scene (Office)</button>
-                <button onclick="showView('view-interviews')" class="btn-mystery-sm">Interview Suspects</button>
+                <button onclick="showView('view-scene')" class="btn-mystery-sm">Examine the Office (Crime Scene)</button>
+                <button onclick="showView('view-room-prize')" class="btn-mystery-sm">Go to Prize Counter</button>
+                <button onclick="showView('view-room-repair')" class="btn-mystery-sm">Go to Repair Shop</button>
+                <button onclick="showView('view-room-versus')" class="btn-mystery-sm">Go to Versus Corner</button>
+                <button onclick="showView('view-room-breakroom')" class="btn-mystery-sm">Go to Staff Breakroom</button>
+                <button onclick="showView('view-interviews')" class="btn-mystery-sm">Talk to Suspects</button>
                 <button onclick="showView('view-accuse')" class="btn-mystery-sm">Make an Accusation</button>
             </div>
         </div>
 
         <!-- =================================================================
-        VIEW 3: SUSPECTS LIST
+        VIEW 3: SUSPECTS LIST (No longer used, combined into Interviews)
         ================================================================== -->
-        <div id="view-suspects" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Suspects</h2>
-            <ul class="space-y-4 text-gray-300">
-                <li><strong>Trisha Hargrave:</strong> The pro-gamer niece. She thinks retro games are lame and wants Ace to turn the place into a modern computer LAN hall.</li>
-                <li><strong>Lacey Collins:</strong> The pushy, seductive arcade manager. She's all about getting the job done and was often seen drinking with Ace after hours.</li>
-                <li><strong>'Doc' Shaw:</strong> The wiz repair tech. He's cheap and prefers to 'Frankenstein' old machines with homemade parts rather than buy expensive new ones.</li>
-                <li><strong>Stan "the man" Thompson:</strong> The rival arcade owner from downtown. His upscale building and better wages have been stealing customers and staff.</li>
-                <li><strong>Liz Harding:</strong> The quiet cashier at the prize counter. There's something about her that doesn't add up...</li>
-            </ul>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
-        </div>
         
         <!-- =================================================================
-        VIEW 4: INTERVIEW HUB
+        VIEW 4: INTERVIEW HUB (Now the main suspect view)
         ================================================================== -->
         <div id="view-interviews" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Talk to Suspects</h2>
             <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showMessage('Interview: Trisha', 'She scoffs, barely looking up from her Game Boy. \'Ace was running this place into the ground. It should be a LAN hall. And I can\'t stand that Lacey... always hanging around him after hours.\'')" class="btn-mystery-sm">Trisha Hargrave</button>
-                <button onclick="showMessage('Interview: Lacey Collins', 'She bats her eyelashes. \'It\'s a *tragedy*, detective. I was just dropping off the night\'s receipts. Trisha stormed out of his office just before, though. She has a nasty temper.\'')" class="btn-mystery-sm">Lacey Collins</button>
-                <button onclick="showMessage('Interview: \'Doc\' Shaw', 'He\'s tinkering with a circuit board. \'Ace wouldn\'t buy the right parts! Said my custom rig wasn\'t \'up to code\'. Bah! Saved us a fortune. His cheapness was the death of him...\'')" class="btn-mystery-sm">'Doc' Shaw</button>
-                <button onclick="showMessage('Interview: Stan \'the man\' Thompson', 'He flashes a fake smile. \'Look, detective, I hated the guy, but I was at my own arcade all night. Got witnesses. Bad for business, this whole mess.\'')" class="btn-mystery-sm">Stan "the man" Thompson</button>
-                <button onclick="showMessage('Interview: Liz Harding', 'She looks nervous, avoiding eye contact. \'I just... I just heard raised voices from the back office. And something smashed. I didn\'t see anything, I swear!\'')" class="btn-mystery-sm">Liz Harding</button>
+                <button onclick="showInterview('trisha')" class="btn-mystery-sm">Trisha Hargrave</button>
+                <button onclick="showInterview('lacey')" class="btn-mystery-sm">Lacey Collins</button>
+                <button onclick="showInterview('doc')" class="btn-mystery-sm">'Doc' Shaw</button>
+                <button onclick="showInterview('stan')" class="btn-mystery-sm">Stan "the man" Thompson</button>
+                <button onclick="showInterview('liz')" class="btn-mystery-sm">Liz Harding</button>
             </div>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         <!-- =================================================================
-        VIEW 5: CRIME SCENE (With Password Puzzle)
+        VIEW 5: CRIME SCENE (With Safe Puzzle)
         ================================================================== -->
         <div id="view-scene" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
             <p class="text-gray-300 mb-6">
-                The office is cluttered with spare parts and boxes of prizes. A faint smell of ozone hangs in the air. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body.
+                The office is cluttered. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body. Nearby lies a bloody shard of plexiglass.
             </p>
             <p class="text-gray-300 mb-6">
-                Nearby on the floor lies a bloody shard of plexiglass from a broken cabinet. Next to the desk is a locked metal cash box.
+                Under the desk is a large, heavy safe, locked with a 4-digit keypad. You'll need to find the combination.
             </p>
             
             <!-- This is the interactive part! -->
             <div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
-                <p class="text-gray-300 mb-4">A small riddle is taped to the box:</p>
-                <p class="text-fuchsia-400 italic text-lg mb-4" style="text-shadow: 0 0 5px #f0f;">"I have a head and a tail, but no body. What am I?"</p>
+                <p class="text-gray-300 mb-4">A 4-digit combination is required:</p>
                 
                 <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="text" id="clue-password" placeholder="Enter your answer..." class="flex-grow bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 font-pixel">
-                    <button onclick="checkPassword()" class="btn-mystery">Unlock</button>
+                    <input type="text" id="safe-code" placeholder="Enter 4-digit code..." maxlength="4" class="flex-grow bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 font-pixel">
+                    <button onclick="checkSafeCode()" class="btn-mystery">Unlock</button>
                 </div>
             </div>
 
             <!-- This is the hidden clue -->
             <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
-                <h3 class="font-bold text-xl text-green-300 mb-2">Cash Box Unlocked!</h3>
+                <h3 class="font-bold text-xl text-green-300 mb-2">Safe Unlocked!</h3>
                 <p class="text-green-200">
-                    Inside the cash box, you find a printed email. It's from Hargrave to a corporate buyer, discussing the sale of the arcade. It states that his niece, <strong>Trisha</strong>, was to be given a one-time payout and completely excluded from the new company.
+                    Inside the safe, you find a legal contract. It's a draft of Ace's will, leaving 'The Pixel Palace' *entirely* to his niece, <strong>Trisha</strong>. A handwritten note in the margin reads: "Make sure there's a clause specifically excluding Lacey C. from any ownership, ever."
                 </p>
             </div>
 
@@ -162,17 +165,70 @@
         </div>
 
         <!-- =================================================================
-        VIEW 6: MAKE AN ACCUSATION
+        NEW VIEWS FOR CLUES
+        ================================================================== -->
+
+        <!-- Prize Counter -->
+        <div id="view-room-prize" class="view p-8 md:p-12">
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
+            <p class="text-gray-300 mb-6">The prize counter is full of cheap toys and candy. Liz Harding is here, nervously sorting tickets. "Please... just look around. Don't mind me."</p>
+            <p class="text-gray-300 mb-6">You see the ticket sorting machine, a cash register, and shelves of prizes.</p>
+            <div id="clue-prize-button">
+                <button onclick="findClue('8', 'view-room-prize', 'clue-prize-button')" class="btn-mystery-sm">Search the ticket sorter</button>
+            </div>
+            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">Tucked under the ticket counter, you find a crumpled sticky note. It has a number written on it: "8".</p>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+        </div>
+
+        <!-- Repair Shop -->
+        <div id="view-room-repair" class="view p-8 md:p-12">
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
+            <p class="text-gray-300 mb-6">'Doc' Shaw's repair shop is a mess of wires and old arcade parts. "Don't touch anything!" he barks. "It's all delicately calibrated!"</p>
+            <p class="text-gray-300 mb-6">His main workbench is covered in tools and schematics.</p>
+            <div id="clue-repair-button">
+                <button onclick="findClue('3', 'view-room-repair', 'clue-repair-button')" class="btn-mystery-sm">Examine schematics</button>
+            </div>
+            <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You find a schematic for a custom-rigged power supply. In the corner, 'Doc' has scribbled a note: "Power req: 3 Amps".</p>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+        </div>
+
+        <!-- Versus Corner -->
+        <div id="view-room-versus" class="view p-8 md:p-12">
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
+            <p class="text-gray-300 mb-6">This is Trisha's domain, surrounded by 'Street Fighter' and 'Mortal Kombat' cabinets. She's practicing combos on a machine. "What do you want? I'm busy."</p>
+            <p class="text-gray-300 mb-6">Her game bag is sitting on a nearby stool.</p>
+            <div id="clue-versus-button">
+                <button onclick="findClue('1', 'view-room-versus', 'clue-versus-button')" class="btn-mystery-sm">Check her game bag</button>
+            </div>
+            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">Inside her bag, you find a notebook full of strategies. On the back page is a doodle of a trophy with a number: "1".</p>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+        </div>
+
+        <!-- Staff Breakroom -->
+        <div id="view-room-breakroom" class="view p-8 md:p-12">
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Staff Breakroom</h2>
+            <p class="text-gray-300 mb-6">The small, grimy staff breakroom. It smells like stale coffee. Lacey's jean jacket is slung over a chair.</p>
+            <p class="text-gray-300 mb-6">A locker unit stands against the far wall.</p>
+             <div id="clue-breakroom-button">
+                <button onclick="findClue('5', 'view-room-breakroom', 'clue-breakroom-button')" class="btn-mystery-sm">Check Lacey's jacket</button>
+            </div>
+            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">In her jacket pocket, you find a folded bar napkin from 'The Neon Poodle' lounge. A time is written on it: "Meet Ace - 5 PM".</p>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+        </div>
+
+
+        <!-- =================================================================
+        VIEW 6: MAKE AN ACCUSATION (UPDATED)
         ================================================================== -->
         <div id="view-accuse" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Make Your Accusation</h2>
             <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showSolution(false, 'You accuse Lacey Collins, but she vehemently denies the charge. Her alibi is solid. The real killer gets away.')" class="btn-mystery-sm">Lacey Collins</button>
-                <button onclick="showSolution(true, 'Trisha\'s composure cracks. She confesses! Furious about being cut from the sale (the clue in the cash box!), she grabbed the sharp piece of plexiglass in a fit of rage. \'He was going to sell my future for *nothing*!\'. Case closed.')" class="btn-mystery-sm">Trisha Hargrave</button>
+                <button onclick="showSolution(true, 'You accuse Lacey. She breaks down. \'He promised me! We were supposed to be partners, 50/50. Then... he was just going to give it all to that *brat* Trisha and write me off! I found the contract draft in the safe. I confronted him. He laughed. I... I just snapped.\' Case Closed.')" class="btn-mystery-sm">Lacey Collins</button>
+                <button onclick="showSolution(false, 'You accuse Trisha. She\'s furious. \'What?! He was giving me the arcade! I had everything I wanted! You\'re wrong!\' The real killer gets away.')" class="btn-mystery-sm">Trisha Hargrave</button>
                 <button onclick="showSolution(false, 'You accuse \'Doc\' Shaw. He denies it. Despite his constant complaining, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">'Doc' Shaw</button>
-                <button onclick="showSolution(false, 'Stan Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-form">Stan "the man" Thompson</button>
-                <button onclick="showSolution(false, 'Liz Harding is confused by the accusation. She had no motive... that you know of. The investigation stalls.')" class="btn-mystery-sm">Liz Harding</button>
+                <button onclick="showSolution(false, 'Stan Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-sm">Stan "the man" Thompson</button>
+                <button onclick="showSolution(false, 'Liz Harding is confused by the accusation. She was just a witness. The investigation stalls.')" class="btn-mystery-sm">Liz Harding</button>
             </div>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
@@ -204,64 +260,94 @@
 
     <script>
         let currentView = 'view-start';
-        const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalText = document.getElementById('modal-text');
+        let foundClues = [];
         
-        const solutionModal = document.getElementById('solution-modal');
-        const solutionTitle = document.getElementById('solution-title');
-        const solutionText = document.getElementById('solution-text');
+        // --- NEW: Object to store interview state ---
+        let interviewState = {
+            trisha: 0,
+            lacey: 0,
+            doc: 0,
+            stan: 0,
+            liz: 0
+        };
 
-        function showView(viewId) {
-            const oldView = document.getElementById(currentView);
-            if (oldView) {
-                oldView.classList.remove('active');
+        // --- NEW: Object to store all suspect dialogues ---
+        const dialogues = {
+            trisha: [
+                "She scoffs. 'He was finally going to listen to me! He was going to give me the arcade to run it *my* way. That Lacey... she thought she had him wrapped around her little finger. Guess not.'",
+                "Look, I already told you. Ace was giving *me* the arcade. Why would I kill him? Unlike Lacey, I actually had a future here. Now, if you'll excuse me, I'm about to beat my high score."
+            ],
+            lacey: [
+                "She dabs at her eyes. 'I... I can't believe he's gone. We were... close. He told me he was leaving the arcade to Trisha, to his *family*. I just... I just wanted us to run it together. But he said I wasn't family.'",
+                "Why are you talking to me again? It's a tragedy. Ace and I were... we were very close. He was just confused, that's all. That contract in the safe... he didn't mean it. He was just trying to appease Trisha."
+            ],
+            doc: [
+                "He's tinkering with a circuit board. 'Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. C-couldn't have been me, I was... fixing this board!'",
+                "You again? Look, I'm busy building... uh... *fixing*... this. If you want a *real* lead, go talk to that cashier, Liz. She's always disappearing from the counter. Comes back all nervous, covered in gray and black fur. What's that about? Weirdo."
+            ],
+            stan: [
+                "He flashes a fake smile. 'Liz Harding works for me, yeah. She's my girl. She told me Ace was going to sell, but then changed his mind to give it to his bratty niece. Messed up my plans to buy it.'",
+                "I told you, I've got an alibi. My girl Liz was just feeding me info. Ace was unstable, first wanting to sell, then giving it to his niece. It's no way to run a business. Frankly, *someone* putting him out of his misery... it's not the worst thing for *my* business. But it wasn't me."
+            ],
+            liz: [
+                "She looks nervous. 'I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.'",
+                "Oh... hi. Listen, you should really be looking at 'Doc' Shaw. He's *always* in that shop, says he's 'working,' but I think he's just skipping out. I bet he's an alcoholic. He's mean, too... I think he hates animals. He's always yelling about 'vermin' by the dumpsters. As for the fur... [she looks down] ...I... I just feed the raccoons out back. They're sweet. Don't tell Doc."
+            ]
+        };
+        
+        const modal = document.getElementById('modal');
+// ... existing code ... -->
+        
+        const clueLogText = document.getElementById('clue-log-text');
+
+// ... existing code ... -->
             }
-            
-            const newView = document.getElementById(viewId);
-            if (newView) {
-                newView.classList.add('active');
-            }
-            
-            currentView = viewId;
         }
 
         // --- Puzzle Logic ---
-        function checkPassword() {
-            const passwordInput = document.getElementById('clue-password');
-            const answer = passwordInput.value.trim().toLowerCase();
-            
-            // The answer to the riddle
-            if (answer === 'a coin' || answer === 'coin') {
-                document.getElementById('clue-locked').style.display = 'none';
-                document.getElementById('clue-unlocked').style.display = 'block';
-                showMessage('Success!', 'The cash box clicks open.');
-            } else {
-                showMessage('Locked', 'The box remains firmly shut. Wrong answer.');
+// ... existing code ... -->
             }
         }
 
         // --- Modal Logic ---
         function showMessage(title, text) {
-            modalTitle.textContent = title;
-            modalText.textContent = text;
-            modal.classList.remove('hidden');
+// ... existing code ... -->
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
 
+        // --- NEW: Interview Logic ---
+        function showInterview(suspect) {
+            let dialogueText = '';
+            let title = `Interview: ${suspect.charAt(0).toUpperCase() + suspect.slice(1)}`;
+            
+            // Adjust title for 'Doc' and 'Stan'
+            if (suspect === 'doc') title = "Interview: 'Doc' Shaw";
+            if (suspect === 'stan') title = "Interview: Stan 'the man' Thompson";
+            if (suspect === 'liz') title = "Interview: Liz Harding";
+            if (suspect === 'lacey') title = "Interview: Lacey Collins";
+            if (suspect === 'trisha') title = "Interview: Trisha Hargrave";
+
+
+            if (interviewState[suspect] === 0) {
+                // First time talking
+                dialogueText = dialogues[suspect][0];
+                interviewState[suspect]++;
+            } else {
+                // Second or later time talking
+                dialogueText = dialogues[suspect][1];
+            }
+            
+            showMessage(title, dialogueText);
+        }
+
         function closeModal() {
-            modal.classList.add('opacity-0');
+// ... existing code ... -->
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
         
         // --- Solution Modal Logic ---
         function showSolution(isCorrect, text) {
-            if(isCorrect) {
-                solutionTitle.textContent = "Case Solved!";
-                solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-green-400";
-            } else {
-                solutionTitle.textContent = "Case Unsolved";
-                solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-red-400";
+// ... existing code ... -->
             }
             
             solutionText.textContent = text;
@@ -269,6 +355,7 @@
             setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
         }
 
+        // --- FIXED: Added missing function ---
         function restartGame() {
             // Hide modal
             solutionModal.classList.add('opacity-0');
@@ -277,7 +364,53 @@
             // Reset puzzle
             document.getElementById('clue-locked').style.display = 'block';
             document.getElementById('clue-unlocked').style.display = 'none';
-            document.getElementById('clue-password').value = '';
+            document.getElementById('safe-code').value = '';
+
+            // Reset clues
+            foundClues = [];
+            updateClueLog();
+            
+            // Reset clue buttons and text
+            const clueButtons = [
+                'clue-prize-button', 
+                'clue-repair-button', 
+                'clue-versus-button', 
+                'clue-breakroom-button'
+            ];
+            const clueTexts = [
+                'clue-prize-text', 
+                'clue-repair-text', 
+                'clue-versus-text', 
+                'clue-breakroom-text'
+            ];
+            
+            const clueButtonActions = [
+                "findClue('8', 'view-room-prize', 'clue-prize-button')",
+                "findClue('3', 'view-room-repair', 'clue-repair-button')",
+                "findClue('1', 'view-room-versus', 'clue-versus-button')",
+                "findClue('5', 'view-room-breakroom', 'clue-breakroom-button')"
+            ];
+
+            const clueButtonTexts = [
+                "Search the ticket sorter",
+                "Examine schematics",
+                "Check her game bag",
+                "Check Lacey's jacket"
+            ];
+            
+            for (let i = 0; i < clueButtons.length; i++) {
+                document.getElementById(clueButtons[i]).innerHTML = `<button onclick="${clueButtonActions[i]}" class="btn-mystery-sm">${clueButtonTexts[i]}</button>`;
+                document.getElementById(clueTexts[i]).classList.add('hidden');
+            }
+
+            // Reset interview states
+            interviewState = {
+                trisha: 0,
+                lacey: 0,
+                doc: 0,
+                stan: 0,
+                liz: 0
+            };
 
             // Go to start
             showView('view-start');
