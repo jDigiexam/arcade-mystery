@@ -234,7 +234,7 @@
             </div>
             
             <div id="clue-prize-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's 800 tickets. The first digit, '8', is circled. </p>
+            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's <strong class="text-xl">8</strong>00 tickets. The first digit, '<strong class="text-xl">8</strong>', is circled. </p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -254,14 +254,14 @@
             </div>
             
             <div id="clue-repair-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing a tiny number '3' etched next to it.</p>
+            <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for <strong class="text-xl">3</strong>.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         <!-- Versus Corner -->
         <div id="view-room-versus" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
-            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old 'Contra' machine shows a "Secret Code" with 8 steps, but the moves are scratched out. "Try it if you want, newb. It's a classic for a reason."</p>
+            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old fighting game shows a "Secret Combo" with 4 moves, but they are scratched out. "Try it if you want, newb."</p>
             
             <div id="combo-display" class="mb-4"></div>
             
@@ -270,15 +270,12 @@
                 <button class="combo-btn" onclick="enterCombo('U')">↑</button>
                 <div></div>
                 <button class="combo-btn" onclick="enterCombo('L')">←</button>
-                <div></div>
-                <button class="combo-btn" onclick="enterCombo('R')">→</button>
-                <div></div>
                 <button class="combo-btn" onclick="enterCombo('D')">↓</button>
-                <div></div>
+                <button class="combo-btn" onclick="enterCombo('R')">→</button>
             </div>
             
             <div id="clue-versus-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You enter the 8-button combo: Up, Up, Down, Down, Left, Right, Left, Right. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player 1.'</p>
+            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You enter a simple combo: Up, Down, Left, Right. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -295,12 +292,7 @@
                 <span id="clock-minutes" class="text-6xl font-pixel text-gray-500 transition-colors">00</span>
             </div>
             
-            <div id="clock-controls" class="flex justify-center space-x-4">
-                <button onclick="adjustTime('hour')" class="btn-mystery-sm">Hour +</button>
-                <button onclick="adjustTime('minute')" class="btn-mystery-sm">Minute +</button>
-            </div>
-            
-            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">As you set the clock to 5:00, the display stops flickering and glows a steady green. The time must have been 5 PM. The clue is '5'.</p>
+            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">As you set the clock to <strong class="text-xl">5</strong>:00, the display stops flickering and glows a steady green. The time must have been <strong class="text-xl">5</strong> PM.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -470,7 +462,7 @@
 
         // Versus Puzzle
         let comboInput = "";
-        const correctCombo = "UUDDLRLR"; // Up, Up, Down, Down, Left, Right, Left, Right
+        const correctCombo = "UDLR"; // Up, Down, Left, Right
         
         function enterCombo(move) {
             if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) {
@@ -481,7 +473,7 @@
             comboInput += move;
             document.getElementById('combo-display').textContent = comboInput;
             
-            if (comboInput.length >= 8) {
+            if (comboInput.length >= 4) {
                 if (comboInput === correctCombo) {
                     document.getElementById('clue-versus-text').classList.remove('hidden');
                     // Disable buttons
@@ -728,4 +720,3 @@
     </script>
 </body>
 </html>
-
