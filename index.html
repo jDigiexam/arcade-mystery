@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Midnight Murder Mystery</title>
+    <title>Game Over at the Arcade</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
         
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a1a1a;
+            font-family: 'VT323', monospace;
+            background-color: #0d0d0d;
             color: #e0e0e0;
+            font-size: 1.1rem; /* VT323 is small, so we upsize it */
+            line-height: 1.6;
         }
 
-        .font-serif {
-            font-family: 'Playfair Display', serif;
+        .font-pixel {
+            font-family: 'VT323', monospace;
         }
 
         /* Simple fade-in animation */
@@ -35,58 +37,60 @@
 
         /* Custom button style for the theme */
         .btn-mystery {
-            @apply bg-amber-900/70 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-amber-800 transition-all duration-300 ease-in-out cursor-pointer text-center;
+            @apply bg-fuchsia-600/80 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-fuchsia-500 transition-all duration-300 ease-in-out cursor-pointer text-center border-2 border-fuchsia-400;
+            text-shadow: 0 0 5px #fuchsia-300;
         }
 
         .btn-mystery-sm {
-            @apply bg-gray-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition-all duration-300 ease-in-out cursor-pointer text-center;
+            @apply bg-cyan-700/80 text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-cyan-600 transition-all duration-300 ease-in-out cursor-pointer text-center border-2 border-cyan-500;
+            text-shadow: 0 0 5px #cyan-300;
         }
 
         /* Custom modal for messages */
         .modal {
-            @apply fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
+            @apply fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
         }
         
         .modal-content {
-            @apply bg-gray-800 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center;
+            @apply bg-gray-900 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
         }
 
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-3xl w-full mx-auto bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-700">
+    <div class="max-w-3xl w-full mx-auto bg-black/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border-2 border-cyan-500/50" style="box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);">
         
         <!-- =================================================================
         VIEW 1: START SCREEN
         ================================================================== -->
         <div id="view-start" class="view p-8 md:p-12 active">
-            <h1 class="font-serif text-4xl md:text-5xl font-bold text-amber-500 mb-4 text-center">A Midnight Murder</h1>
+            <h1 class="font-pixel text-4xl md:text-5xl font-bold text-cyan-400 mb-4 text-center" style="text-shadow: 0 0 10px #0ff;">Game Over</h1>
             <p class="text-lg text-gray-300 mb-8 text-center">
-                In a quiet mansion on the outskirts of town, a wealthy collector, Mr. Arthur Hargrave, has been found murdered in his study.
+                At 'The Pixel Palace', the town's most popular 90s arcade, owner 'Ace' Hargrave has been found murdered in his back office.
             </p>
             <p class="text-gray-400 mb-10 text-center">
-                As the detectives, you've been called to investigate. Unravel the secrets of the guests, examine the evidence, and find the killer before they slip away.
+                As the detectives, you've been called to investigate. The arcade is locked down. Unravel the secrets of the staff, examine the evidence, and find the killer before they can '1-UP' you.
             </p>
             <div class="flex justify-center">
-                <button onclick="showView('view-hub')" class="btn-mystery text-xl">
-                    Begin Investigation
+                <button onclick="showView('view-hub')" class="btn-mystery text-2xl">
+                    Press Start
                 </button>
             </div>
         </div>
 
         <!-- =================================================================
-        VIEW 2: MAIN HUB (The Hallway)
+        VIEW 2: MAIN HUB (The Arcade Floor)
         ================================================================== -->
         <div id="view-hub" class="view p-8 md:p-12">
-            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">The Grand Hallway</h2>
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Arcade Floor</h2>
             <p class="text-gray-300 mb-8">
-                You stand in the grand hallway. The suspects are waiting in the parlor, and the crime scene is in the study.
-                <br>What do you want to do first?
+                You stand on the main arcade floor, the neon lights of the games casting long shadows. The suspects are waiting by the prize counter, and the crime scene is in the back office.
+                <br>What's your next move?
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <button onclick="showView('view-suspects')" class="btn-mystery-sm">View Suspects</button>
-                <button onclick="showView('view-scene')" class="btn-mystery-sm">Examine the Crime Scene (Study)</button>
+                <button onclick="showView('view-scene')" class="btn-mystery-sm">Examine the Crime Scene (Office)</button>
                 <button onclick="showView('view-interviews')" class="btn-mystery-sm">Interview Suspects</button>
                 <button onclick="showView('view-accuse')" class="btn-mystery-sm">Make an Accusation</button>
             </div>
@@ -96,81 +100,81 @@
         VIEW 3: SUSPECTS LIST
         ================================================================== -->
         <div id="view-suspects" class="view p-8 md:p-12">
-            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">The Suspects</h2>
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Suspects</h2>
             <ul class="space-y-4 text-gray-300">
-                <li><strong>Beatrice Hargrave:</strong> The ambitious niece, who stands to inherit a vast fortune.</li>
-                <li><strong>Ms. Collins:</strong> The loyal personal assistant, one of the last to see him alive.</li>
-                <li><strong>Dr. Leonard Shaw:</strong> The personal doctor, claiming a late-night health check.</li>
-                <li><strong>Mr. Thompson:</strong> A rival art dealer with whom Hargrave had a... contentious relationship.</li>
-                <li><strong>Eliza Harding:</strong> The quiet housekeeper, who may know more than she's letting on.</li>
+                <li><strong>Beatrice Hargrave:</strong> The ambitious niece, a pro-gamer who wanted to take over the business and resented 'Ace's old-school ways.</li>
+                <li><strong>Ms. Collins:</strong> The loyal arcade manager, one of the last to see 'Ace' alive.</li>
+                <li><strong>Dr. Leonard Shaw:</strong> The arcade's grumpy repair technician, constantly arguing with 'Ace' over cheap parts.</li>
+                <li><strong>Mr. Thompson:</strong> The rival arcade owner from across town, who was losing business to 'The Pixel Palace'.</li>
+                <li><strong>Eliza Harding:</strong> The quiet cashier at the prize counter, who may know more than she's letting on.</li>
             </ul>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
         
         <!-- =================================================================
         VIEW 4: INTERVIEW HUB
         ================================================================== -->
         <div id="view-interviews" class="view p-8 md:p-12">
-            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">Interview Room</h2>
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
             <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showMessage('Interview: Beatrice', 'She seems cold and frustrated, denying any involvement. She mentions arguments over the will.')" class="btn-mystery-sm">Beatrice Hargrave</button>
-                <button onclick="showMessage('Interview: Ms. Collins', 'She seems rattled but insists she was just arranging his papers. She mentions Beatrice left the study shortly before the murder.')" class="btn-mystery-sm">Ms. Collins</button>
-                <button onclick="showMessage('Interview: Dr. Shaw', 'He claims he was checking on Mr. Hargrave\'s health. He mentions overhearing a heated argument between Hargrave and Beatrice.')" class="btn-mystery-sm">Dr. Shaw</button>
-                <button onclick="showMessage('Interview: Mr. Thompson', 'He admits to a business rivalry but claims it never escalated to violence. He was in the library.')" class="btn-mystery-sm">Mr. Thompson</button>
-                <button onclick="showMessage('Interview: Eliza Harding', 'She looks nervous. She admits to hearing raised voices and the sound of breaking glass.')" class="btn-mystery-sm">Eliza Harding</button>
+                <button onclick="showMessage('Interview: Beatrice', 'She seems cold and frustrated, denying any involvement. \'Ace was running this place into the ground. I had plans. Big plans.\'')" class="btn-mystery-sm">Beatrice Hargrave</button>
+                <button onclick="showMessage('Interview: Ms. Collins', 'She seems rattled but insists she was just dropping off the night's token receipts. She mentions Beatrice storming out of the office just before the murder.')" class="btn-mystery-sm">Ms. Collins</button>
+                <button onclick="showMessage('Interview: Dr. Shaw', 'He claims he was fixing a broken \'Street Fighter II\' cabinet. \'Ace wouldn\'t buy the right parts! I told him his cheapness would be the death of him... guess I was right.\'')" class="btn-mystery-sm">Dr. Shaw</button>
+                <button onclick="showMessage('Interview: Mr. Thompson', 'He admits to a business rivalry but claims he was at his own arcade all night. \'Sure, I hated the guy, but I didn\'t kill him. Bad for business.\'')" class="btn-mystery-sm">Mr. Thompson</button>
+                <button onclick="showMessage('Interview: Eliza Harding', 'She looks nervous. She admits to hearing raised voices and the sound of something smashing from the back office.')" class="btn-mystery-sm">Eliza Harding</button>
             </div>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         <!-- =================================================================
         VIEW 5: CRIME SCENE (With Password Puzzle)
         ================================================================== -->
         <div id="view-scene" class="view p-8 md:p-12">
-            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">The Crime Scene: The Study</h2>
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
             <p class="text-gray-300 mb-6">
-                The study is grand, with dark oak paneling. A faint smell of cigar smoke lingers. On the desk, you see a broken decanter of brandy and Mr. Hargrave’s body, a wound on his chest.
+                The office is cluttered with spare parts and boxes of prizes. A faint smell of ozone hangs in the air. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body.
             </p>
             <p class="text-gray-300 mb-6">
-                Nearby on the floor lies a bloodied letter opener. Next to the desk is a small, locked drawer. It seems to require a password.
+                Nearby on the floor lies a bloody shard of plexiglass from a broken cabinet. Next to the desk is a locked metal cash box.
             </p>
             
             <!-- This is the interactive part! -->
             <div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
-                <p class="text-gray-300 mb-4">You find a small riddle inscribed on the drawer:</p>
-                <p class="text-amber-500 italic text-lg mb-4">"I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?"</p>
+                <p class="text-gray-300 mb-4">A small riddle is taped to the box:</p>
+                <p class="text-fuchsia-400 italic text-lg mb-4" style="text-shadow: 0 0 5px #f0f;">"I have a head and a tail, but no body. What am I?"</p>
                 
                 <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="text" id="clue-password" placeholder="Enter your answer..." class="flex-grow bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    <input type="text" id="clue-password" placeholder="Enter your answer..." class="flex-grow bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 font-pixel">
                     <button onclick="checkPassword()" class="btn-mystery">Unlock</button>
                 </div>
             </div>
 
             <!-- This is the hidden clue -->
             <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
-                <h3 class="font-bold text-xl text-green-300 mb-2">Drawer Unlocked!</h3>
+                <h3 class="font-bold text-xl text-green-300 mb-2">Cash Box Unlocked!</h3>
                 <p class="text-green-200">
-                    Inside, you find a torn letter. It's from Hargrave to his solicitor, discussing changes to his will. It states that his niece, <strong>Beatrice</strong>, was to be completely excluded from the inheritance.
+                    Inside the cash box, you find a printed email. It's from Hargrave to a corporate buyer, discussing the sale of the arcade. It states that his niece, <strong>Beatrice</strong>, was to be given a one-time payout and completely excluded from the new company.
                 </p>
             </div>
 
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         <!-- =================================================================
         VIEW 6: MAKE AN ACCUSATION
         ================================================================== -->
         <div id="view-accuse" class="view p-8 md:p-12">
-            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">Make Your Accusation</h2>
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Make Your Accusation</h2>
             <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <button onclick="showSolution(false, 'You accuse Ms. Collins, but she vehemently denies the charge. Her alibi is solid. The real killer gets away.')" class="btn-mystery-sm">Ms. Collins</button>
-                <button onclick="showSolution(true, 'Beatrice\'s composure cracks. She confesses! Furious about being cut from the will (the clue in the locked drawer!), she grabbed the letter opener in a fit of rage. Case closed.')" class="btn-mystery-sm">Beatrice Hargrave</button>
-                <button onclick="showSolution(false, 'Dr. Shaw denies the accusation. Despite his suspicious behavior, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">Dr. Shaw</button>
+                <button onclick="showSolution(true, 'Beatrice\'s composure cracks. She confesses! Furious about being cut from the sale (the clue in the cash box!), she grabbed the sharp piece of plexiglass in a fit of rage. Case closed.')" class="btn-mystery-sm">Beatrice Hargrave</button>
+                <button onclick="showSolution(false, 'Dr. Shaw denies the accusation. Despite his constant complaining, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">Dr. Shaw</button>
                 <button onclick="showSolution(false, 'Mr. Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-sm">Mr. Thompson</button>
                 <button onclick="showSolution(false, 'Eliza is confused by the accusation. She had no motive. The investigation stalls.')" class="btn-mystery-sm">Eliza Harding</button>
             </div>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
     </div>
@@ -180,7 +184,7 @@
     ================================================================== -->
     <div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 id="modal-title" class="font-serif text-2xl font-bold text-amber-500 mb-4"></h3>
+            <h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
             <p id="modal-text" class="text-gray-300 mb-6"></p>
             <button onclick="closeModal()" class="btn-mystery-sm">Close</button>
         </div>
@@ -191,7 +195,7 @@
     ================================================================== -->
     <div id="solution-modal" class="modal hidden opacity-0">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 id="solution-title" class="font-serif text-2xl font-bold mb-4"></h3>
+            <h3 id="solution-title" class="font-pixel text-2xl font-bold mb-4"></h3>
             <p id="solution-text" class="text-gray-300 mb-6"></p>
             <button onclick="restartGame()" class="btn-mystery">Start New Game</button>
         </div>
@@ -228,12 +232,12 @@
             const answer = passwordInput.value.trim().toLowerCase();
             
             // The answer to the riddle
-            if (answer === 'a map' || answer === 'map') {
+            if (answer === 'a coin' || answer === 'coin') {
                 document.getElementById('clue-locked').style.display = 'none';
                 document.getElementById('clue-unlocked').style.display = 'block';
-                showMessage('Success!', 'The drawer clicks open.');
+                showMessage('Success!', 'The cash box clicks open.');
             } else {
-                showMessage('Locked', 'The drawer remains firmly shut. That must be the wrong answer.');
+                showMessage('Locked', 'The box remains firmly shut. Wrong answer.');
             }
         }
 
@@ -254,10 +258,10 @@
         function showSolution(isCorrect, text) {
             if(isCorrect) {
                 solutionTitle.textContent = "Case Solved!";
-                solutionTitle.className = "font-serif text-2xl font-bold mb-4 text-green-400";
+                solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-green-400";
             } else {
                 solutionTitle.textContent = "Case Unsolved";
-                solutionTitle.className = "font-serif text-2xl font-bold mb-4 text-red-400";
+                solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-red-400";
             }
             
             solutionText.textContent = text;
@@ -282,3 +286,4 @@
     </script>
 </body>
 </html>
+
