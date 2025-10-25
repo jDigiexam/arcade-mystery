@@ -110,6 +110,11 @@
             @apply w-2 h-2 bg-black rounded-full absolute top-1/2 left-1/2 -mt-1 -ml-1;
         }
 
+        /* NEW: Clue Input Field */
+        .clue-input {
+            @apply w-12 h-12 bg-gray-900 border-2 border-gray-700 text-white rounded-lg p-3 text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-fuchsia-500;
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
@@ -145,8 +150,13 @@
             
             <!-- Clue Log -->
             <div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
-                <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">Clue Log:</h4>
-                <p id="clue-log-text" class="text-gray-400 italic">No clues found yet...</p>
+                <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">My Clues:</h4>
+                <div class="flex justify-center space-x-2">
+                    <input type="text" id="clue-input-1" maxlength="1" class="clue-input">
+                    <input type="text" id="clue-input-2" maxlength="1" class="clue-input">
+                    <input type="text" id="clue-input-3" maxlength="1" class="clue-input">
+                    <input type="text" id="clue-input-4" maxlength="1" class="clue-input">
+                </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -221,7 +231,7 @@
         <div id="view-room-prize" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
             <p class="text-gray-300 mb-6">Liz is nervously sorting tickets. On the counter is a small riddle card next to a display of top prizes.</p>
-            <p class="text-fuchsia-400 italic text-lg mb-6 text-center">"I'm tall when I'm young and short when I'm old. You'll find me on a cake. What am I?"</p>
+            <p class="text-fuchsia-400 italic text-lg mb-6 text-center">"I have a spine but no bones, and many leaves but I am not a tree. I can be a good friend or a worst enemy. What am I?"</p>
             
             <div class="grid grid-cols-3 gap-4 mb-6">
                 <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
@@ -233,8 +243,8 @@
                     <p>Teddy Bear</p>
                 </div>
                 <div class="prize-item" onclick="checkPrizePuzzle(this, true)">
-                    <span class="text-4xl">🕯️</span>
-                    <p>Birthday Candle</p>
+                    <span class="text-4xl">📖</span>
+                    <p>Book</p>
                 </div>
                 <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
                     <span class="text-4xl">👄</span>
@@ -247,7 +257,7 @@
             </div>
             
             <div id="clue-prize-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the candle. Liz nods. "Oh... right." You look at the price tag for the candle. It's 800 tickets. The first digit, '8', is circled. </p>
+            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's 800 tickets. The first digit, '8', is circled. </p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -257,18 +267,10 @@
             <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
             
             <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
-                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
-                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
-                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
-                <div class="switch" data-state="off" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
+                <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
+                <button id="switch2" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 2)">OFF</button>
+                <button id="switch3" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 3)">OFF</button>
+                <button id="switch4" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 4)">OFF</button>
             </div>
             <div class="flex justify-center">
                  <button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button>
@@ -282,7 +284,7 @@
         <!-- Versus Corner -->
         <div id="view-room-versus" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
-            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on her 'Street Fighter' machine shows a "Secret Move" with a 4-step combo, but the moves are scratched out. "Try it if you want, newb. You'll never get it."</p>
+            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old 'Contra' machine shows a "Secret Code" with 8 steps, but the moves are scratched out. "Try it if you want, newb. It's a classic for a reason."</p>
             
             <div id="combo-display" class="mb-4"></div>
             <div class="flex justify-center space-x-4 mb-6">
@@ -310,7 +312,7 @@
             </div>
             
             <div class="flex justify-center" id="clue-breakroom-button">
-                <button onclick="findClue('5', 'view-room-breakroom', 'clue-breakroom-button')" class="btn-mystery-sm">"The clock is stopped at 5:00..."</button>
+                <button onclick="checkBreakroomPuzzle()" class="btn-mystery-sm">"The clock is stopped at 5:00..."</button>
             </div>
             <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">The clock is frozen at 5:00. The meeting time must have been 5 PM. The clue is '5'.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
@@ -363,7 +365,6 @@
     ================================================================== -->
     <script>
         let currentView = 'view-start';
-        let foundClues = [];
         
         // Object to store interview state
         let interviewState = {
@@ -408,8 +409,8 @@
         const solutionTitle = document.getElementById('solution-title');
         const solutionText = document.getElementById('solution-text');
         
-        // Clue Log element
-        const clueLogText = document.getElementById('clue-log-text');
+        // Clue Log element (REMOVED)
+        // const clueLogText = document.getElementById('clue-log-text');
 
         // --- View Navigation ---
         function showView(viewId) {
@@ -425,24 +426,21 @@
             
             currentView = viewId;
             
-            // Update clue log when returning to hub
-            if (viewId === 'view-hub') {
-                updateClueLog();
-            }
+            // Update clue log (REMOVED)
+            // if (viewId === 'view-hub') {
+            //     updateClueLog();
+            // }
         }
         
         // --- NEW Puzzle Logic ---
 
         // Prize Puzzle
         function checkPrizePuzzle(selectedElement, isCorrect) {
-            if (foundClues.includes('8')) {
-                showMessage('Already Found', 'You already solved this puzzle.');
-                return;
-            }
-            
             if (isCorrect) {
                 selectedElement.classList.add('border-green-500');
-                findClue('8', 'view-room-prize', 'clue-prize-button');
+                document.getElementById('clue-prize-text').classList.remove('hidden');
+                // Disable all prize buttons
+                document.querySelectorAll('.prize-item').forEach(el => el.onclick = null);
             } else {
                 selectedElement.classList.add('border-red-500');
                 showMessage('Wrong Prize', 'That\'s not it. Try again.');
@@ -453,26 +451,34 @@
         }
 
         // Repair Puzzle
-        function toggleSwitch(el) {
-            if (el.dataset.state === "off") {
-                el.dataset.state = "on";
+        let switchStates = [0, 0, 0, 0];
+        function toggleSwitchBtn(btn, num) {
+            let index = num - 1;
+            if (switchStates[index] === 0) {
+                switchStates[index] = 1;
+                btn.textContent = 'ON';
+                btn.classList.remove('bg-red-600/80', 'border-red-400');
+                btn.classList.add('bg-green-600/80', 'border-green-400');
             } else {
-                el.dataset.state = "off";
+                switchStates[index] = 0;
+                btn.textContent = 'OFF';
+                btn.classList.add('bg-red-600/80', 'border-red-400');
+                btn.classList.remove('bg-green-600/80', 'border-green-400');
             }
         }
         
         function checkRepairPuzzle() {
-            if (foundClues.includes('3')) {
-                showMessage('Already Found', 'You already solved this puzzle.');
-                return;
-            }
-            
-            const switches = document.querySelectorAll('#view-room-repair .switch');
-            const combo = Array.from(switches).map(s => s.dataset.state === 'on' ? '1' : '0').join('');
+            const combo = switchStates.join('');
             
             // Correct combo is 0011 (binary for 3)
             if (combo === '0011') {
-                findClue('3', 'view-room-repair', 'clue-repair-button');
+                document.getElementById('clue-repair-text').classList.remove('hidden');
+                // Disable check button
+                const checkBtn = document.querySelector('#view-room-repair .btn-mystery-sm');
+                checkBtn.disabled = true;
+                checkBtn.classList.add('btn-disabled');
+                // Disable switches
+                document.querySelectorAll('#view-room-repair button[id^="switch"]').forEach(btn => btn.disabled = true);
             } else {
                 showMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.');
             }
@@ -480,10 +486,10 @@
 
         // Versus Puzzle
         let comboInput = "";
-        const correctCombo = "UDLR"; // Up, Down, Left, Right
+        const correctCombo = "UUDDLRLR"; // Up, Up, Down, Down, Left, Right, Left, Right
         
         function enterCombo(move) {
-            if (foundClues.includes('1')) {
+            if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) {
                 showMessage('Already Found', 'You already solved this puzzle.');
                 return;
             }
@@ -491,69 +497,50 @@
             comboInput += move;
             document.getElementById('combo-display').textContent = comboInput;
             
-            if (comboInput.length >= 4) {
+            if (comboInput.length >= 8) {
                 if (comboInput === correctCombo) {
-                    findClue('1', 'view-room-versus', 'clue-versus-button');
+                    document.getElementById('clue-versus-text').classList.remove('hidden');
+                    // Disable buttons
+                    document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = true);
                 } else {
                     showMessage('Wrong Combo', 'Trisha laughs. "Not even close!"');
                 }
                 comboInput = "";
                 setTimeout(() => {
-                     document.getElementById('combo-display').textContent = "";
+                     if (document.getElementById('clue-versus-text').classList.contains('hidden')) {
+                        document.getElementById('combo-display').textContent = "";
+                     }
                 }, 1000);
             }
         }
 
-        // Breakroom Puzzle logic is handled by the findClue button directly.
+        // Breakroom Puzzle logic
+        function checkBreakroomPuzzle() {
+            document.getElementById('clue-breakroom-text').classList.remove('hidden');
+            const btnEl = document.querySelector('#clue-breakroom-button button');
+            btnEl.disabled = true;
+            btnEl.classList.add('btn-disabled');
+        }
 
-        // --- Clue Logic ---
-        function findClue(clue, roomViewId, clueButtonId) {
-            if (!foundClues.includes(clue)) {
-                foundClues.push(clue);
-                foundClues.sort(); // Keep them in order
-                
-                // Show text in room
-                const clueTextElement = document.getElementById(clueButtonId.replace('-button', '-text'));
-                if (clueTextElement) {
-                    clueTextElement.classList.remove('hidden');
-                }
-                
-                // Disable button in room
-                const clueButtonElement = document.getElementById(clueButtonId);
-                if (clueButtonElement) {
-                    // For breakroom, we disable the button. For others, we just hide the puzzle interface (which findClue doesn't do, but that's ok)
-                    clueButtonElement.innerHTML = '<button class="btn-disabled" disabled>Clue Found</button>';
-                }
-                
-                showMessage('Clue Found!', `You found a piece of the combination: ${clue}`);
-            } else {
-                // This will trigger for the clock puzzle if clicked twice.
-                showMessage('Already Found', 'You\'ve already noted this clue.');
-            }
-        }
+        // --- Clue Logic (REMOVED) ---
+        // function findClue(...) { ... }
         
-        function updateClueLog() {
-            if (foundClues.length === 0) {
-                clueLogText.textContent = 'No clues found yet...';
-            } else {
-                clueLogText.textContent = `Clues: ${foundClues.join(', ')}`;
-            }
-        }
+        // function updateClueLog() { ... }
 
         // --- Puzzle Logic ---
         function checkSafeCode() {
             const safeCodeInput = document.getElementById('safe-code');
             const answer = safeCodeInput.value.trim();
             
-            // The answer is the 4 clues
-            const correctCode = "1358"; // The clues 8, 3, 1, 5 sorted
+            // The answer is the 4 clues sorted
+            const correctCode = "1358";
             
             if (answer === correctCode) {
                 document.getElementById('clue-locked').style.display = 'none';
                 document.getElementById('clue-unlocked').style.display = 'block';
                 showMessage('Success!', 'The safe clicks open.');
             } else {
-                showMessage('Locked', 'The safe remains firmly shut. Wrong code.');
+                showMessage('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)');
             }
         }
 
@@ -622,31 +609,56 @@
             document.getElementById('safe-code').value = '';
 
             // Reset clues
-            foundClues = [];
-            updateClueLog();
+            // foundClues = []; (REMOVED)
+            // updateClueLog(); (REMOVED)
+            
+            // Reset clue inputs
+            for (let i = 1; i <= 4; i++) {
+                const input = document.getElementById(`clue-input-${i}`);
+                if (input) input.value = '';
+            }
             
             // --- UPDATED: Reset Puzzles ---
             
             // 1. Prize Puzzle
-            document.querySelectorAll('.prize-item.border-green-500').forEach(el => el.classList.remove('border-green-500'));
+            document.querySelectorAll('.prize-item').forEach(el => {
+                el.classList.remove('border-green-500');
+                let isCorrect = el.querySelector('span').textContent === '📖'; // Check if it's the book
+                el.onclick = () => checkPrizePuzzle(el, isCorrect);
+            });
             document.getElementById('clue-prize-text').classList.add('hidden');
-            document.getElementById('clue-prize-button').innerHTML = ''; // Clear it
             
             // 2. Repair Puzzle
-            document.querySelectorAll('#view-room-repair .switch').forEach(el => el.dataset.state = 'off');
+            switchStates = [0, 0, 0, 0];
+            const switchBtns = document.querySelectorAll('#view-room-repair .btn-mystery-sm');
+            switchBtns.forEach((btn, index) => {
+                if (btn.id.startsWith('switch')) { // Only the 4 toggle buttons
+                    btn.textContent = 'OFF';
+                    btn.classList.add('bg-red-600/80', 'border-red-400');
+                    btn.classList.remove('bg-green-600/80', 'border-green-400');
+                    btn.disabled = false;
+                } else { // The 'Check Switches' button
+                    btn.disabled = false;
+                    btn.classList.remove('btn-disabled');
+                }
+            });
             document.getElementById('clue-repair-text').classList.add('hidden');
-            document.getElementById('clue-repair-button').innerHTML = ''; // Clear it
 
             // 3. Versus Puzzle
             comboInput = "";
-            if(document.getElementById('combo-display')) {
-                document.getElementById('combo-display').textContent = "";
+            const comboDisplay = document.getElementById('combo-display');
+            if (comboDisplay) {
+                comboDisplay.textContent = "";
             }
             document.getElementById('clue-versus-text').classList.add('hidden');
-            document.getElementById('clue-versus-button').innerHTML = ''; // Clear it
+            document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = false);
             
             // 4. Breakroom Puzzle
-            document.getElementById('clue-breakroom-button').innerHTML = `<button onclick="findClue('5', 'view-room-breakroom', 'clue-breakroom-button')" class="btn-mystery-sm">"The clock is stopped at 5:00..."</button>`;
+            const breakroomBtn = document.querySelector('#clue-breakroom-button button');
+            if (breakroomBtn) {
+                breakroomBtn.disabled = false;
+                breakroomBtn.classList.remove('btn-disabled');
+            }
             document.getElementById('clue-breakroom-text').classList.add('hidden');
 
 
@@ -666,4 +678,5 @@
     </script>
 </body>
 </html>
+
 
