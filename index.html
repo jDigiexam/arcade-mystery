@@ -171,7 +171,7 @@
                 <button onclick="showSolution(false, 'You accuse Lacey Collins, but she vehemently denies the charge. Her alibi is solid. The real killer gets away.')" class="btn-mystery-sm">Lacey Collins</button>
                 <button onclick="showSolution(true, 'Trisha\'s composure cracks. She confesses! Furious about being cut from the sale (the clue in the cash box!), she grabbed the sharp piece of plexiglass in a fit of rage. \'He was going to sell my future for *nothing*!\'. Case closed.')" class="btn-mystery-sm">Trisha Hargrave</button>
                 <button onclick="showSolution(false, 'You accuse \'Doc\' Shaw. He denies it. Despite his constant complaining, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">'Doc' Shaw</button>
-                <button onclick="showSolution(false, 'Stan Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-sm">Stan "the man" Thompson</button>
+                <button onclick="showSolution(false, 'Stan Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-form">Stan "the man" Thompson</button>
                 <button onclick="showSolution(false, 'Liz Harding is confused by the accusation. She had no motive... that you know of. The investigation stalls.')" class="btn-mystery-sm">Liz Harding</button>
             </div>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
@@ -266,5 +266,24 @@
             
             solutionText.textContent = text;
             solutionModal.classList.remove('hidden');
-Something went wrong. Please try again.
+            setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
+        }
+
+        function restartGame() {
+            // Hide modal
+            solutionModal.classList.add('opacity-0');
+            setTimeout(() => solutionModal.classList.add('hidden'), 300);
+            
+            // Reset puzzle
+            document.getElementById('clue-locked').style.display = 'block';
+            document.getElementById('clue-unlocked').style.display = 'none';
+            document.getElementById('clue-password').value = '';
+
+            // Go to start
+            showView('view-start');
+        }
+
+    </script>
+</body>
+</html>
 
