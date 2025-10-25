@@ -102,11 +102,11 @@
         <div id="view-suspects" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Suspects</h2>
             <ul class="space-y-4 text-gray-300">
-                <li><strong>Beatrice Hargrave:</strong> The ambitious niece, a pro-gamer who wanted to take over the business and resented 'Ace's old-school ways.</li>
-                <li><strong>Ms. Collins:</strong> The loyal arcade manager, one of the last to see 'Ace' alive.</li>
-                <li><strong>Dr. Leonard Shaw:</strong> The arcade's grumpy repair technician, constantly arguing with 'Ace' over cheap parts.</li>
-                <li><strong>Mr. Thompson:</strong> The rival arcade owner from across town, who was losing business to 'The Pixel Palace'.</li>
-                <li><strong>Eliza Harding:</strong> The quiet cashier at the prize counter, who may know more than she's letting on.</li>
+                <li><strong>Trisha Hargrave:</strong> The pro-gamer niece. She thinks retro games are lame and wants Ace to turn the place into a modern computer LAN hall.</li>
+                <li><strong>Lacey Collins:</strong> The pushy, seductive arcade manager. She's all about getting the job done and was often seen drinking with Ace after hours.</li>
+                <li><strong>'Doc' Shaw:</strong> The wiz repair tech. He's cheap and prefers to 'Frankenstein' old machines with homemade parts rather than buy expensive new ones.</li>
+                <li><strong>Stan "the man" Thompson:</strong> The rival arcade owner from downtown. His upscale building and better wages have been stealing customers and staff.</li>
+                <li><strong>Liz Harding:</strong> The quiet cashier at the prize counter. There's something about her that doesn't add up...</li>
             </ul>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
@@ -118,11 +118,11 @@
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
             <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showMessage('Interview: Beatrice', 'She seems cold and frustrated, denying any involvement. \'Ace was running this place into the ground. I had plans. Big plans.\'')" class="btn-mystery-sm">Beatrice Hargrave</button>
-                <button onclick="showMessage('Interview: Ms. Collins', 'She seems rattled but insists she was just dropping off the night's token receipts. She mentions Beatrice storming out of the office just before the murder.')" class="btn-mystery-sm">Ms. Collins</button>
-                <button onclick="showMessage('Interview: Dr. Shaw', 'He claims he was fixing a broken \'Street Fighter II\' cabinet. \'Ace wouldn\'t buy the right parts! I told him his cheapness would be the death of him... guess I was right.\'')" class="btn-mystery-sm">Dr. Shaw</button>
-                <button onclick="showMessage('Interview: Mr. Thompson', 'He admits to a business rivalry but claims he was at his own arcade all night. \'Sure, I hated the guy, but I didn\'t kill him. Bad for business.\'')" class="btn-mystery-sm">Mr. Thompson</button>
-                <button onclick="showMessage('Interview: Eliza Harding', 'She looks nervous. She admits to hearing raised voices and the sound of something smashing from the back office.')" class="btn-mystery-sm">Eliza Harding</button>
+                <button onclick="showMessage('Interview: Trisha', 'She scoffs, barely looking up from her Game Boy. \'Ace was running this place into the ground. It should be a LAN hall. And I can\'t stand that Lacey... always hanging around him after hours.\'')" class="btn-mystery-sm">Trisha Hargrave</button>
+                <button onclick="showMessage('Interview: Lacey Collins', 'She bats her eyelashes. \'It\'s a *tragedy*, detective. I was just dropping off the night\'s receipts. Trisha stormed out of his office just before, though. She has a nasty temper.\'')" class="btn-mystery-sm">Lacey Collins</button>
+                <button onclick="showMessage('Interview: \'Doc\' Shaw', 'He\'s tinkering with a circuit board. \'Ace wouldn\'t buy the right parts! Said my custom rig wasn\'t \'up to code\'. Bah! Saved us a fortune. His cheapness was the death of him...\'')" class="btn-mystery-sm">'Doc' Shaw</button>
+                <button onclick="showMessage('Interview: Stan \'the man\' Thompson', 'He flashes a fake smile. \'Look, detective, I hated the guy, but I was at my own arcade all night. Got witnesses. Bad for business, this whole mess.\'')" class="btn-mystery-sm">Stan "the man" Thompson</button>
+                <button onclick="showMessage('Interview: Liz Harding', 'She looks nervous, avoiding eye contact. \'I just... I just heard raised voices from the back office. And something smashed. I didn\'t see anything, I swear!\'')" class="btn-mystery-sm">Liz Harding</button>
             </div>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
@@ -154,7 +154,7 @@
             <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
                 <h3 class="font-bold text-xl text-green-300 mb-2">Cash Box Unlocked!</h3>
                 <p class="text-green-200">
-                    Inside the cash box, you find a printed email. It's from Hargrave to a corporate buyer, discussing the sale of the arcade. It states that his niece, <strong>Beatrice</strong>, was to be given a one-time payout and completely excluded from the new company.
+                    Inside the cash box, you find a printed email. It's from Hargrave to a corporate buyer, discussing the sale of the arcade. It states that his niece, <strong>Trisha</strong>, was to be given a one-time payout and completely excluded from the new company.
                 </p>
             </div>
 
@@ -168,11 +168,11 @@
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Make Your Accusation</h2>
             <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showSolution(false, 'You accuse Ms. Collins, but she vehemently denies the charge. Her alibi is solid. The real killer gets away.')" class="btn-mystery-sm">Ms. Collins</button>
-                <button onclick="showSolution(true, 'Beatrice\'s composure cracks. She confesses! Furious about being cut from the sale (the clue in the cash box!), she grabbed the sharp piece of plexiglass in a fit of rage. Case closed.')" class="btn-mystery-sm">Beatrice Hargrave</button>
-                <button onclick="showSolution(false, 'Dr. Shaw denies the accusation. Despite his constant complaining, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">Dr. Shaw</button>
-                <button onclick="showSolution(false, 'Mr. Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-sm">Mr. Thompson</button>
-                <button onclick="showSolution(false, 'Eliza is confused by the accusation. She had no motive. The investigation stalls.')" class="btn-mystery-sm">Eliza Harding</button>
+                <button onclick="showSolution(false, 'You accuse Lacey Collins, but she vehemently denies the charge. Her alibi is solid. The real killer gets away.')" class="btn-mystery-sm">Lacey Collins</button>
+                <button onclick="showSolution(true, 'Trisha\'s composure cracks. She confesses! Furious about being cut from the sale (the clue in the cash box!), she grabbed the sharp piece of plexiglass in a fit of rage. \'He was going to sell my future for *nothing*!\'. Case closed.')" class="btn-mystery-sm">Trisha Hargrave</button>
+                <button onclick="showSolution(false, 'You accuse \'Doc\' Shaw. He denies it. Despite his constant complaining, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">'Doc' Shaw</button>
+                <button onclick="showSolution(false, 'Stan Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-sm">Stan "the man" Thompson</button>
+                <button onclick="showSolution(false, 'Liz Harding is confused by the accusation. She had no motive... that you know of. The investigation stalls.')" class="btn-mystery-sm">Liz Harding</button>
             </div>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
@@ -266,24 +266,5 @@
             
             solutionText.textContent = text;
             solutionModal.classList.remove('hidden');
-            setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
-        }
-
-        function restartGame() {
-            // Hide modal
-            solutionModal.classList.add('opacity-0');
-            setTimeout(() => solutionModal.classList.add('hidden'), 300);
-            
-            // Reset puzzle
-            document.getElementById('clue-locked').style.display = 'block';
-            document.getElementById('clue-unlocked').style.display = 'none';
-            document.getElementById('clue-password').value = '';
-
-            // Go to start
-            showView('view-start');
-        }
-
-    </script>
-</body>
-</html>
+Something went wrong. Please try again.
 
