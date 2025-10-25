@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Midnight Murder Mystery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Simple fade-in animation */
+        .view {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Custom button style for the theme */
+        .btn-mystery {
+            @apply bg-amber-900/70 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-amber-800 transition-all duration-300 ease-in-out cursor-pointer text-center;
+        }
+
+        .btn-mystery-sm {
+            @apply bg-gray-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition-all duration-300 ease-in-out cursor-pointer text-center;
+        }
+
+        /* Custom modal for messages */
+        .modal {
+            @apply fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
+        }
+        
+        .modal-content {
+            @apply bg-gray-800 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-3xl w-full mx-auto bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-gray-700">
+        
+        <!-- =================================================================
+        VIEW 1: START SCREEN
+        ================================================================== -->
+        <div id="view-start" class="view p-8 md:p-12 active">
+            <h1 class="font-serif text-4xl md:text-5xl font-bold text-amber-500 mb-4 text-center">A Midnight Murder</h1>
+            <p class="text-lg text-gray-300 mb-8 text-center">
+                In a quiet mansion on the outskirts of town, a wealthy collector, Mr. Arthur Hargrave, has been found murdered in his study.
+            </p>
+            <p class="text-gray-400 mb-10 text-center">
+                As the detectives, you've been called to investigate. Unravel the secrets of the guests, examine the evidence, and find the killer before they slip away.
+            </p>
+            <div class="flex justify-center">
+                <button onclick="showView('view-hub')" class="btn-mystery text-xl">
+                    Begin Investigation
+                </button>
+            </div>
+        </div>
+
+        <!-- =================================================================
+        VIEW 2: MAIN HUB (The Hallway)
+        ================================================================== -->
+        <div id="view-hub" class="view p-8 md:p-12">
+            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">The Grand Hallway</h2>
+            <p class="text-gray-300 mb-8">
+                You stand in the grand hallway. The suspects are waiting in the parlor, and the crime scene is in the study.
+                <br>What do you want to do first?
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="showView('view-suspects')" class="btn-mystery-sm">View Suspects</button>
+                <button onclick="showView('view-scene')" class="btn-mystery-sm">Examine the Crime Scene (Study)</button>
+                <button onclick="showView('view-interviews')" class="btn-mystery-sm">Interview Suspects</button>
+                <button onclick="showView('view-accuse')" class="btn-mystery-sm">Make an Accusation</button>
+            </div>
+        </div>
+
+        <!-- =================================================================
+        VIEW 3: SUSPECTS LIST
+        ================================================================== -->
+        <div id="view-suspects" class="view p-8 md:p-12">
+            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">The Suspects</h2>
+            <ul class="space-y-4 text-gray-300">
+                <li><strong>Beatrice Hargrave:</strong> The ambitious niece, who stands to inherit a vast fortune.</li>
+                <li><strong>Ms. Collins:</strong> The loyal personal assistant, one of the last to see him alive.</li>
+                <li><strong>Dr. Leonard Shaw:</strong> The personal doctor, claiming a late-night health check.</li>
+                <li><strong>Mr. Thompson:</strong> A rival art dealer with whom Hargrave had a... contentious relationship.</li>
+                <li><strong>Eliza Harding:</strong> The quiet housekeeper, who may know more than she's letting on.</li>
+            </ul>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+        </div>
+        
+        <!-- =================================================================
+        VIEW 4: INTERVIEW HUB
+        ================================================================== -->
+        <div id="view-interviews" class="view p-8 md:p-12">
+            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">Interview Room</h2>
+            <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="showMessage('Interview: Beatrice', 'She seems cold and frustrated, denying any involvement. She mentions arguments over the will.')" class="btn-mystery-sm">Beatrice Hargrave</button>
+                <button onclick="showMessage('Interview: Ms. Collins', 'She seems rattled but insists she was just arranging his papers. She mentions Beatrice left the study shortly before the murder.')" class="btn-mystery-sm">Ms. Collins</button>
+                <button onclick="showMessage('Interview: Dr. Shaw', 'He claims he was checking on Mr. Hargrave\'s health. He mentions overhearing a heated argument between Hargrave and Beatrice.')" class="btn-mystery-sm">Dr. Shaw</button>
+                <button onclick="showMessage('Interview: Mr. Thompson', 'He admits to a business rivalry but claims it never escalated to violence. He was in the library.')" class="btn-mystery-sm">Mr. Thompson</button>
+                <button onclick="showMessage('Interview: Eliza Harding', 'She looks nervous. She admits to hearing raised voices and the sound of breaking glass.')" class="btn-mystery-sm">Eliza Harding</button>
+            </div>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+        </div>
+
+        <!-- =================================================================
+        VIEW 5: CRIME SCENE (With Password Puzzle)
+        ================================================================== -->
+        <div id="view-scene" class="view p-8 md:p-12">
+            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">The Crime Scene: The Study</h2>
+            <p class="text-gray-300 mb-6">
+                The study is grand, with dark oak paneling. A faint smell of cigar smoke lingers. On the desk, you see a broken decanter of brandy and Mr. Hargrave’s body, a wound on his chest.
+            </p>
+            <p class="text-gray-300 mb-6">
+                Nearby on the floor lies a bloodied letter opener. Next to the desk is a small, locked drawer. It seems to require a password.
+            </p>
+            
+            <!-- This is the interactive part! -->
+            <div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                <p class="text-gray-300 mb-4">You find a small riddle inscribed on the drawer:</p>
+                <p class="text-amber-500 italic text-lg mb-4">"I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?"</p>
+                
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input type="text" id="clue-password" placeholder="Enter your answer..." class="flex-grow bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    <button onclick="checkPassword()" class="btn-mystery">Unlock</button>
+                </div>
+            </div>
+
+            <!-- This is the hidden clue -->
+            <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
+                <h3 class="font-bold text-xl text-green-300 mb-2">Drawer Unlocked!</h3>
+                <p class="text-green-200">
+                    Inside, you find a torn letter. It's from Hargrave to his solicitor, discussing changes to his will. It states that his niece, <strong>Beatrice</strong>, was to be completely excluded from the inheritance.
+                </p>
+            </div>
+
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+        </div>
+
+        <!-- =================================================================
+        VIEW 6: MAKE AN ACCUSATION
+        ================================================================== -->
+        <div id="view-accuse" class="view p-8 md:p-12">
+            <h2 class="font-serif text-3xl font-bold text-amber-600 mb-6">Make Your Accusation</h2>
+            <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="showSolution(false, 'You accuse Ms. Collins, but she vehemently denies the charge. Her alibi is solid. The real killer gets away.')" class="btn-mystery-sm">Ms. Collins</button>
+                <button onclick="showSolution(true, 'Beatrice\'s composure cracks. She confesses! Furious about being cut from the will (the clue in the locked drawer!), she grabbed the letter opener in a fit of rage. Case closed.')" class="btn-mystery-sm">Beatrice Hargrave</button>
+                <button onclick="showSolution(false, 'Dr. Shaw denies the accusation. Despite his suspicious behavior, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">Dr. Shaw</button>
+                <button onclick="showSolution(false, 'Mr. Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-sm">Mr. Thompson</button>
+                <button onclick="showSolution(false, 'Eliza is confused by the accusation. She had no motive. The investigation stalls.')" class="btn-mystery-sm">Eliza Harding</button>
+            </div>
+            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to the Hallway</button>
+        </div>
+
+    </div>
+
+    <!-- =================================================================
+    MODAL for messages
+    ================================================================== -->
+    <div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 id="modal-title" class="font-serif text-2xl font-bold text-amber-500 mb-4"></h3>
+            <p id="modal-text" class="text-gray-300 mb-6"></p>
+            <button onclick="closeModal()" class="btn-mystery-sm">Close</button>
+        </div>
+    </div>
+    
+    <!-- =================================================================
+    MODAL for solution
+    ================================================================== -->
+    <div id="solution-modal" class="modal hidden opacity-0">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 id="solution-title" class="font-serif text-2xl font-bold mb-4"></h3>
+            <p id="solution-text" class="text-gray-300 mb-6"></p>
+            <button onclick="restartGame()" class="btn-mystery">Start New Game</button>
+        </div>
+    </div>
+
+
+    <script>
+        let currentView = 'view-start';
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        
+        const solutionModal = document.getElementById('solution-modal');
+        const solutionTitle = document.getElementById('solution-title');
+        const solutionText = document.getElementById('solution-text');
+
+        function showView(viewId) {
+            const oldView = document.getElementById(currentView);
+            if (oldView) {
+                oldView.classList.remove('active');
+            }
+            
+            const newView = document.getElementById(viewId);
+            if (newView) {
+                newView.classList.add('active');
+            }
+            
+            currentView = viewId;
+        }
+
+        // --- Puzzle Logic ---
+        function checkPassword() {
+            const passwordInput = document.getElementById('clue-password');
+            const answer = passwordInput.value.trim().toLowerCase();
+            
+            // The answer to the riddle
+            if (answer === 'a map' || answer === 'map') {
+                document.getElementById('clue-locked').style.display = 'none';
+                document.getElementById('clue-unlocked').style.display = 'block';
+                showMessage('Success!', 'The drawer clicks open.');
+            } else {
+                showMessage('Locked', 'The drawer remains firmly shut. That must be the wrong answer.');
+            }
+        }
+
+        // --- Modal Logic ---
+        function showMessage(title, text) {
+            modalTitle.textContent = title;
+            modalText.textContent = text;
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+        
+        // --- Solution Modal Logic ---
+        function showSolution(isCorrect, text) {
+            if(isCorrect) {
+                solutionTitle.textContent = "Case Solved!";
+                solutionTitle.className = "font-serif text-2xl font-bold mb-4 text-green-400";
+            } else {
+                solutionTitle.textContent = "Case Unsolved";
+                solutionTitle.className = "font-serif text-2xl font-bold mb-4 text-red-400";
+            }
+            
+            solutionText.textContent = text;
+            solutionModal.classList.remove('hidden');
+            setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
+        }
+
+        function restartGame() {
+            // Hide modal
+            solutionModal.classList.add('opacity-0');
+            setTimeout(() => solutionModal.classList.add('hidden'), 300);
+            
+            // Reset puzzle
+            document.getElementById('clue-locked').style.display = 'block';
+            document.getElementById('clue-unlocked').style.display = 'none';
+            document.getElementById('clue-password').value = '';
+
+            // Go to start
+            showView('view-start');
+        }
+
+    </script>
+</body>
+</html>
