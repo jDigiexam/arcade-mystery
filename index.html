@@ -61,50 +61,27 @@
             @apply bg-gray-900 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
         }
         
-        /* --- NEW Puzzle Styles --- */
+        /* --- NEW PUZZLE STYLES --- */
         
-        /* For Prize Puzzle */
+        /* Prize Puzzle */
         .prize-item {
-            @apply bg-gray-800 p-4 rounded-lg border-2 border-gray-700 hover:border-fuchsia-500 cursor-pointer transition-all text-center;
+            @apply bg-gray-800 p-4 rounded-lg text-center cursor-pointer border-2 border-gray-700 hover:border-fuchsia-500 transition-all;
         }
-        .prize-item:hover {
-            transform: scale(1.05);
-        }
-
-        /* For Repair Puzzle */
-        .switch {
-            @apply w-16 h-8 bg-gray-700 rounded-full relative cursor-pointer transition-all;
-        }
-        .switch-knob {
-            @apply w-6 h-6 bg-white rounded-full absolute top-1 left-1 transition-all;
-        }
-        .switch[data-state="on"] .switch-knob {
-            transform: translateX(32px);
-            @apply bg-cyan-400;
-        }
-        .switch[data-state="on"] {
-            @apply bg-cyan-700;
-        }
-
-        /* For Versus Puzzle */
+        
+        /* Versus Puzzle */
         .combo-btn {
-            @apply w-16 h-16 bg-gray-700 rounded-lg flex items-center justify-center text-3xl hover:bg-gray-600 cursor-pointer transition-all border-2 border-gray-600;
+            @apply w-12 h-12 bg-gray-700 text-white font-bold rounded-full flex items-center justify-center shadow-lg hover:bg-gray-600 transition-all;
         }
         #combo-display {
-            @apply w-full h-12 bg-gray-900 rounded-md border border-gray-700 flex items-center px-4 text-gray-400 text-2xl tracking-widest;
+            @apply h-10 bg-gray-900 border border-gray-700 rounded-lg p-2 text-center text-lg text-fuchsia-400 font-pixel tracking-widest;
         }
-
-        /* For Breakroom Puzzle */
+        
+        /* Breakroom Puzzle (was clock) */
         .clock {
-            @apply w-32 h-32 bg-gray-200 rounded-full border-4 border-gray-400 relative m-auto;
+            @apply w-40 h-40 bg-gray-800 rounded-full border-4 border-gray-600 relative shadow-inner;
         }
-        .clock-hand-hour {
-            @apply w-1 h-10 bg-black absolute bottom-1/2 left-1/2 -ml-0.5 rounded-t-full origin-bottom;
-            transform: rotate(150deg); /* Points to 5 */
-        }
-        .clock-hand-minute {
-            @apply w-0.5 h-14 bg-black absolute bottom-1/2 left-1/2 -ml-px rounded-t-full origin-bottom;
-            transform: rotate(0deg); /* Points to 12 */
+        .clock-hand {
+            @apply w-1.5 h-16 bg-cyan-400 absolute bottom-1/2 left-1/2 -ml-0.5 origin-bottom;
         }
         .clock-center {
             @apply w-2 h-2 bg-black rounded-full absolute top-1/2 left-1/2 -mt-1 -ml-1;
@@ -224,7 +201,7 @@
         </div>
 
         <!-- =================================================================
-        NEW VIEWS FOR CLUES (PUZZLE VERSION)
+        NEW VIEWS FOR CLUES
         ================================================================== -->
 
         <!-- Prize Counter -->
@@ -287,15 +264,21 @@
             <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old 'Contra' machine shows a "Secret Code" with 8 steps, but the moves are scratched out. "Try it if you want, newb. It's a classic for a reason."</p>
             
             <div id="combo-display" class="mb-4"></div>
-            <div class="flex justify-center space-x-4 mb-6">
-                <button class="combo-btn" onclick="enterCombo('U')">⬆️</button>
-                <button class="combo-btn" onclick="enterCombo('D')">⬇️</button>
-                <button class="combo-btn" onclick="enterCombo('L')">⬅️</button>
-                <button class="combo-btn" onclick="enterCombo('R')">➡️</button>
+            
+            <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto mb-6">
+                <div></div>
+                <button class="combo-btn" onclick="enterCombo('U')">↑</button>
+                <div></div>
+                <button class="combo-btn" onclick="enterCombo('L')">←</button>
+                <div></div>
+                <button class="combo-btn" onclick="enterCombo('R')">→</button>
+                <div></div>
+                <button class="combo-btn" onclick="enterCombo('D')">↓</button>
+                <div></div>
             </div>
             
             <div id="clue-versus-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You enter a simple combo: Up, Down, Left, Right. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Player 1 gets the clue: 1'</p>
+            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You enter the 8-button combo: Up, Up, Down, Down, Left, Right, Left, Right. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player 1.'</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -303,18 +286,21 @@
         <div id="view-room-breakroom" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Staff Breakroom</h2>
             <p class="text-gray-300 mb-6">The grimy breakroom. Lacey's jacket is slung over a chair. You check the pocket and find a folded bar napkin from 'The Neon Poodle' lounge. It says: "Meet Ace - __ PM". The time is smudged and unreadable.</p>
-            <p class="text-gray-300 mb-6">You look around for a clue to the time and see a broken clock on the wall, its hands frozen.</p>
+            <p class="text-gray-300 mb-6">You look at a digital clock on the wall, its display flickering. Maybe you can set it to the right time?</p>
             
-            <div class="clock my-8">
-                <div class="clock-hand-hour"></div>
-                <div class="clock-hand-minute"></div>
-                <div class="clock-center"></div>
+            <!-- NEW Digital Clock Puzzle -->
+            <div class="flex justify-center items-center space-x-2 my-8">
+                <span id="clock-hours" class="text-6xl font-pixel text-gray-500 transition-colors">12</span>
+                <span class="text-6xl font-pixel text-gray-500 transition-colors">:</span>
+                <span id="clock-minutes" class="text-6xl font-pixel text-gray-500 transition-colors">00</span>
             </div>
             
-            <div class="flex justify-center" id="clue-breakroom-button">
-                <button onclick="checkBreakroomPuzzle()" class="btn-mystery-sm">"The clock is stopped at 5:00..."</button>
+            <div id="clock-controls" class="flex justify-center space-x-4">
+                <button onclick="adjustTime('hour')" class="btn-mystery-sm">Hour +</button>
+                <button onclick="adjustTime('minute')" class="btn-mystery-sm">Minute +</button>
             </div>
-            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">The clock is frozen at 5:00. The meeting time must have been 5 PM. The clue is '5'.</p>
+            
+            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">As you set the clock to 5:00, the display stops flickering and glows a steady green. The time must have been 5 PM. The clue is '5'.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -368,43 +354,41 @@
         
         // Object to store interview state
         let interviewState = {
-            trisha: 0,
-            lacey: 0,
-            doc: 0,
-            stan: 0,
-            liz: 0
+            'trisha': 0,
+            'lacey': 0,
+            'doc': 0,
+            'stan': 0,
+            'liz': 0
         };
-
-        // Object to store all suspect dialogues
+        
+        // Dialogues
         const dialogues = {
-            trisha: [
-                "She looks really stressed, not making eye contact. 'Ace... he just wouldn't listen! I told him he had to modernize, but he just... he kept talking to 'Doc' about 'preserving the classics.' What about *my* future? He was just... ignoring me.'",
-                "I'm telling you, he was going to run this place into the ground with 'Doc's' terrible ideas! Someone had to make him see sense! But... but I didn't *do* anything! You have to believe me. What if he listened to Doc instead of me?"
+            'trisha': [
+                "He was finally going to listen to me! I thought... I thought he was going to give me the arcade. But he spent *so* much time with 'Doc' lately. I was worried he'd listen to that old fossil and keep this place a museum!",
+                "Look, I'm nervous, okay? This place is my future. If Doc convinced him to not upgrade to a LAN hall, I... I don't know what I'd do. But I didn't kill him."
             ],
-            lacey: [
-                "She dabs at her eyes. 'I... I can't believe he's gone. We were... close. Very close. I just... I wanted us to run this place together, 50/50. But he kept putting me off, saying he had 'family obligations' to think about with Trisha...'",
-                "Why are you talking to me again? It's a tragedy. Ace and I were... special. He was just confused, that's all. He would have come around. He *had* to. I deserved my half."
+            'lacey': [
+                "I... I can't believe he's gone. We were... close. He told me he was leaving the arcade to Trisha, to his *family*. I just... I just wanted us to run it together. But he said I wasn't 'family.'",
+                "He promised me we'd be partners. 50/50. He was just stringing me along. I gave him everything... and he was just going to toss me aside for that brat."
             ],
-            doc: [
-                "He's tinkering with a circuit board. 'Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. C-couldn't have been me, I was... fixing this board!'",
-                "You again? Look, I'm busy building... uh... *fixing*... this. If you want a *real* lead, go talk to that cashier, Liz. She's always disappearing from the counter. Comes back all nervous, covered in gray and black fur. What's that about? Weirdo."
+            'doc': [
+                "Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. Couldn't have been me, I was... fixing this board!",
+                "That cashier, Liz... she's a weird one. Always sneaking out back. Comes back covered in gray and black fur. What's that about? Me? I'm just... busy. Building... uh... *fixing* something new."
             ],
-            stan: [
-                "He flashes a fake smile. 'Look, I didn't like the guy, but I've got an alibi. If you want a *real* tip, you should look at that cashier, Liz. I've heard she's got serious money problems. Always short.'",
-                "Yeah, Liz. She works for me on the side, but I'm thinking of firing her. She's got a bleeding heart for stray animals. I know for a fact she's been skimming from Ace's register and donating it to animal charities. She's a thief, detective. Who knows what else she'd do?"
+            'stan': [
+                "Liz Harding works for me, yeah. She's my girl. She told me Ace was going to sell, but then changed his mind to give it to his bratty niece. Messed up my plans to buy it.",
+                "Between you and me, Liz has... cash problems. Big time. Always donating to those animal charities. I know for a fact she was skimming from Ace's registers. Maybe he found out?"
             ],
-            liz: [
-                "She looks nervous. 'I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.'",
-                "Oh... hi. Listen, Stan is a liar! I'm not stealing... I just... I just feed the raccoons out back with my *own* tips! They're sweet. And you should really be looking at 'Doc' Shaw. He's *always* in that shop... I bet he's an alcoholic. He's mean, too... I think he hates animals. He's always yelling about 'vermin' by the dumpsters."
+            'liz': [
+                "I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.",
+                "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."
             ]
         };
         
-        // Modal elements
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modal-title');
         const modalText = document.getElementById('modal-text');
         
-        // Solution Modal elements
         const solutionModal = document.getElementById('solution-modal');
         const solutionTitle = document.getElementById('solution-title');
         const solutionText = document.getElementById('solution-text');
@@ -515,11 +499,65 @@
         }
 
         // Breakroom Puzzle logic
-        function checkBreakroomPuzzle() {
-            document.getElementById('clue-breakroom-text').classList.remove('hidden');
-            const btnEl = document.querySelector('#clue-breakroom-button button');
-            btnEl.disabled = true;
-            btnEl.classList.add('btn-disabled');
+        let clockHour = 12;
+        let clockMinute = 0;
+        let breakroomPuzzleSolved = false;
+
+        function adjustTime(part) {
+            if (breakroomPuzzleSolved) return;
+
+            if (part === 'hour') {
+                clockHour++;
+                if (clockHour > 12) {
+                    clockHour = 1;
+                }
+            } else if (part === 'minute') {
+                clockMinute += 10;
+                if (clockMinute > 50) {
+                    clockMinute = 0;
+                }
+            }
+            updateClockDisplay();
+        }
+
+        function updateClockDisplay() {
+            const hoursEl = document.getElementById('clock-hours');
+            const minutesEl = document.getElementById('clock-minutes');
+
+            if (!hoursEl || !minutesEl) return;
+
+            hoursEl.textContent = String(clockHour).padStart(2, '0');
+            minutesEl.textContent = String(clockMinute).padStart(2, '0');
+            
+            checkClockSolution();
+        }
+        
+        function checkClockSolution() {
+            // Check for 5:00
+            if (clockHour === 5 && clockMinute === 0 && !breakroomPuzzleSolved) {
+                breakroomPuzzleSolved = true;
+                
+                const hoursEl = document.getElementById('clock-hours');
+                const minutesEl = document.getElementById('clock-minutes');
+                const colonEl = document.querySelector('#view-room-breakroom .text-6xl:nth-child(2)');
+
+                // Change color to green
+                if (hoursEl && minutesEl && colonEl) {
+                    [hoursEl, minutesEl, colonEl].forEach(el => {
+                        el.classList.remove('text-gray-500');
+                        el.classList.add('text-green-400');
+                    });
+                }
+                
+                // Show clue
+                document.getElementById('clue-breakroom-text').classList.remove('hidden');
+                
+                // Disable buttons
+                document.querySelectorAll('#clock-controls button').forEach(btn => {
+                    btn.disabled = true;
+                    btn.classList.add('btn-disabled');
+                });
+            }
         }
 
         // --- Clue Logic (REMOVED) ---
@@ -545,36 +583,33 @@
         }
 
         // --- Modal Logic ---
+        function showInterview(suspect) {
+            let dialogue = "";
+            let title = "Interview: ";
+            
+            // Determine which dialogue to show
+            if (interviewState[suspect] === 0) {
+                dialogue = dialogues[suspect][0];
+                interviewState[suspect]++; // Increment count
+            } else {
+                dialogue = dialogues[suspect][1]; // Show second dialogue
+            }
+            
+            // Get full name for title
+            if (suspect === 'trisha') title += "Trisha Hargrave";
+            if (suspect === 'lacey') title += "Lacey Collins";
+            if (suspect === 'doc') title += "'Doc' Shaw";
+            if (suspect === 'stan') title += "Stan 'the man' Thompson";
+            if (suspect === 'liz') title += "Liz Harding";
+
+            showMessage(title, dialogue);
+        }
+
         function showMessage(title, text) {
             modalTitle.textContent = title;
             modalText.textContent = text;
             modal.classList.remove('hidden');
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
-        }
-
-        // --- Interview Logic ---
-        function showInterview(suspect) {
-            let dialogueText = '';
-            let title = `Interview: ${suspect.charAt(0).toUpperCase() + suspect.slice(1)}`;
-            
-            // Adjust title for 'Doc' and 'Stan'
-            if (suspect === 'doc') title = "Interview: 'Doc' Shaw";
-            if (suspect === 'stan') title = "Interview: Stan 'the man' Thompson";
-            if (suspect === 'liz') title = "Interview: Liz Harding";
-            if (suspect === 'lacey') title = "Interview: Lacey Collins";
-            if (suspect === 'trisha') title = "Interview: Trisha Hargrave";
-
-
-            if (interviewState[suspect] === 0) {
-                // First time talking
-                dialogueText = dialogues[suspect][0];
-                interviewState[suspect]++;
-            } else {
-                // Second or later time talking
-                dialogueText = dialogues[suspect][1];
-            }
-            
-            showMessage(title, dialogueText);
         }
 
         function closeModal() {
@@ -597,9 +632,8 @@
             setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
         }
 
-        // --- Restart Game Logic ---
         function restartGame() {
-            // Hide modal
+            // Hide solution modal
             solutionModal.classList.add('opacity-0');
             setTimeout(() => solutionModal.classList.add('hidden'), 300);
             
@@ -654,23 +688,39 @@
             document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = false);
             
             // 4. Breakroom Puzzle
-            const breakroomBtn = document.querySelector('#clue-breakroom-button button');
-            if (breakroomBtn) {
-                breakroomBtn.disabled = false;
-                breakroomBtn.classList.remove('btn-disabled');
+            breakroomPuzzleSolved = false;
+            clockHour = 12;
+            clockMinute = 0;
+            
+            const hoursEl = document.getElementById('clock-hours');
+            const minutesEl = document.getElementById('clock-minutes');
+            const colonEl = document.querySelector('#view-room-breakroom .text-6xl:nth-child(2)');
+            
+            if (hoursEl && minutesEl && colonEl) {
+                [hoursEl, minutesEl, colonEl].forEach(el => {
+                    el.classList.add('text-gray-500');
+                    el.classList.remove('text-green-400');
+                });
+                hoursEl.textContent = '12';
+                minutesEl.textContent = '00';
             }
+            
+            document.querySelectorAll('#clock-controls button').forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('btn-disabled');
+            });
             document.getElementById('clue-breakroom-text').classList.add('hidden');
 
 
             // Reset interview states
             interviewState = {
-                trisha: 0,
-                lacey: 0,
-                doc: 0,
-                stan: 0,
-                liz: 0
+                'trisha': 0,
+                'lacey': 0,
+                'doc': 0,
+                'stan': 0,
+                'liz': 0
             };
-
+            
             // Go to start
             showView('view-start');
         }
@@ -678,5 +728,4 @@
     </script>
 </body>
 </html>
-
 
