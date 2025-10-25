@@ -292,6 +292,11 @@
                 <span id="clock-minutes" class="text-6xl font-pixel text-gray-500 transition-colors">00</span>
             </div>
             
+            <div id="clock-controls" class="flex justify-center space-x-4">
+                <button onclick="adjustTime('hour')" class="btn-mystery-sm">Hour +</button>
+                <button onclick="adjustTime('minute')" class="btn-mystery-sm">Minute +</button>
+            </div>
+            
             <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">As you set the clock to <strong class="text-xl">5</strong>:00, the display stops flickering and glows a steady green. The time must have been <strong class="text-xl">5</strong> PM.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
@@ -333,7 +338,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="solution-title" class="font-pixel text-2xl font-bold mb-4"></h3>
             <p id="solution-text" class="text-gray-300 mb-6"></p>
-            <button onclick="restartGame()" class="btn-mystery">Start New Game</button>
+            <button id="solution-button" class="btn-mystery"></button>
         </div>
     </div>
 
@@ -611,15 +616,33 @@
         
         // --- Solution Modal Logic ---
         function showSolution(isCorrect, text) {
+            const solutionButton = document.getElementById('solution-button'); 
+            
             if(isCorrect) {
                 solutionTitle.textContent = "Case Solved!";
                 solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-green-400";
+                solutionText.textContent = text; // Use the confession text
+                
+                // Set button for "Win" state
+                solutionButton.textContent = "Start New Game";
+                solutionButton.onclick = restartGame; 
+                
             } else {
-                solutionTitle.textContent = "Case Unsolved";
+                solutionTitle.textContent = "Game Over"; // New title
                 solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-red-400";
+                
+                // New "Lose" state text, ignoring the passed 'text'
+                solutionText.innerHTML = "Would you like to play again?<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>"; 
+                
+                // Set button for "Lose" state
+                solutionButton.textContent = "Continue";
+                solutionButton.onclick = () => {
+                    solutionModal.classList.add('opacity-0');
+                    setTimeout(() => solutionModal.classList.add('hidden'), 300);
+                    showView('view-hub');
+                };
             }
             
-            solutionText.textContent = text;
             solutionModal.classList.remove('hidden');
             setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
         }
@@ -720,6 +743,4 @@
     </script>
 </body>
 </html>
-
-
 
