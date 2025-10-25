@@ -261,7 +261,7 @@
         <!-- Versus Corner -->
         <div id="view-room-versus" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
-            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old fighting game shows a "Secret Combo" with 4 moves, but they are scratched out. "Try it if you want, newb."</p>
+            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old fighting game shows a "Secret Combo" with 8 moves, but they are scratched out. "Try it if you want, newb."</p>
             
             <div id="combo-display" class="mb-4"></div>
             
@@ -275,7 +275,7 @@
             </div>
             
             <div id="clue-versus-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You enter a simple combo: Up, Down, Left, Right. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
+            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
@@ -467,7 +467,7 @@
 
         // Versus Puzzle
         let comboInput = "";
-        const correctCombo = "UDLR"; // Up, Down, Left, Right
+        const correctCombo = "UUDDLRLR"; // Contra Code
         
         function enterCombo(move) {
             if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) {
@@ -478,7 +478,7 @@
             comboInput += move;
             document.getElementById('combo-display').textContent = comboInput;
             
-            if (comboInput.length >= 4) {
+            if (comboInput.length >= 8) { // Check for 8 moves
                 if (comboInput === correctCombo) {
                     document.getElementById('clue-versus-text').classList.remove('hidden');
                     // Disable buttons
@@ -743,4 +743,5 @@
     </script>
 </body>
 </html>
+
 
