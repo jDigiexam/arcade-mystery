@@ -258,11 +258,14 @@
     </div>
 
 
+    <!-- =================================================================
+    SCRIPT (Corrected Version)
+    ================================================================== -->
     <script>
         let currentView = 'view-start';
         let foundClues = [];
         
-        // --- NEW: Object to store interview state ---
+        // Object to store interview state
         let interviewState = {
             trisha: 0,
             lacey: 0,
@@ -271,7 +274,7 @@
             liz: 0
         };
 
-        // --- NEW: Object to store all suspect dialogues ---
+        // Object to store all suspect dialogues
         const dialogues = {
             trisha: [
                 "She scoffs. 'He was finally going to listen to me! He was going to give me the arcade to run it *my* way. That Lacey... she thought she had him wrapped around her little finger. Guess not.'",
@@ -295,27 +298,97 @@
             ]
         };
         
+        // Modal elements
         const modal = document.getElementById('modal');
-// ... existing code ... -->
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
         
+        // Solution Modal elements
+        const solutionModal = document.getElementById('solution-modal');
+        const solutionTitle = document.getElementById('solution-title');
+        const solutionText = document.getElementById('solution-text');
+        
+        // Clue Log element
         const clueLogText = document.getElementById('clue-log-text');
 
-// ... existing code ... -->
+        // --- View Navigation ---
+        function showView(viewId) {
+            const oldView = document.getElementById(currentView);
+            if (oldView) {
+                oldView.classList.remove('active');
+            }
+            
+            const newView = document.getElementById(viewId);
+            if (newView) {
+                newView.classList.add('active');
+            }
+            
+            currentView = viewId;
+            
+            // Update clue log when returning to hub
+            if (viewId === 'view-hub') {
+                updateClueLog();
+            }
+        }
+
+        // --- Clue Logic ---
+        function findClue(clue, roomViewId, clueButtonId) {
+            if (!foundClues.includes(clue)) {
+                foundClues.push(clue);
+                foundClues.sort(); // Keep them in order
+                
+                // Show text in room
+                const clueTextElement = document.getElementById(clueButtonId.replace('-button', '-text'));
+                if (clueTextElement) {
+                    clueTextElement.classList.remove('hidden');
+                }
+                
+                // Disable button in room
+                const clueButtonElement = document.getElementById(clueButtonId);
+                if (clueButtonElement) {
+                    clueButtonElement.innerHTML = '<button class="btn-disabled" disabled>Clue Found</button>';
+                }
+                
+                showMessage('Clue Found!', `You found a piece of the combination: ${clue}`);
+            } else {
+                showMessage('Already Found', 'You\'ve already searched this spot.');
+            }
+        }
+        
+        function updateClueLog() {
+            if (foundClues.length === 0) {
+                clueLogText.textContent = 'No clues found yet...';
+            } else {
+                clueLogText.textContent = `Clues: ${foundClues.join(', ')}`;
             }
         }
 
         // --- Puzzle Logic ---
-// ... existing code ... -->
+        function checkSafeCode() {
+            const safeCodeInput = document.getElementById('safe-code');
+            const answer = safeCodeInput.value.trim();
+            
+            // The answer is the 4 clues
+            const correctCode = "1358"; // The clues 8, 3, 1, 5 sorted
+            
+            if (answer === correctCode) {
+                document.getElementById('clue-locked').style.display = 'none';
+                document.getElementById('clue-unlocked').style.display = 'block';
+                showMessage('Success!', 'The safe clicks open.');
+            } else {
+                showMessage('Locked', 'The safe remains firmly shut. Wrong code.');
             }
         }
 
         // --- Modal Logic ---
         function showMessage(title, text) {
-// ... existing code ... -->
+            modalTitle.textContent = title;
+            modalText.textContent = text;
+            modal.classList.remove('hidden');
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
 
-        // --- NEW: Interview Logic ---
+        // --- Interview Logic ---
         function showInterview(suspect) {
             let dialogueText = '';
             let title = `Interview: ${suspect.charAt(0).toUpperCase() + suspect.slice(1)}`;
@@ -341,13 +414,18 @@
         }
 
         function closeModal() {
-// ... existing code ... -->
+            modal.classList.add('opacity-0');
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
         
         // --- Solution Modal Logic ---
         function showSolution(isCorrect, text) {
-// ... existing code ... -->
+            if(isCorrect) {
+                solutionTitle.textContent = "Case Solved!";
+                solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-green-400";
+            } else {
+                solutionTitle.textContent = "Case Unsolved";
+                solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-red-400";
             }
             
             solutionText.textContent = text;
@@ -355,7 +433,7 @@
             setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
         }
 
-        // --- FIXED: Added missing function ---
+        // --- Restart Game Logic ---
         function restartGame() {
             // Hide modal
             solutionModal.classList.add('opacity-0');
