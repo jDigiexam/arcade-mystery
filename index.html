@@ -196,7 +196,7 @@
 
             <div id="view-room-repair" class="view p-8 md:p-12">
                 <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
-                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps."</p>
+                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
                 <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
                     <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
                     <button id="switch2" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 2)">OFF</button>
@@ -259,7 +259,7 @@
         </div>
 
         <div id="dialogue-panel" class="md:col-span-2 bg-black/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border-2 border-fuchsia-500/50 p-6 hidden flex-col" style="box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);">
-            </div>
+        </div>
 
     </div>
 
@@ -273,7 +273,7 @@
     
 <script>
     let currentView = 'view-start';
-    let isSafeUnlocked = false; // <-- NEW: Tracks if the safe is open
+    let isSafeUnlocked = false;
     
     // --- DIALOGUES & STATES ---
     let interviewState = { 'trisha': 0, 'lacey': 0, 'doc': 0, 'stan': 0, 'liz': 0 };
@@ -285,11 +285,11 @@
         'liz': { name: "Liz Harding", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png", lines: ["I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.", "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."] }
     };
 
-    // --- DIALOGUE PANEL LOGIC ---
+    // --- DIALOGUE PANEL LOGIC (NOW WITH CUSTOM BUTTONS) ---
     const dialoguePanel = document.getElementById('dialogue-panel');
     let typingTimeout;
 
-    function displayMessage(title, text, imgSrc, type = 'default') {
+    function displayMessage(title, text, imgSrc, type = 'default', buttonText = 'Close', buttonAction = null) {
         clearTimeout(typingTimeout);
         dialoguePanel.innerHTML = '';
         dialoguePanel.style.display = 'flex';
@@ -309,8 +309,13 @@
         }
         textEl.className = 'text-lg mb-auto';
         closeBtn.className = 'btn-mystery-sm mt-6';
-        closeBtn.textContent = 'Close';
-        closeBtn.onclick = () => { dialoguePanel.style.display = 'none'; };
+        closeBtn.textContent = buttonText;
+        
+        if (buttonAction) {
+            closeBtn.onclick = buttonAction;
+        } else {
+            closeBtn.onclick = () => { dialoguePanel.style.display = 'none'; };
+        }
 
         let textColor = 'text-cyan-300', textShadow = '0 0 5px #0ff';
         if (type === 'error') { textColor = 'text-red-400'; textShadow = '0 0 7px #f44'; } 
@@ -354,7 +359,6 @@
         currentView = viewId;
     }
     
-    // --- NEW ACCUSATION CHECK ---
     function tryToAccuse() {
         if (isSafeUnlocked) {
             showView('view-accuse');
@@ -368,7 +372,7 @@
         const answer = document.getElementById('safe-code').value.trim();
         const correctCode = "1358";
         if (answer === correctCode) {
-            isSafeUnlocked = true; // <-- NEW: Set safe state to unlocked
+            isSafeUnlocked = true;
             document.getElementById('clue-locked').style.display = 'none';
             document.getElementById('clue-unlocked').style.display = 'block';
             displayMessage('Success!', 'The safe clicks open. You found a crucial document!', null, 'success'); 
@@ -406,7 +410,7 @@
                 btn.disabled = true;
                 btn.classList.add('btn-disabled');
             });
-            displayMessage('Clue Found!', "You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for 3.", null, 'success');
+            displayMessage('Clue Found!', "You flip the last two switches to ON. The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for 3.", null, 'success');
         } else {
             displayMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null, 'error');
         }
@@ -456,32 +460,32 @@
         }
     }
     
-    // --- FINAL SOLUTION MODAL ---
+    // --- FINAL SOLUTION LOGIC ---
     const solutionModal = document.getElementById('solution-modal');
     function showSolution(isCorrect, explanationText) {
-        const title = solutionModal.querySelector('#solution-title');
-        const text = solutionModal.querySelector('#solution-text');
-        const button = solutionModal.querySelector('#solution-button');
-
         if (isCorrect) {
+            const title = solutionModal.querySelector('#solution-title');
+            const text = solutionModal.querySelector('#solution-text');
+            const button = solutionModal.querySelector('#solution-button');
+
             title.textContent = "Case Solved!";
             title.className = 'font-pixel text-2xl font-bold mb-4 text-green-400';
             text.innerHTML = explanationText;
             button.textContent = "Start New Game";
             button.onclick = restartGame;
+
+            solutionModal.classList.remove('hidden');
+            setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
         } else {
-            title.textContent = "Game Over";
-            title.className = 'font-pixel text-2xl font-bold mb-4 text-red-400';
-            text.innerHTML = `You accused the wrong person. ${explanationText}<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>`;
-            button.textContent = "Return to Investigation";
-            button.onclick = () => {
-                closeSolutionModal();
+            const fullText = `You accused the wrong person. ${explanationText}<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>`;
+            const returnAction = () => {
+                dialoguePanel.style.display = 'none';
                 showView('view-hub');
             };
+            displayMessage('Game Over', fullText, null, 'error', 'Return to Investigation', returnAction);
         }
-        solutionModal.classList.remove('hidden');
-        setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
     }
+    
     function closeSolutionModal() {
         solutionModal.classList.add('opacity-0');
         setTimeout(() => solutionModal.classList.add('hidden'), 300);
