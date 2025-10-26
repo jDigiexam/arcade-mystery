@@ -53,7 +53,6 @@
             @apply bg-gray-700 text-gray-400 font-bold py-2 px-4 rounded-md shadow-md cursor-not-allowed border-2 border-gray-600;
         }
 
-        /* Modal for final solution screen */
         .modal {
             @apply fixed inset-0 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
         }
@@ -76,9 +75,9 @@
             @apply h-10 bg-gray-900 border border-gray-700 rounded-lg p-2 text-center text-lg text-fuchsia-400 font-pixel tracking-widest;
         }
         
+        /* MODIFIED: Removed the broken @apply rule. We will style the inputs directly in the HTML. */
         .clue-input {
-            @apply w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400;
-            caret-color: black;
+             caret-color: black; /* This is a standard CSS property that will work */
         }
 
         .pixel-art-container {
@@ -133,10 +132,10 @@
                 <div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
                     <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">My Clues:</h4>
                     <div class="flex justify-center space-x-2">
-                        <input type="text" id="clue-input-1" maxlength="1" class="clue-input">
-                        <input type="text" id="clue-input-2" maxlength="1" class="clue-input">
-                        <input type="text" id="clue-input-3" maxlength="1" class="clue-input">
-                        <input type="text" id="clue-input-4" maxlength="1" class="clue-input">
+                        <input type="text" id="clue-input-1" maxlength="1" class="clue-input w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                        <input type="text" id="clue-input-2" maxlength="1" class="clue-input w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                        <input type="text" id="clue-input-3" maxlength="1" class="clue-input w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                        <input type="text" id="clue-input-4" maxlength="1" class="clue-input w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
