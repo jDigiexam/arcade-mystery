@@ -56,12 +56,10 @@
         /* Modal for final solution screen */
         .modal {
             @apply fixed inset-0 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
-            /* No background here, handled by overlay */
         }
         
         .modal-content {
-            /* UPDATED: Solid black background for maximum readability */
-            background-color: rgba(0, 0, 0, 0.98); /* Almost completely black */
+            background-color: rgba(0, 0, 0, 0.98);
             @apply p-6 rounded-lg shadow-2xl max-w-sm w-full border-2 border-fuchsia-500/70 flex flex-col items-center;
             backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
@@ -79,8 +77,8 @@
         }
         
         .clue-input {
-            /* MODIFIED: Centered text, changed colors for readability */
-            @apply w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400 flex items-center justify-center;
+            /* CORRECTED: Replaced flex properties with text-center */
+            @apply w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400;
             caret-color: black;
         }
 
@@ -106,7 +104,6 @@
             @apply !bg-fuchsia-600/80 !border-fuchsia-400;
         }
         
-        /* Fullscreen overlay for fade effect */
         #fade-overlay {
             @apply fixed inset-0 bg-black opacity-0 z-40;
             transition: opacity 5s ease-in-out;
@@ -486,17 +483,14 @@
         if (isCorrect) {
             const fadeOverlay = document.getElementById('fade-overlay');
             
-            // 1. Fade game UI and background to black
             fadeOverlay.style.opacity = '1';
 
-            // 2. After 5 seconds, swap the background and fade it in
             setTimeout(() => {
                 document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jDigiexam/halloween2025/main/easter%20egg.png')";
-                document.getElementById('main-container').style.display = 'none'; // Hide game UI permanently
-                fadeOverlay.style.opacity = '0'; // Fade out black overlay to reveal new background
-            }, 5000); // 5 seconds
+                document.getElementById('main-container').style.display = 'none';
+                fadeOverlay.style.opacity = '0';
+            }, 5000);
 
-            // Show the modal immediately
             const title = solutionModal.querySelector('#solution-title');
             const text = solutionModal.querySelector('#solution-text');
             const button = solutionModal.querySelector('#solution-button');
