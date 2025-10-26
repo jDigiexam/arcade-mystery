@@ -18,7 +18,7 @@
             color: #e0e0e0;
             font-size: 1.1rem;
             line-height: 1.6;
-            transition: background-image 1s ease-in-out; /* Smooth background transition */
+            transition: background-image 1s ease-in-out;
         }
 
         .font-pixel {
@@ -55,23 +55,21 @@
 
         /* Modal for final solution screen */
         .modal {
-            @apply fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
+            @apply fixed inset-0 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
+            /* Removed bg-black/70 to control fade separately */
         }
         
         .modal-content {
-            /* UPDATED: Darker background and blur for readability */
-            @apply bg-black/90 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
-            /* Added explicit backdrop-filter for blur, might need vendor prefixes for wider support */
-            backdrop-filter: blur(4px); 
-            -webkit-backdrop-filter: blur(4px);
+            /* UPDATED: Much darker background and stronger blur for readability */
+            @apply bg-black/95 backdrop-blur-md p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
         }
         
-        /* Prize Puzzle */
         .prize-item {
             @apply bg-gray-800 p-4 rounded-lg text-center cursor-pointer border-2 border-gray-700 hover:border-fuchsia-500 transition-all;
         }
         
-        /* Versus Puzzle */
         .combo-btn {
             @apply w-12 h-12 bg-gray-700 text-white font-bold rounded-full flex items-center justify-center shadow-lg hover:bg-gray-600 transition-all text-2xl;
         }
@@ -99,7 +97,6 @@
             object-fit: cover;
         }
 
-        /* Blinking animation for the easter egg button */
         @keyframes blink {
             50% { opacity: 0.6; box-shadow: 0 0 15px #f0f; }
         }
@@ -107,10 +104,19 @@
             animation: blink 1s linear infinite;
             @apply !bg-fuchsia-600/80 !border-fuchsia-400;
         }
+        
+        /* NEW: Fullscreen overlay for fade effect */
+        #fade-overlay {
+            @apply fixed inset-0 bg-black opacity-0 z-40;
+            /* z-index is below modal (50) but above everything else */
+            transition: opacity 5s ease-in-out;
+        }
 
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
+
+    <div id="fade-overlay"></div>
 
     <div id="main-container" class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6 transition-opacity duration-1000">
 
@@ -210,7 +216,7 @@
 
             <div id="view-room-repair" class="view p-8 md:p-12">
                 <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
-                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
+                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps."</p>
                 <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
                     <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
                     <button id="switch2" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 2)">OFF</button>
@@ -478,14 +484,19 @@
     const solutionModal = document.getElementById('solution-modal');
     function showSolution(isCorrect, explanationText) {
         if (isCorrect) {
-            // Fade out main game container
-            document.getElementById('main-container').style.opacity = '0';
+            const fadeOverlay = document.getElementById('fade-overlay');
             
-            // After fade, change background
+            // 1. Fade game UI and background to black
+            fadeOverlay.style.opacity = '1';
+
+            // 2. After 5 seconds, swap the background and fade it in
             setTimeout(() => {
                 document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jDigiexam/halloween2025/main/easter%20egg.png')";
-            }, 1000); // Match transition duration
+                document.getElementById('main-container').style.display = 'none'; // Hide game UI permanently
+                fadeOverlay.style.opacity = '0'; // Fade out black overlay to reveal new background
+            }, 5000); // 5 seconds
 
+            // Show the modal immediately
             const title = solutionModal.querySelector('#solution-title');
             const text = solutionModal.querySelector('#solution-text');
             const button = solutionModal.querySelector('#solution-button');
@@ -495,7 +506,7 @@
             text.innerHTML = explanationText;
             
             button.textContent = "Doc's Dungeon";
-            button.className = 'btn-mystery-sm blinking-button'; // Add blinking class
+            button.className = 'btn-mystery-sm blinking-button';
             button.onclick = () => {
                 window.open('https://jdigiexam.github.io/docs-dungeon/', '_blank');
             };
@@ -516,7 +527,6 @@
         setTimeout(() => solutionModal.classList.add('hidden'), 300);
     }
 
-    // --- GAME RESTART (remains for incorrect answers for now) ---
     function restartGame() {
         window.location.reload();
     }
