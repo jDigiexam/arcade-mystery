@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Over at Ace's Arcade</title> <!-- Updated Title -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Game Over at Ace's Arcade</title> <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
         
@@ -63,7 +62,7 @@
         
         /* Added bg-black/80, backdrop-blur-sm */
         .modal-content {
-            @apply bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
+            @apply bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70 transition-colors duration-300;
         }
         
         /* --- NEW PUZZLE STYLES --- */
@@ -113,12 +112,6 @@
             object-fit: cover;
         }
 
-        /* Style for the "Safe Locked" message modal on the right */
-        /* FIXED: Ensured this applies the blur effect */
-        #right-message-modal .modal-content {
-            @apply bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
-        }
-
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
@@ -126,10 +119,8 @@
     <div class="max-w-3xl w-full mx-auto bg-black/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border-2 border-cyan-500/50" style="box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);">
         
         
-
 <div id="view-start" class="view p-8 md:p-12 active">
-            <h1 class="font-pixel text-4xl md:text-5xl font-bold text-cyan-400 mb-4 text-center" style="text-shadow: 0 0 10px #0ff;">Game Over at Ace's Arcade</h1> <!-- Updated Title -->
-            <p class="text-lg text-gray-300 mb-8 text-center">
+            <h1 class="font-pixel text-4xl md:text-5xl font-bold text-cyan-400 mb-4 text-center" style="text-shadow: 0 0 10px #0ff;">Game Over at Ace's Arcade</h1> <p class="text-lg text-gray-300 mb-8 text-center">
                 At 'The Pixel Palace', the town's most popular 90s arcade, owner 'Ace' Hargrave has been found murdered in his back office.
             </p>
             <p class="text-gray-400 mb-10 text-center">
@@ -143,7 +134,6 @@
         </div>
 
         
-
 <div id="view-hub" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Arcade Floor</h2>
             <p class="text-gray-300 mb-8">
@@ -151,12 +141,10 @@
             </p>
             
             
-
 <div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
                 <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">My Clues:</h4>
                 <div class="flex justify-center space-x-2">
                     
-
 <input type="text" id="clue-input-1" maxlength="1" class="clue-input">
                     <input type="text" id="clue-input-2" maxlength="1" class="clue-input">
                     <input type="text" id="clue-input-3" maxlength="1" class="clue-input">
@@ -176,65 +164,52 @@
         </div>
 
         
-
 <div id="view-interviews" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Talk to Suspects</h2>
             <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
             
             
-
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 
                 
-
 <div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
                         
-
 <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('trisha')" class="btn-mystery-sm w-full">Trisha</button>
                 </div>
                 
                 
-
 <div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
                         
-
 <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('lacey')" class="btn-mystery-sm w-full">Lacey</button>
                 </div>
                 
                 
-
 <div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
                         
-
 <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('doc')" class="btn-mystery-sm w-full">'Doc' Shaw</button>
                 </div>
                 
                 
-
 <div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
                         
-
-<img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png" alt="Stan" class="w-full h-full object-cover"> <!-- Corrected URL -->
-                    </div>
+<img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png" alt="Stan" class="w-full h-full object-cover"> </div>
                     <button onclick="showInterview('stan')" class="btn-mystery-sm w-full">Stan</button>
                 </div>
                 
                 
-
 <div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
                         
-
 <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('liz')" class="btn-mystery-sm w-full">Liz</button>
@@ -246,7 +221,6 @@
         </div>
 
         
-
 <div id="view-scene" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
             <p class="text-gray-300 mb-6">
@@ -257,7 +231,6 @@
             </p>
             
             
-
 <div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
                 <p class="text-gray-300 mb-4">A 4-digit combination is required:</p>
                 
@@ -268,7 +241,6 @@
             </div>
 
             
-
 <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
                 <h3 class="font-bold text-xl text-green-300 mb-2">Safe Unlocked!</h3>
                 <p class="text-green-200">
@@ -281,7 +253,6 @@
 
 
         
-
 <div id="view-room-prize" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
             <p class="text-gray-300 mb-6">Liz is nervously sorting tickets. On the counter is a small riddle card next to a display of top prizes.</p>
@@ -311,16 +282,14 @@
             </div>
             
             <div id="clue-prize-button" class="hidden"></div> 
-
 <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's <strong class="text-xl">8</strong>00 tickets. The first digit, '<strong class="text-xl">8</strong>', is circled. </p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         
-
 <div id="view-room-repair" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
-            <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
+            <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps."</p>
             
             <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
                 <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
@@ -329,17 +298,15 @@
                 <button id="switch4" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 4)">OFF</button>
             </div>
             <div class="flex justify-center">
-                 <button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button>
+                <button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button>
             </div>
             
             <div id="clue-repair-button" class="hidden"></div> 
-
 <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for <strong class="text-xl">3</strong>.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         
-
 <div id="view-room-versus" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
             <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old fighting game shows a "Secret Combo" with 8 moves, but they are scratched out. "Try it if you want, newb."</p>
@@ -356,20 +323,17 @@
             </div>
             
             <div id="clue-versus-button" class="hidden"></div> 
-
 <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
         
-
 <div id="view-room-breakroom" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Staff Breakroom</h2>
             <p class="text-gray-300 mb-6">Lacey's jacket is slung over a chair. You check the pocket and find a folded bar napkin from 'The Neon Poodle' lounge. It says: "Meet Ace - __ PM". The time is smudged and unreadable.</p>
             <p class="text-gray-300 mb-6">You look at a digital clock on the wall, its display flickering. Maybe you can set it to the right time?</p>
             
             
-
 <div class="flex justify-center items-center space-x-2 my-8">
                 <span id="clock-hours" class="text-6xl font-pixel text-gray-500 transition-colors">12</span>
                 <span class="text-6xl font-pixel text-gray-500 transition-colors">:</span>
@@ -387,7 +351,6 @@
 
 
         
-
 <div id="view-accuse" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Make Your Accusation</h2>
             <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
@@ -404,15 +367,12 @@
     </div>
 
     
-
 <div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             
-
 <h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
             <div id="modal-portrait-container" class="w-32 h-32 mx-auto mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
                 
-
 </div>
             <p id="modal-text" class="text-gray-300 mb-6"></p>
             <button onclick="closeModal()" class="btn-mystery-sm">Close</button>
@@ -420,18 +380,6 @@
     </div>
     
     
-
-<div id="right-message-modal" class="modal hidden opacity-0" style="left: auto; right: 0; align-items: flex-start; padding-top: 50px;">
-        <div class="modal-content" onclick="event.stopPropagation()" style="text-align: left;">
-            <h3 id="right-message-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
-            <p id="right-message-text" class="text-gray-300 mb-6"></p>
-            <button onclick="closeRightMessageModal()" class="btn-mystery-sm">Close</button>
-        </div>
-    </div>
-
-
-    
-
 <script>
         let currentView = 'view-start';
         
@@ -493,10 +441,6 @@
         const modalText = document.getElementById('modal-text');
         const modalPortraitContainer = document.getElementById('modal-portrait-container');
         
-        const rightMessageModal = document.getElementById('right-message-modal'); // Right-side modal for safe messages
-        const rightMessageTitle = document.getElementById('right-message-title');
-        const rightMessageText = document.getElementById('right-message-text');
-        
 
         // --- View Navigation ---
         function showView(viewId) {
@@ -526,7 +470,7 @@
                 addClueToInput('8');
             } else {
                 selectedElement.classList.add('border-red-500');
-                showMessageInternal('Wrong Prize', 'That\'s not it. Try again.', null);
+                showMessageInternal('Wrong Prize', 'That\'s not it. Try again.', null, 'error');
                 setTimeout(() => {
                     selectedElement.classList.remove('border-red-500');
                 }, 1000);
@@ -565,7 +509,7 @@
                 // Optionally add clue to input box
                 addClueToInput('3');
             } else {
-                showMessageInternal('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null);
+                showMessageInternal('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null, 'error');
             }
         }
 
@@ -590,7 +534,7 @@
                     // Optionally add clue to input box
                     addClueToInput('1');
                 } else {
-                    showMessageInternal('Wrong Combo', 'Trisha laughs. "Not even close!"', null);
+                    showMessageInternal('Wrong Combo', 'Trisha laughs. "Not even close!"', null, 'error');
                 }
                 comboInput = "";
                 setTimeout(() => {
@@ -677,10 +621,10 @@
                 document.getElementById('clue-locked').style.display = 'none';
                 document.getElementById('clue-unlocked').style.display = 'block';
                 // Using the main modal for success message
-                showMessageInternal('Success!', 'The safe clicks open. You found a crucial document!', null); 
+                showMessageInternal('Success!', 'The safe clicks open. You found a crucial document!', null, 'success'); 
             } else {
-                // Using the new right-side message modal for "Locked"
-                showRightMessage('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)');
+                // Using the main modal for "Locked" with error styling
+                showMessageInternal('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)', null, 'error');
             }
         }
 
@@ -725,10 +669,32 @@
         /**
          * Internal function to show any modal.
          * Shows portrait if imgSrc is provided, otherwise hides it.
+         * Applies color coding based on the message 'type'.
          */
-        function showMessageInternal(title, text, imgSrc) {
+        function showMessageInternal(title, text, imgSrc, type = 'default') {
+            const modalContent = modal.querySelector('.modal-content');
+
+            // Reset colors on every call to handle all cases
+            modalContent.classList.remove('border-red-500/70', 'border-green-500/70');
+            modalTitle.classList.remove('text-red-400', 'text-green-400');
+            // Ensure the default color is reapplied if the last modal was an error/success
+            modalTitle.classList.add('text-fuchsia-400');
+
+
+            // Apply new styles based on the message type
+            if (type === 'error') {
+                modalContent.classList.add('border-red-500/70');
+                modalTitle.classList.add('text-red-400');
+                modalTitle.classList.remove('text-fuchsia-400'); // Remove default color
+            } else if (type === 'success') {
+                modalContent.classList.add('border-green-500/70');
+                modalTitle.classList.add('text-green-400');
+                modalTitle.classList.remove('text-fuchsia-400'); // Remove default color
+            }
+            // If type is 'default', no extra classes are added, so it uses the standard fuchsia style.
+
             modalTitle.textContent = title;
-            modalText.textContent = text;
+            modalText.innerHTML = text; // Use innerHTML for potential line breaks
             
             if (imgSrc) {
                 modalPortraitContainer.innerHTML = `<img src="${imgSrc}" alt="${title}" class="w-full h-full object-cover">`;
@@ -747,26 +713,8 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
         
-        // --- NEW: Right-Side Message Modal Logic ---
-        function showRightMessage(title, text) {
-            rightMessageTitle.textContent = title;
-            rightMessageText.textContent = text;
-            rightMessageModal.classList.remove('hidden');
-            setTimeout(() => rightMessageModal.classList.remove('opacity-0'), 10);
-        }
-
-        function closeRightMessageModal() {
-            rightMessageModal.classList.add('opacity-0');
-            setTimeout(() => rightMessageModal.classList.add('hidden'), 300);
-        }
-
-
-        // --- Solution Modal Logic (now called 'solution-modal' again for clarity) ---
+        // --- Solution Modal Logic ---
         function showSolution(isCorrect, text) {
-            // Re-using the main modal for solution display to avoid conflict with right-side message modal.
-            // Reset right-side modal if it's open
-            closeRightMessageModal(); 
-
             let titleText = "";
             let buttonText = "";
             let buttonAction;
@@ -780,10 +728,10 @@
             } else {
                 titleText = "Game Over"; 
                 titleClass += "text-red-400";
-                text = "Would you like to play again?<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>"; 
-                buttonText = "Continue";
+                text = "You accused the wrong person. The real killer gets away.<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>"; 
+                buttonText = "Try Again";
                 buttonAction = () => {
-                    closeModal(); // Close the solution modal (which is using the main modal)
+                    closeModal(); // Close the solution modal
                     showView('view-hub'); // Go back to hub, don't restart
                 };
             }
@@ -839,7 +787,7 @@
                     btn.classList.add('bg-red-600/80', 'border-red-400');
                     btn.classList.remove('bg-green-600/80', 'border-green-400');
                     btn.disabled = false;
-                } else { // The 'Check Switches' button
+                } else if(btn.textContent === 'Check Switches') { // The 'Check Switches' button
                     btn.disabled = false;
                     btn.classList.remove('btn-disabled');
                 }
@@ -896,4 +844,3 @@
     </script>
 </body>
 </html>
-
