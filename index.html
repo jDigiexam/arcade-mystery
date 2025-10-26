@@ -10,7 +10,6 @@
         
         body {
             font-family: 'VT323', monospace;
-            /* UPDATED: Correct GitHub Raw URL */
             background-image: url('https://raw.githubusercontent.com/jDigiexam/halloween2025/main/arcade%20floor.jpg');
             background-color: #0d0d0d; /* Fallback color */
             background-size: cover;
@@ -63,7 +62,7 @@
         }
         
         .modal-content {
-            @apply bg-gray-900 p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
+            @apply bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/7Two-step
         }
         
         /* --- NEW PUZZLE STYLES --- */
@@ -92,9 +91,9 @@
             @apply w-2 h-2 bg-black rounded-full absolute top-1/2 left-1/2 -mt-1 -ml-1;
         }
 
-        /* NEW: Clue Input Field */
+        /* NEW: Clue Input Field - MODIFIED */
         .clue-input {
-            @apply w-12 h-12 bg-gray-900 border-2 border-gray-700 text-white rounded-lg p-3 text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-fuchsia-500;
+            @apply w-12 h-12 bg-gray-100 border-2 border-gray-700 text-black rounded-lg p-3 text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-fuchsia-500; /* Added w-12, h-12, text-black, and text-center */
         }
 
         /* NEW: Pixel art styling */
@@ -106,10 +105,10 @@
             background-color: #374151; /* gray-700 */
         }
 
-        .pixel-art-container img { /* UPDATED from svg to img */
+        .pixel-art-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Use cover to fill the box */
+            object-fit: cover;
         }
 
     </style>
@@ -120,8 +119,7 @@
         
         <!-- =================================================================
         VIEW 1: START SCREEN
-        ================================================================== -->
-        <div id="view-start" class="view p-8 md:p-12 active">
+        ================================================================== --><div id="view-start" class="view p-8 md:p-12 active">
             <h1 class="font-pixel text-4xl md:text-5xl font-bold text-cyan-400 mb-4 text-center" style="text-shadow: 0 0 10px #0ff;">Game Over</h1>
             <p class="text-lg text-gray-300 mb-8 text-center">
                 At 'The Pixel Palace', the town's most popular 90s arcade, owner 'Ace' Hargrave has been found murdered in his back office.
@@ -138,18 +136,16 @@
 
         <!-- =================================================================
         VIEW 2: MAIN HUB (The Arcade Floor)
-        ================================================================== -->
-        <div id="view-hub" class="view p-8 md:p-12">
+        ================================================================== --><div id="view-hub" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Arcade Floor</h2>
             <p class="text-gray-300 mb-8">
                 You stand on the main arcade floor. The suspects are milling about. Where do you want to go?
             </p>
             
-            <!-- Clue Log -->
-            <div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
+            <!-- Clue Log --><div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
                 <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">My Clues:</h4>
                 <div class="flex justify-center space-x-2">
-                    <input type="text" id="clue-input-1" maxlength="1" class="clue-input">
+                    <!-- MODIFIED: Added w-12, h-12, and text-black --><input type="text" id="clue-input-1" maxlength="1" class="clue-input">
                     <input type="text" id="clue-input-2" maxlength="1" class="clue-input">
                     <input type="text" id="clue-input-3" maxlength="1" class="clue-input">
                     <input type="text" id="clue-input-4" maxlength="1" class="clue-input">
@@ -169,59 +165,45 @@
 
         <!-- =================================================================
         VIEW 3: SUSPECTS LIST (No longer used, combined into Interviews)
-        ================================================================== -->
-        
-        <!-- =================================================================
+        ================================================================== --><!-- =================================================================
         VIEW 4: INTERVIEW HUB (Now the main suspect view)
-        ================================================================== -->
-        <div id="view-interviews" class="view p-8 md:p-12">
+        ================================================================== --><div id="view-interviews" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Talk to Suspects</h2>
             <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
             
-            <!-- NEW: Visual Interview Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <!-- NEW: Visual Interview Grid --><div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 
-                <!-- Trisha -->
-                <div class="text-center">
+                <!-- Trisha --><div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <!-- UPDATED: Correct GitHub URL -->
-                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL --><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('trisha')" class="btn-mystery-sm w-full">Trisha</button>
                 </div>
                 
-                <!-- Lacey -->
-                <div class="text-center">
+                <!-- Lacey --><div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <!-- UPDATED: Correct GitHub URL -->
-                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL --><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('lacey')" class="btn-mystery-sm w-full">Lacey</button>
                 </div>
                 
-                <!-- Doc -->
-                <div class="text-center">
+                <!-- Doc --><div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <!-- UPDATED: Correct GitHub URL -->
-                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL --><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('doc')" class="btn-mystery-sm w-full">'Doc' Shaw</button>
                 </div>
                 
-                <!-- Stan -->
-                <div class="text-center">
+                <!-- Stan --><div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <!-- UPDATED: Correct GitHub URL -->
-                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png" alt="Stan" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL --><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.jpg" alt="Stan" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('stan')" class="btn-mystery-sm w-full">Stan</button>
                 </div>
                 
-                <!-- Liz -->
-                <div class="text-center">
+                <!-- Liz --><div class="text-center">
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <!-- UPDATED: Correct GitHub URL -->
-                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL --><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('liz')" class="btn-mystery-sm w-full">Liz</button>
                 </div>
@@ -233,8 +215,7 @@
 
         <!-- =================================================================
         VIEW 5: CRIME SCENE (With Safe Puzzle) - REBUILT
-        ================================================================== -->
-        <div id="view-scene" class="view p-8 md:p-12">
+        ================================================================== --><div id="view-scene" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
             <p class="text-gray-300 mb-6">
                 The office is cluttered. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body. Nearby lies a bloody shard of plexiglass.
@@ -243,8 +224,7 @@
                 Under the desk is a large, heavy safe, locked with a 4-digit keypad. You'll need to find the combination.
             </p>
             
-            <!-- This is the interactive part! (Moved from modal) -->
-            <div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+            <!-- This is the interactive part! (Moved from modal) --><div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
                 <p class="text-gray-300 mb-4">A 4-digit combination is required:</p>
                 
                 <div class="flex flex-col sm:flex-row gap-2">
@@ -253,8 +233,7 @@
                 </div>
             </div>
 
-            <!-- This is the hidden clue (Moved from modal) -->
-            <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
+            <!-- This is the hidden clue (Moved from modal) --><div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
                 <h3 class="font-bold text-xl text-green-300 mb-2">Safe Unlocked!</h3>
                 <p class="text-green-200">
                     Inside the safe, you find a legal contract. It's a draft of Ace's will, leaving 'The Pixel Palace' *entirely* to his niece, <strong>Trisha</strong>. A handwritten note in the margin reads: "Make sure there's a clause specifically excluding Lacey C. from any ownership, ever."
@@ -267,10 +246,7 @@
 
         <!-- =================================================================
         NEW VIEWS FOR CLUES
-        ================================================================== -->
-
-        <!-- Prize Counter -->
-        <div id="view-room-prize" class="view p-8 md:p-12">
+        ================================================================== --><!-- Prize Counter --><div id="view-room-prize" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
             <p class="text-gray-300 mb-6">Liz is nervously sorting tickets. On the counter is a small riddle card next to a display of top prizes.</p>
             <p class="text-fuchsia-400 italic text-lg mb-6 text-center">"I have a spine but no bones, and many leaves but I am not a tree. I can be a good friend or a worst enemy. What am I?"</p>
@@ -298,13 +274,11 @@
                 </div>
             </div>
             
-            <div id="clue-prize-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's <strong class="text-xl">8</strong>00 tickets. The first digit, '<strong class="text-xl">8</strong>', is circled. </p>
+            <div id="clue-prize-button" class="hidden"></div> <!-- For findClue logic --><p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's <strong class="text-xl">8</strong>00 tickets. The first digit, '<strong class="text-xl">8</strong>', is circled. </p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
-        <!-- Repair Shop -->
-        <div id="view-room-repair" class="view p-8 md:p-12">
+        <!-- Repair Shop --><div id="view-room-repair" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
             <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
             
@@ -318,13 +292,11 @@
                  <button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button>
             </div>
             
-            <div id="clue-repair-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for <strong class="text-xl">3</strong>.</p>
+            <div id="clue-repair-button" class="hidden"></div> <!-- For findClue logic --><p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for <strong class="text-xl">3</strong>.</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
-        <!-- Versus Corner -->
-        <div id="view-room-versus" class="view p-8 md:p-12">
+        <!-- Versus Corner --><div id="view-room-versus" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
             <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old fighting game shows a "Secret Combo" with 8 moves, but they are scratched out. "Try it if you want, newb."</p>
             
@@ -339,19 +311,16 @@
                 <button class="combo-btn" onclick="enterCombo('R')">▶️</button>
             </div>
             
-            <div id="clue-versus-button" class="hidden"></div> <!-- For findClue logic -->
-            <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
+            <div id="clue-versus-button" class="hidden"></div> <!-- For findClue logic --><p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
 
-        <!-- Staff Breakroom -->
-        <div id="view-room-breakroom" class="view p-8 md:p-12">
+        <!-- Staff Breakroom --><div id="view-room-breakroom" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Staff Breakroom</h2>
-            <p class="text-gray-300 mb-6">The grimy breakroom. Lacey's jacket is slung over a chair. You check the pocket and find a folded bar napkin from 'The Neon Poodle' lounge. It says: "Meet Ace - __ PM". The time is smudged and unreadable.</p>
+            <p class="text-gray-300 mb-6">Lacey's jacket is slung over a chair. You check the pocket and find a folded bar napkin from 'The Neon Poodle' lounge. It says: "Meet Ace - __ PM". The time is smudged and unreadable.</p>
             <p class="text-gray-300 mb-6">You look at a digital clock on the wall, its display flickering. Maybe you can set it to the right time?</p>
             
-            <!-- NEW Digital Clock Puzzle -->
-            <div class="flex justify-center items-center space-x-2 my-8">
+            <!-- NEW Digital Clock Puzzle --><div class="flex justify-center items-center space-x-2 my-8">
                 <span id="clock-hours" class="text-6xl font-pixel text-gray-500 transition-colors">12</span>
                 <span class="text-6xl font-pixel text-gray-500 transition-colors">:</span>
                 <span id="clock-minutes" class="text-6xl font-pixel text-gray-500 transition-colors">00</span>
@@ -369,8 +338,7 @@
 
         <!-- =================================================================
         VIEW 6: MAKE AN ACCUSATION (UPDATED)
-        ================================================================== -->
-        <div id="view-accuse" class="view p-8 md:p-12">
+        ================================================================== --><div id="view-accuse" class="view p-8 md:p-12">
             <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Make Your Accusation</h2>
             <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -387,14 +355,11 @@
 
     <!-- =================================================================
     MODAL for messages (CLEANED UP)
-    ================================================================== -->
-    <div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
+    ================================================================== --><div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <!-- Portrait, title, and text are injected by JS -->
-            <h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
+            <!-- Portrait, title, and text are injected by JS --><h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
             <div id="modal-portrait-container" class="w-32 h-32 mx-auto mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                <!-- Image will be injected here by JS -->
-            </div>
+                <!-- Image will be injected here by JS --></div>
             <p id="modal-text" class="text-gray-300 mb-6"></p>
             <button onclick="closeModal()" class="btn-mystery-sm">Close</button>
         </div>
@@ -402,8 +367,7 @@
     
     <!-- =================================================================
     MODAL for solution
-    ================================================================== -->
-    <div id="solution-modal" class="modal hidden opacity-0">
+    ================================================================== --><div id="solution-modal" class="modal hidden opacity-0">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="solution-title" class="font-pixel text-2xl font-bold mb-4"></h3>
             <p id="solution-text" class="text-gray-300 mb-6"></p>
@@ -414,8 +378,7 @@
 
     <!-- =================================================================
     SCRIPT (Corrected Version)
-    ================================================================== -->
-    <script>
+    ================================================================== --><script>
         let currentView = 'view-start';
         
         // Object to store interview state
@@ -431,7 +394,6 @@
         const dialogues = {
             'trisha': {
                 name: "Trisha Hargrave",
-                // UPDATED: Correct GitHub URL
                 imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png", 
                 lines: [
                     "He was finally going to listen to me! I thought... I thought he was going to give me the arcade. But he spent *so* much time with 'Doc' lately. I was worried he'd listen to that old fossil and keep this place a museum!",
@@ -440,7 +402,6 @@
             },
             'lacey': {
                 name: "Lacey Collins",
-                // UPDATED: Correct GitHub URL
                 imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png",
                 lines: [
                     "I... I can't believe he's gone. We were... close. He told me he was leaving the arcade to Trisha, to his *family*. I just... I just wanted us to run it together. But he said I wasn't 'family.'",
@@ -449,7 +410,6 @@
             },
             'doc': {
                 name: "'Doc' Shaw",
-                // UPDATED: Correct GitHub URL
                 imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png",
                 lines: [
                     "Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. Couldn't have been me, I was... fixing this board!",
@@ -458,7 +418,6 @@
             },
             'stan': {
                 name: "Stan 'the man' Thompson",
-                // UPDATED: Correct GitHub URL
                 imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.jpg",
                 lines: [
                     "Liz Harding works for me, yeah. She's my girl. She told me Ace was going to sell, but then changed his mind to give it to his bratty niece. Messed up my plans to buy it.",
@@ -467,7 +426,6 @@
             },
             'liz': {
                 name: "Liz Harding",
-                // UPDATED: Correct GitHub URL
                 imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png",
                 lines: [
                     "I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.",
@@ -512,7 +470,6 @@
                 document.querySelectorAll('.prize-item').forEach(el => el.onclick = null);
             } else {
                 selectedElement.classList.add('border-red-500');
-                // Show a *non-interview* modal
                 showMessageInternal('Wrong Prize', 'That\'s not it. Try again.', null);
                 setTimeout(() => {
                     selectedElement.classList.remove('border-red-500');
@@ -550,7 +507,6 @@
                 // Disable switches
                 document.querySelectorAll('#view-room-repair button[id^="switch"]').forEach(btn => btn.disabled = true);
             } else {
-                 // Show a *non-interview* modal
                 showMessageInternal('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null);
             }
         }
@@ -561,7 +517,6 @@
         
         function enterCombo(move) {
             if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) {
-                 // Show a *non-interview* modal
                 showMessageInternal('Already Found', 'You already solved this puzzle.', null);
                 return;
             }
@@ -575,14 +530,13 @@
                     // Disable buttons
                     document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = true);
                 } else {
-                     // Show a *non-interview* modal
                     showMessageInternal('Wrong Combo', 'Trisha laughs. "Not even close!"', null);
                 }
                 comboInput = "";
                 setTimeout(() => {
-                     if (document.getElementById('clue-versus-text').classList.contains('hidden')) {
+                    if (document.getElementById('clue-versus-text').classList.contains('hidden')) {
                         document.getElementById('combo-display').textContent = "";
-                     }
+                    }
                 }, 1000);
             }
         }
@@ -660,10 +614,8 @@
             if (answer === correctCode) {
                 document.getElementById('clue-locked').style.display = 'none';
                 document.getElementById('clue-unlocked').style.display = 'block';
-                 // Show a *non-interview* modal
                 showMessageInternal('Success!', 'The safe clicks open.', null);
             } else {
-                 // Show a *non-interview* modal
                 showMessageInternal('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)', null);
             }
         }
@@ -846,4 +798,5 @@
     </script>
 </body>
 </html>
+
 
