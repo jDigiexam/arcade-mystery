@@ -10,8 +10,8 @@
         
         body {
             font-family: 'VT323', monospace;
-            /* UPDATED: Add your full image URL here */
-            background-image: url('https://github.com/jDigiexam/halloween2025/blob/main/arcade%20floor.jpg');
+            /* UPDATED: Correct GitHub Raw URL */
+            background-image: url('https://raw.githubusercontent.com/jDigiexam/halloween2025/main/arcade%20floor.jpg');
             background-color: #0d0d0d; /* Fallback color */
             background-size: cover;
             background-position: center;
@@ -75,7 +75,7 @@
         
         /* Versus Puzzle */
         .combo-btn {
-            @apply w-12 h-12 bg-gray-700 text-white font-bold rounded-full flex items-center justify-center shadow-lg hover:bg-gray-600 transition-all;
+            @apply w-12 h-12 bg-gray-700 text-white font-bold rounded-full flex items-center justify-center shadow-lg hover:bg-gray-600 transition-all text-2xl;
         }
         #combo-display {
             @apply h-10 bg-gray-900 border border-gray-700 rounded-lg p-2 text-center text-lg text-fuchsia-400 font-pixel tracking-widest;
@@ -183,45 +183,45 @@
                 
                 <!-- Trisha -->
                 <div class="text-center">
-                    <!-- UPDATED: 128px (w-32) and img tag -->
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <img src="https://placehold.co/128x128/FFC0CB/800080?text=Trisha" alt="Trisha" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL -->
+                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('trisha')" class="btn-mystery-sm w-full">Trisha</button>
                 </div>
                 
                 <!-- Lacey -->
                 <div class="text-center">
-                    <!-- UPDATED: 128px (w-32) and img tag -->
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <img src="https://placehold.co/128x128/F5DEB3/FFFF00?text=Lacey" alt="Lacey" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL -->
+                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('lacey')" class="btn-mystery-sm w-full">Lacey</button>
                 </div>
                 
                 <!-- Doc -->
                 <div class="text-center">
-                    <!-- UPDATED: 128px (w-32) and img tag -->
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <img src="https://placehold.co/128x128/D2B48C/FFFFFF?text=Doc" alt="Doc" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL -->
+                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('doc')" class="btn-mystery-sm w-full">'Doc' Shaw</button>
                 </div>
                 
                 <!-- Stan -->
                 <div class="text-center">
-                    <!-- UPDATED: 128px (w-32) and img tag -->
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <img src="https://placehold.co/128x128/F0E68C/A52A2A?text=Stan" alt="Stan" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL -->
+                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.jpg" alt="Stan" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('stan')" class="btn-mystery-sm w-full">Stan</button>
                 </div>
                 
                 <!-- Liz -->
                 <div class="text-center">
-                    <!-- UPDATED: 128px (w-32) and img tag -->
                     <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <img src="https://placehold.co/128x128/FFE4E1/2F4F4F?text=Liz" alt="Liz" class="w-full h-full object-cover">
+                        <!-- UPDATED: Correct GitHub URL -->
+                        <img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('liz')" class="btn-mystery-sm w-full">Liz</button>
                 </div>
@@ -232,18 +232,18 @@
         </div>
 
         <!-- =================================================================
-        MODAL for messages
+        VIEW 5: CRIME SCENE (With Safe Puzzle) - REBUILT
         ================================================================== -->
-        <div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
-            <div class="modal-content" onclick="event.stopPropagation()">
-                <!-- NEW: Portrait container -->
-                <div id="modal-portrait-container" class="w-32 h-32 mx-auto mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                    <!-- Image will be injected here by JS -->
-                </div>
-                <h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
+        <div id="view-scene" class="view p-8 md:p-12">
+            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
+            <p class="text-gray-300 mb-6">
+                The office is cluttered. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body. Nearby lies a bloody shard of plexiglass.
+            </p>
+            <p class="text-gray-300 mb-6">
+                Under the desk is a large, heavy safe, locked with a 4-digit keypad. You'll need to find the combination.
             </p>
             
-            <!-- This is the interactive part! -->
+            <!-- This is the interactive part! (Moved from modal) -->
             <div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
                 <p class="text-gray-300 mb-4">A 4-digit combination is required:</p>
                 
@@ -253,7 +253,7 @@
                 </div>
             </div>
 
-            <!-- This is the hidden clue -->
+            <!-- This is the hidden clue (Moved from modal) -->
             <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
                 <h3 class="font-bold text-xl text-green-300 mb-2">Safe Unlocked!</h3>
                 <p class="text-green-200">
@@ -263,6 +263,7 @@
 
             <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
         </div>
+
 
         <!-- =================================================================
         NEW VIEWS FOR CLUES
@@ -331,11 +332,11 @@
             
             <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto mb-6">
                 <div></div>
-                <button class="combo-btn" onclick="enterCombo('U')">↑</button>
+                <button class="combo-btn" onclick="enterCombo('U')">🔼</button>
                 <div></div>
-                <button class="combo-btn" onclick="enterCombo('L')">←</button>
-                <button class="combo-btn" onclick="enterCombo('D')">↓</button>
-                <button class="combo-btn" onclick="enterCombo('R')">→</button>
+                <button class="combo-btn" onclick="enterCombo('L')">◀️</button>
+                <button class="combo-btn" onclick="enterCombo('D')">🔽</button>
+                <button class="combo-btn" onclick="enterCombo('R')">▶️</button>
             </div>
             
             <div id="clue-versus-button" class="hidden"></div> <!-- For findClue logic -->
@@ -385,15 +386,15 @@
     </div>
 
     <!-- =================================================================
-    MODAL for messages
+    MODAL for messages (CLEANED UP)
     ================================================================== -->
     <div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <!-- NEW: Portrait container -->
-            <div id="modal-portrait-container" class="w-32 h-32 mx-auto mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                <!-- SVG will be injected here by JS -->
-            </div>
+            <!-- Portrait, title, and text are injected by JS -->
             <h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
+            <div id="modal-portrait-container" class="w-32 h-32 mx-auto mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
+                <!-- Image will be injected here by JS -->
+            </div>
             <p id="modal-text" class="text-gray-300 mb-6"></p>
             <button onclick="closeModal()" class="btn-mystery-sm">Close</button>
         </div>
@@ -430,7 +431,8 @@
         const dialogues = {
             'trisha': {
                 name: "Trisha Hargrave",
-                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/trisha.png", // UPDATED from svg
+                // UPDATED: Correct GitHub URL
+                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png", 
                 lines: [
                     "He was finally going to listen to me! I thought... I thought he was going to give me the arcade. But he spent *so* much time with 'Doc' lately. I was worried he'd listen to that old fossil and keep this place a museum!",
                     "Look, I'm nervous, okay? This place is my future. If Doc convinced him to not upgrade to a LAN hall, I... I don't know what I'd do. But I didn't kill him."
@@ -438,7 +440,8 @@
             },
             'lacey': {
                 name: "Lacey Collins",
-                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/lacey.png", // UPDATED from svg
+                // UPDATED: Correct GitHub URL
+                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png",
                 lines: [
                     "I... I can't believe he's gone. We were... close. He told me he was leaving the arcade to Trisha, to his *family*. I just... I just wanted us to run it together. But he said I wasn't 'family.'",
                     "He promised me we'd be partners. 50/50. He was just stringing me along. I gave him everything... and he was just going to toss me aside for that brat."
@@ -446,7 +449,8 @@
             },
             'doc': {
                 name: "'Doc' Shaw",
-                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/doc.png", // UPDATED from svg
+                // UPDATED: Correct GitHub URL
+                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png",
                 lines: [
                     "Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. Couldn't have been me, I was... fixing this board!",
                     "That cashier, Liz... she's a weird one. Always sneaking out back. Comes back covered in gray and black fur. What's that about? Me? I'm just... busy. Building... uh... *fixing* something new."
@@ -454,7 +458,8 @@
             },
             'stan': {
                 name: "Stan 'the man' Thompson",
-                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/stan.png", // UPDATED from svg
+                // UPDATED: Correct GitHub URL
+                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.jpg",
                 lines: [
                     "Liz Harding works for me, yeah. She's my girl. She told me Ace was going to sell, but then changed his mind to give it to his bratty niece. Messed up my plans to buy it.",
                     "Between you and me, Liz has... cash problems. Big time. Always donating to those animal charities. I know for a fact she was skimming from Ace's registers. Maybe he found out?"
@@ -462,7 +467,8 @@
             },
             'liz': {
                 name: "Liz Harding",
-                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/liz.png", // UPDATED from svg
+                // UPDATED: Correct GitHub URL
+                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png",
                 lines: [
                     "I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.",
                     "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."
@@ -473,14 +479,12 @@
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modal-title');
         const modalText = document.getElementById('modal-text');
-        const modalPortraitContainer = document.getElementById('modal-portrait-container'); // NEW
+        const modalPortraitContainer = document.getElementById('modal-portrait-container');
         
         const solutionModal = document.getElementById('solution-modal');
         const solutionTitle = document.getElementById('solution-title');
         const solutionText = document.getElementById('solution-text');
         
-        // Clue Log element (REMOVED)
-        // const clueLogText = document.getElementById('clue-log-text');
 
         // --- View Navigation ---
         function showView(viewId) {
@@ -495,11 +499,6 @@
             }
             
             currentView = viewId;
-            
-            // Update clue log (REMOVED)
-            // if (viewId === 'view-hub') {
-            //     updateClueLog();
-            // }
         }
         
         // --- NEW Puzzle Logic ---
@@ -513,7 +512,8 @@
                 document.querySelectorAll('.prize-item').forEach(el => el.onclick = null);
             } else {
                 selectedElement.classList.add('border-red-500');
-                showMessage('Wrong Prize', 'That\'s not it. Try again.');
+                // Show a *non-interview* modal
+                showMessageInternal('Wrong Prize', 'That\'s not it. Try again.', null);
                 setTimeout(() => {
                     selectedElement.classList.remove('border-red-500');
                 }, 1000);
@@ -550,7 +550,8 @@
                 // Disable switches
                 document.querySelectorAll('#view-room-repair button[id^="switch"]').forEach(btn => btn.disabled = true);
             } else {
-                showMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.');
+                 // Show a *non-interview* modal
+                showMessageInternal('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null);
             }
         }
 
@@ -560,7 +561,8 @@
         
         function enterCombo(move) {
             if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) {
-                showMessage('Already Found', 'You already solved this puzzle.');
+                 // Show a *non-interview* modal
+                showMessageInternal('Already Found', 'You already solved this puzzle.', null);
                 return;
             }
             
@@ -573,7 +575,8 @@
                     // Disable buttons
                     document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = true);
                 } else {
-                    showMessage('Wrong Combo', 'Trisha laughs. "Not even close!"');
+                     // Show a *non-interview* modal
+                    showMessageInternal('Wrong Combo', 'Trisha laughs. "Not even close!"', null);
                 }
                 comboInput = "";
                 setTimeout(() => {
@@ -646,12 +649,7 @@
             }
         }
 
-        // --- Clue Logic (REMOVED) ---
-        // function findClue(...) { ... }
-        
-        // function updateClueLog() { ... }
-
-        // --- Puzzle Logic ---
+        // --- Safe Puzzle Logic ---
         function checkSafeCode() {
             const safeCodeInput = document.getElementById('safe-code');
             const answer = safeCodeInput.value.trim();
@@ -662,17 +660,23 @@
             if (answer === correctCode) {
                 document.getElementById('clue-locked').style.display = 'none';
                 document.getElementById('clue-unlocked').style.display = 'block';
-                showMessage('Success!', 'The safe clicks open.');
+                 // Show a *non-interview* modal
+                showMessageInternal('Success!', 'The safe clicks open.', null);
             } else {
-                showMessage('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)');
+                 // Show a *non-interview* modal
+                showMessageInternal('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)', null);
             }
         }
 
         // --- Modal Logic ---
+        
+        /**
+         * Shows an interview modal with a portrait
+         */
         function showInterview(suspect) {
             let dialogue = "";
             let title = "";
-            let imgSrc = ""; // UPDATED
+            let imgSrc = "";
             
             // Get data from dialogue object
             const suspectData = dialogues[suspect];
@@ -687,18 +691,27 @@
             }
             
             title = `Interview: ${suspectData.name}`;
-            imgSrc = suspectData.imgSrc; // UPDATED
+            imgSrc = suspectData.imgSrc;
 
-            // Inject into modal
-            if (modalPortraitContainer) { // UPDATED
-                modalPortraitContainer.innerHTML = `<img src="${imgSrc}" alt="${suspectData.name}" class="w-full h-full object-cover">`;
-            }
-            showMessage(title, dialogue);
+            showMessageInternal(title, dialogue, imgSrc);
         }
 
-        function showMessage(title, text) {
+        /**
+         * Internal function to show any modal.
+         * Shows portrait if imgSrc is provided, otherwise hides it.
+         */
+        function showMessageInternal(title, text, imgSrc) {
             modalTitle.textContent = title;
             modalText.textContent = text;
+            
+            if (imgSrc) {
+                modalPortraitContainer.innerHTML = `<img src="${imgSrc}" alt="${title}" class="w-full h-full object-cover">`;
+                modalPortraitContainer.style.display = '';
+            } else {
+                modalPortraitContainer.innerHTML = '';
+                modalPortraitContainer.style.display = 'none';
+            }
+            
             modal.classList.remove('hidden');
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
@@ -725,7 +738,7 @@
                 solutionTitle.textContent = "Game Over"; // New title
                 solutionTitle.className = "font-pixel text-2xl font-bold mb-4 text-red-400";
                 
-                // New "Lose" state text, ignoring the passed 'text'
+                // New "Lose" state text
                 solutionText.innerHTML = "Would you like to play again?<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>"; 
                 
                 // Set button for "Lose" state
@@ -733,7 +746,7 @@
                 solutionButton.onclick = () => {
                     solutionModal.classList.add('opacity-0');
                     setTimeout(() => solutionModal.classList.add('hidden'), 300);
-                    showView('view-hub');
+                    showView('view-hub'); // Go back to hub, don't restart
                 };
             }
             
@@ -751,10 +764,6 @@
             document.getElementById('clue-unlocked').style.display = 'none';
             document.getElementById('safe-code').value = '';
 
-            // Reset clues
-            // foundClues = []; (REMOVED)
-            // updateClueLog(); (REMOVED)
-            
             // Reset clue inputs
             for (let i = 1; i <= 4; i++) {
                 const input = document.getElementById(`clue-input-${i}`);
@@ -837,3 +846,4 @@
     </script>
 </body>
 </html>
+
