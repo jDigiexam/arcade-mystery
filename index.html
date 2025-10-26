@@ -56,12 +56,13 @@
         /* Modal for final solution screen */
         .modal {
             @apply fixed inset-0 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
-            /* Removed bg-black/70 to control fade separately */
+            /* No background here, handled by overlay */
         }
         
         .modal-content {
-            /* UPDATED: Much darker background and stronger blur for readability */
-            @apply bg-black/95 backdrop-blur-md p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
+            /* UPDATED: Solid black background for maximum readability */
+            background-color: rgba(0, 0, 0, 0.98); /* Almost completely black */
+            @apply p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
             backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
         }
@@ -105,10 +106,9 @@
             @apply !bg-fuchsia-600/80 !border-fuchsia-400;
         }
         
-        /* NEW: Fullscreen overlay for fade effect */
+        /* Fullscreen overlay for fade effect */
         #fade-overlay {
             @apply fixed inset-0 bg-black opacity-0 z-40;
-            /* z-index is below modal (50) but above everything else */
             transition: opacity 5s ease-in-out;
         }
 
@@ -216,7 +216,7 @@
 
             <div id="view-room-repair" class="view p-8 md:p-12">
                 <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
-                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps."</p>
+                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
                 <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
                     <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
                     <button id="switch2" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 2)">OFF</button>
