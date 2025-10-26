@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Over at Ace's Arcade</title> <script src="https://cdn.tailwindcss.com"></script>
+    <title>Game Over at Ace's Arcade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
         
@@ -15,7 +16,7 @@
             background-position: center;
             background-attachment: fixed;
             color: #e0e0e0;
-            font-size: 1.1rem; /* VT323 is small, so we upsize it */
+            font-size: 1.1rem;
             line-height: 1.6;
         }
 
@@ -23,7 +24,6 @@
             font-family: 'VT323', monospace;
         }
 
-        /* Simple fade-in animation */
         .view {
             display: none;
             animation: fadeIn 0.5s ease-in-out;
@@ -38,7 +38,6 @@
             to { opacity: 1; }
         }
 
-        /* Custom button style for the theme */
         .btn-mystery {
             @apply bg-fuchsia-600/80 text-white font-bold py-3 px-6 rounded-md shadow-lg hover:bg-fuchsia-500 transition-all duration-300 ease-in-out cursor-pointer text-center border-2 border-fuchsia-400;
             text-shadow: 0 0 5px #fuchsia-300;
@@ -49,23 +48,18 @@
             text-shadow: 0 0 5px #cyan-300;
         }
         
-        /* Disabled button for found clues */
         .btn-disabled {
             @apply bg-gray-700 text-gray-400 font-bold py-2 px-4 rounded-md shadow-md cursor-not-allowed border-2 border-gray-600;
         }
 
-
-        /* Custom modal for messages */
+        /* Modal for final solution screen */
         .modal {
             @apply fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 transition-opacity duration-300;
         }
         
-        /* Added bg-black/80, backdrop-blur-sm */
         .modal-content {
-            @apply bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70 transition-colors duration-300;
+            @apply bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
         }
-        
-        /* --- NEW PUZZLE STYLES --- */
         
         /* Prize Puzzle */
         .prize-item {
@@ -80,24 +74,10 @@
             @apply h-10 bg-gray-900 border border-gray-700 rounded-lg p-2 text-center text-lg text-fuchsia-400 font-pixel tracking-widest;
         }
         
-        /* Breakroom Puzzle (was clock) */
-        .clock {
-            @apply w-40 h-40 bg-gray-800 rounded-full border-4 border-gray-600 relative shadow-inner;
-        }
-        .clock-hand {
-            @apply w-1.5 h-16 bg-cyan-400 absolute bottom-1/2 left-1/2 -ml-0.5 origin-bottom;
-        }
-        .clock-center {
-            @apply w-2 h-2 bg-black rounded-full absolute top-1/2 left-1/2 -mt-1 -ml-1;
-        }
-
-        /* Clue Input Field */
-        /* FIXED: Reduced size to w-8 h-8, ensured text-black and text-center */
         .clue-input {
             @apply w-8 h-8 bg-gray-100 border-2 border-gray-700 text-black rounded-lg p-1 text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-fuchsia-500; 
         }
 
-        /* Pixel art styling */
         .pixel-art-container {
             image-rendering: -moz-crisp-edges;
             image-rendering: -webkit-crisp-edges;
@@ -116,731 +96,369 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-3xl w-full mx-auto bg-black/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border-2 border-cyan-500/50" style="box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);">
-        
-        
-<div id="view-start" class="view p-8 md:p-12 active">
-            <h1 class="font-pixel text-4xl md:text-5xl font-bold text-cyan-400 mb-4 text-center" style="text-shadow: 0 0 10px #0ff;">Game Over at Ace's Arcade</h1> <p class="text-lg text-gray-300 mb-8 text-center">
-                At 'The Pixel Palace', the town's most popular 90s arcade, owner 'Ace' Hargrave has been found murdered in his back office.
-            </p>
-            <p class="text-gray-400 mb-10 text-center">
-                As the detectives, you've been called to investigate. The arcade is locked down. You must find 4 clues to unlock the office safe and find the killer.
-            </p>
-            <div class="flex justify-center">
-                <button onclick="showView('view-hub')" class="btn-mystery text-2xl">
-                    Press Start
-                </button>
-            </div>
-        </div>
+    <div class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6">
 
-        
-<div id="view-hub" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Arcade Floor</h2>
-            <p class="text-gray-300 mb-8">
-                You stand on the main arcade floor. The suspects are milling about. Where do you want to go?
-            </p>
+        <div class="md:col-span-3 bg-black/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border-2 border-cyan-500/50" style="box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);">
             
-            
-<div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
-                <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">My Clues:</h4>
-                <div class="flex justify-center space-x-2">
-                    
-<input type="text" id="clue-input-1" maxlength="1" class="clue-input">
-                    <input type="text" id="clue-input-2" maxlength="1" class="clue-input">
-                    <input type="text" id="clue-input-3" maxlength="1" class="clue-input">
-                    <input type="text" id="clue-input-4" maxlength="1" class="clue-input">
+            <div id="view-start" class="view p-8 md:p-12 active">
+                <h1 class="font-pixel text-4xl md:text-5xl font-bold text-cyan-400 mb-4 text-center" style="text-shadow: 0 0 10px #0ff;">Game Over at Ace's Arcade</h1>
+                <p class="text-lg text-gray-300 mb-8 text-center">At 'The Pixel Palace', the town's most popular 90s arcade, owner 'Ace' Hargrave has been found murdered in his back office.</p>
+                <p class="text-gray-400 mb-10 text-center">As the detectives, you've been called to investigate. The arcade is locked down. You must find 4 clues to unlock the office safe and find the killer.</p>
+                <div class="flex justify-center">
+                    <button onclick="showView('view-hub')" class="btn-mystery text-2xl">Press Start</button>
                 </div>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showView('view-scene')" class="btn-mystery-sm">Examine the Office (Crime Scene)</button>
-                <button onclick="showView('view-room-prize')" class="btn-mystery-sm">Go to Prize Counter</button>
-                <button onclick="showView('view-room-repair')" class="btn-mystery-sm">Go to Repair Shop</button>
-                <button onclick="showView('view-room-versus')" class="btn-mystery-sm">Go to Versus Corner</button>
-                <button onclick="showView('view-room-breakroom')" class="btn-mystery-sm">Go to Staff Breakroom</button>
-                <button onclick="showView('view-interviews')" class="btn-mystery-sm">Talk to Suspects</button>
-                <button onclick="showView('view-accuse')" class="btn-mystery-sm">Make an Accusation</button>
-            </div>
-        </div>
 
-        
-<div id="view-interviews" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Talk to Suspects</h2>
-            <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
-            
-            
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                
-                
-<div class="text-center">
-                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        
-<img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover">
+            <div id="view-hub" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Arcade Floor</h2>
+                <p class="text-gray-300 mb-8">You stand on the main arcade floor. The suspects are milling about. Where do you want to go?</p>
+                <div id="clue-log" class="mb-6 p-4 bg-gray-900/70 rounded-lg border border-fuchsia-500/50">
+                    <h4 class="font-pixel text-lg text-fuchsia-400 mb-2">My Clues:</h4>
+                    <div class="flex justify-center space-x-2">
+                        <input type="text" id="clue-input-1" maxlength="1" class="clue-input">
+                        <input type="text" id="clue-input-2" maxlength="1" class="clue-input">
+                        <input type="text" id="clue-input-3" maxlength="1" class="clue-input">
+                        <input type="text" id="clue-input-4" maxlength="1" class="clue-input">
                     </div>
-                    <button onclick="showInterview('trisha')" class="btn-mystery-sm w-full">Trisha</button>
                 </div>
-                
-                
-<div class="text-center">
-                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        
-<img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="showView('view-scene')" class="btn-mystery-sm">Examine the Office (Crime Scene)</button>
+                    <button onclick="showView('view-room-prize')" class="btn-mystery-sm">Go to Prize Counter</button>
+                    <button onclick="showView('view-room-repair')" class="btn-mystery-sm">Go to Repair Shop</button>
+                    <button onclick="showView('view-room-versus')" class="btn-mystery-sm">Go to Versus Corner</button>
+                    <button onclick="showView('view-room-breakroom')" class="btn-mystery-sm">Go to Staff Breakroom</button>
+                    <button onclick="showView('view-interviews')" class="btn-mystery-sm">Talk to Suspects</button>
+                    <button onclick="showView('view-accuse')" class="btn-mystery-sm">Make an Accusation</button>
+                </div>
+            </div>
+
+            <div id="view-interviews" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Talk to Suspects</h2>
+                <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover"></div>
+                        <button onclick="showInterview('trisha')" class="btn-mystery-sm w-full">Trisha</button>
                     </div>
-                    <button onclick="showInterview('lacey')" class="btn-mystery-sm w-full">Lacey</button>
-                </div>
-                
-                
-<div class="text-center">
-                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        
-<img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover">
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover"></div>
+                        <button onclick="showInterview('lacey')" class="btn-mystery-sm w-full">Lacey</button>
                     </div>
-                    <button onclick="showInterview('doc')" class="btn-mystery-sm w-full">'Doc' Shaw</button>
-                </div>
-                
-                
-<div class="text-center">
-                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        
-<img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png" alt="Stan" class="w-full h-full object-cover"> </div>
-                    <button onclick="showInterview('stan')" class="btn-mystery-sm w-full">Stan</button>
-                </div>
-                
-                
-<div class="text-center">
-                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        
-<img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover">
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover"></div>
+                        <button onclick="showInterview('doc')" class="btn-mystery-sm w-full">'Doc' Shaw</button>
                     </div>
-                    <button onclick="showInterview('liz')" class="btn-mystery-sm w-full">Liz</button>
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png" alt="Stan" class="w-full h-full object-cover"></div>
+                        <button onclick="showInterview('stan')" class="btn-mystery-sm w-full">Stan</button>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover"></div>
+                        <button onclick="showInterview('liz')" class="btn-mystery-sm w-full">Liz</button>
+                    </div>
                 </div>
-                
+                <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
             </div>
             
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+            <div id="view-scene" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
+                <p class="text-gray-300 mb-6">The office is cluttered. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body. Nearby lies a bloody shard of plexiglass.</p>
+                <p class="text-gray-300 mb-6">Under the desk is a large, heavy safe, locked with a 4-digit keypad. You'll need to find the combination.</p>
+                <div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                    <p class="text-gray-300 mb-4">A 4-digit combination is required:</p>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="safe-code" placeholder="Enter 4-digit code..." maxlength="4" class="flex-grow bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 font-pixel">
+                        <button onclick="checkSafeCode()" class="btn-mystery">Unlock</button>
+                    </div>
+                </div>
+                <div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
+                    <h3 class="font-bold text-xl text-green-300 mb-2">Safe Unlocked!</h3>
+                    <p class="text-green-200">Inside the safe, you find a legal contract. It's a draft of Ace's will, leaving 'The Pixel Palace' *entirely* to his niece, <strong>Trisha</strong>. A handwritten note in the margin reads: "Make sure there's a clause specifically excluding Lacey C. from any ownership, ever."</p>
+                </div>
+                <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+            </div>
+
+            <div id="view-room-prize" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
+                <p class="text-gray-300 mb-6">Liz is nervously sorting tickets. On the counter is a small riddle card next to a display of top prizes.</p>
+                <p class="text-fuchsia-400 italic text-lg mb-6 text-center">"I have a spine but no bones, and many leaves but I am not a tree. I can be a good friend or a worst enemy. What am I?"</p>
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="prize-item" onclick="checkPrizePuzzle(this, false)"><span class="text-4xl">🎈</span><p>Balloon</p></div>
+                    <div class="prize-item" onclick="checkPrizePuzzle(this, false)"><span class="text-4xl">🧸</span><p>Teddy Bear</p></div>
+                    <div class="prize-item" onclick="checkPrizePuzzle(this, true)"><span class="text-4xl">📖</span><p>Book</p></div>
+                    <div class="prize-item" onclick="checkPrizePuzzle(this, false)"><span class="text-4xl">👄</span><p>Wax Lips</p></div>
+                    <div class="prize-item" onclick="checkPrizePuzzle(this, false)"><span class="text-4xl">🤖</span><p>Toy Robot</p></div>
+                </div>
+                <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's <strong class="text-xl">8</strong>00 tickets. The first digit, '<strong class="text-xl">8</strong>', is circled.</p>
+                <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+            </div>
+
+            <div id="view-room-repair" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
+                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps."</p>
+                <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
+                    <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
+                    <button id="switch2" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 2)">OFF</button>
+                    <button id="switch3" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 3)">OFF</button>
+                    <button id="switch4" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 4)">OFF</button>
+                </div>
+                <div class="flex justify-center"><button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button></div>
+                <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for <strong class="text-xl">3</strong>.</p>
+                <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+            </div>
+
+            <div id="view-room-versus" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
+                <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old fighting game shows a "Secret Combo" with 8 moves, but they are scratched out. "Try it if you want, newb."</p>
+                <div id="combo-display" class="mb-4"></div>
+                <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto mb-6">
+                    <div></div><button class="combo-btn" onclick="enterCombo('U')">🔼</button><div></div>
+                    <button class="combo-btn" onclick="enterCombo('L')">◀️</button>
+                    <button class="combo-btn" onclick="enterCombo('D')">🔽</button>
+                    <button class="combo-btn" onclick="enterCombo('R')">▶️</button>
+                </div>
+                <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
+                <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+            </div>
+
+            <div id="view-room-breakroom" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Staff Breakroom</h2>
+                <p class="text-gray-300 mb-6">Lacey's jacket is slung over a chair. You check the pocket and find a folded bar napkin from 'The Neon Poodle' lounge. It says: "Meet Ace - __ PM". The time is smudged and unreadable.</p>
+                <p class="text-gray-300 mb-6">You look at a digital clock on the wall, its display flickering. Maybe you can set it to the right time?</p>
+                <div class="flex justify-center items-center space-x-2 my-8">
+                    <span id="clock-hours" class="text-6xl font-pixel text-gray-500 transition-colors">12</span>
+                    <span class="text-6xl font-pixel text-gray-500 transition-colors">:</span>
+                    <span id="clock-minutes" class="text-6xl font-pixel text-gray-500 transition-colors">00</span>
+                </div>
+                <div id="clock-controls" class="flex justify-center space-x-4">
+                    <button onclick="adjustTime('hour')" class="btn-mystery-sm">Hour +</button>
+                    <button onclick="adjustTime('minute')" class="btn-mystery-sm">Minute +</button>
+                </div>
+                <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">As you set the clock to <strong class="text-xl">5</strong>:00, the display stops flickering and glows a steady green. The time must have been <strong class="text-xl">5</strong> PM.</p>
+                <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+            </div>
+
+            <div id="view-accuse" class="view p-8 md:p-12">
+                <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Make Your Accusation</h2>
+                <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="showSolution(true, 'You accuse Lacey. She breaks down. \'He promised me! We were supposed to be partners, 50/50. I... I really cared for him, you know? I thought he felt the same. Then... he was just going to give it all to that *brat* Trisha and write me off! I found the contract draft in the safe. I confronted him. He laughed. I... I just snapped.\' Case Closed.')" class="btn-mystery-sm">Lacey Collins</button>
+                    <button onclick="showSolution(false, 'You accuse Trisha. She\'s furious. \'What?! He was giving me the arcade! I had everything I wanted! You\'re wrong!\'')" class="btn-mystery-sm">Trisha Hargrave</button>
+                    <button onclick="showSolution(false, 'You accuse \'Doc\' Shaw. He denies it. Despite his constant complaining, no solid evidence ties him to the murder.')" class="btn-mystery-sm">'Doc' Shaw</button>
+                    <button onclick="showSolution(false, 'Stan Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime.')" class="btn-mystery-sm">Stan "the man" Thompson</button>
+                    <button onclick="showSolution(false, 'Liz Harding is confused by the accusation. She was just a witness.')" class="btn-mystery-sm">Liz Harding</button>
+                </div>
+                <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
+            </div>
         </div>
 
-        
-<div id="view-scene" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
-            <p class="text-gray-300 mb-6">
-                The office is cluttered. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body. Nearby lies a bloody shard of plexiglass.
-            </p>
-            <p class="text-gray-300 mb-6">
-                Under the desk is a large, heavy safe, locked with a 4-digit keypad. You'll need to find the combination.
-            </p>
-            
-            
-<div id="clue-locked" class="bg-gray-800 p-6 rounded-lg border border-gray-700">
-                <p class="text-gray-300 mb-4">A 4-digit combination is required:</p>
-                
-                <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="text" id="safe-code" placeholder="Enter 4-digit code..." maxlength="4" class="flex-grow bg-gray-900 border border-gray-600 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 font-pixel">
-                    <button onclick="checkSafeCode()" class="btn-mystery">Unlock</button>
-                </div>
+        <div id="dialogue-panel" class="md:col-span-2 bg-black/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border-2 border-fuchsia-500/50 p-6 hidden flex-col" style="box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);">
             </div>
-
-            
-<div id="clue-unlocked" class="hidden bg-green-900/50 border border-green-700 p-6 rounded-lg mt-6">
-                <h3 class="font-bold text-xl text-green-300 mb-2">Safe Unlocked!</h3>
-                <p class="text-green-200">
-                    Inside the safe, you find a legal contract. It's a draft of Ace's will, leaving 'The Pixel Palace' *entirely* to his niece, <strong>Trisha</strong>. A handwritten note in the margin reads: "Make sure there's a clause specifically excluding Lacey C. from any ownership, ever."
-                </p>
-            </div>
-
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
-        </div>
-
-
-        
-<div id="view-room-prize" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Prize Counter</h2>
-            <p class="text-gray-300 mb-6">Liz is nervously sorting tickets. On the counter is a small riddle card next to a display of top prizes.</p>
-            <p class="text-fuchsia-400 italic text-lg mb-6 text-center">"I have a spine but no bones, and many leaves but I am not a tree. I can be a good friend or a worst enemy. What am I?"</p>
-            
-            <div class="grid grid-cols-3 gap-4 mb-6">
-                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
-                    <span class="text-4xl">🎈</span>
-                    <p>Balloon</p>
-                </div>
-                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
-                    <span class="text-4xl">🧸</span>
-                    <p>Teddy Bear</p>
-                </div>
-                <div class="prize-item" onclick="checkPrizePuzzle(this, true)">
-                    <span class="text-4xl">📖</span>
-                    <p>Book</p>
-                </div>
-                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
-                    <span class="text-4xl">👄</span>
-                    <p>Wax Lips</p>
-                </div>
-                <div class="prize-item" onclick="checkPrizePuzzle(this, false)">
-                    <span class="text-4xl">🤖</span>
-                    <p>Toy Robot</p>
-                </div>
-            </div>
-            
-            <div id="clue-prize-button" class="hidden"></div> 
-<p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's <strong class="text-xl">8</strong>00 tickets. The first digit, '<strong class="text-xl">8</strong>', is circled. </p>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
-        </div>
-
-        
-<div id="view-room-repair" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
-            <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps."</p>
-            
-            <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
-                <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
-                <button id="switch2" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 2)">OFF</button>
-                <button id="switch3" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 3)">OFF</button>
-                <button id="switch4" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 4)">OFF</button>
-            </div>
-            <div class="flex justify-center">
-                <button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button>
-            </div>
-            
-            <div id="clue-repair-button" class="hidden"></div> 
-<p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for <strong class="text-xl">3</strong>.</p>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
-        </div>
-
-        
-<div id="view-room-versus" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Versus Corner</h2>
-            <p class="text-gray-300 mb-6">Trisha is practicing combos. The 'How to Play' screen on an old fighting game shows a "Secret Combo" with 8 moves, but they are scratched out. "Try it if you want, newb."</p>
-            
-            <div id="combo-display" class="mb-4"></div>
-            
-            <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto mb-6">
-                <div></div>
-                <button class="combo-btn" onclick="enterCombo('U')">🔼</button>
-                <div></div>
-                <button class="combo-btn" onclick="enterCombo('L')">◀️</button>
-                <button class="combo-btn" onclick="enterCombo('D')">🔽</button>
-                <button class="combo-btn" onclick="enterCombo('R')">▶️</button>
-            </div>
-            
-            <div id="clue-versus-button" class="hidden"></div> 
-<p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
-        </div>
-
-        
-<div id="view-room-breakroom" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Staff Breakroom</h2>
-            <p class="text-gray-300 mb-6">Lacey's jacket is slung over a chair. You check the pocket and find a folded bar napkin from 'The Neon Poodle' lounge. It says: "Meet Ace - __ PM". The time is smudged and unreadable.</p>
-            <p class="text-gray-300 mb-6">You look at a digital clock on the wall, its display flickering. Maybe you can set it to the right time?</p>
-            
-            
-<div class="flex justify-center items-center space-x-2 my-8">
-                <span id="clock-hours" class="text-6xl font-pixel text-gray-500 transition-colors">12</span>
-                <span class="text-6xl font-pixel text-gray-500 transition-colors">:</span>
-                <span id="clock-minutes" class="text-6xl font-pixel text-gray-500 transition-colors">00</span>
-            </div>
-            
-            <div id="clock-controls" class="flex justify-center space-x-4">
-                <button onclick="adjustTime('hour')" class="btn-mystery-sm">Hour +</button>
-                <button onclick="adjustTime('minute')" class="btn-mystery-sm">Minute +</button>
-            </div>
-            
-            <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">As you set the clock to <strong class="text-xl">5</strong>:00, the display stops flickering and glows a steady green. The time must have been <strong class="text-xl">5</strong> PM.</p>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
-        </div>
-
-
-        
-<div id="view-accuse" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Make Your Accusation</h2>
-            <p class="text-gray-300 mb-8">You've reviewed the evidence. Who do you believe is the killer?</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="showSolution(true, 'You accuse Lacey. She breaks down. \'He promised me! We were supposed to be partners, 50/50. I... I really cared for him, you know? I thought he felt the same. Then... he was just going to give it all to that *brat* Trisha and write me off! I found the contract draft in the safe. I confronted him. He laughed. I... I just snapped.\' Case Closed.')" class="btn-mystery-sm">Lacey Collins</button>
-                <button onclick="showSolution(false, 'You accuse Trisha. She\'s furious. \'What?! He was giving me the arcade! I had everything I wanted! You\'re wrong!\' The real killer gets away.')" class="btn-mystery-sm">Trisha Hargrave</button>
-                <button onclick="showSolution(false, 'You accuse \'Doc\' Shaw. He denies it. Despite his constant complaining, no solid evidence ties him to the murder. You\'ve made a mistake.')" class="btn-mystery-sm">'Doc' Shaw</button>
-                <button onclick="showSolution(false, 'Stan Thompson scoffs. His alibi holds up, and there is no evidence linking him to the crime. A dead-end.')" class="btn-mystery-sm">Stan "the man" Thompson</button>
-                <button onclick="showSolution(false, 'Liz Harding is confused by the accusation. She was just a witness. The investigation stalls.')" class="btn-mystery-sm">Liz Harding</button>
-            </div>
-            <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
-        </div>
 
     </div>
 
-    
-<div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
+    <div id="solution-modal" class="modal hidden opacity-0" onclick="closeSolutionModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            
-<h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
-            <div id="modal-portrait-container" class="w-32 h-32 mx-auto mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                
-</div>
-            <p id="modal-text" class="text-gray-300 mb-6"></p>
-            <button onclick="closeModal()" class="btn-mystery-sm">Close</button>
+            <h3 id="solution-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
+            <p id="solution-text" class="text-gray-300 mb-6"></p>
+            <button id="solution-button" class="btn-mystery-sm">Close</button>
         </div>
     </div>
-    
     
 <script>
-        let currentView = 'view-start';
-        
-        // Object to store interview state
-        let interviewState = {
-            'trisha': 0,
-            'lacey': 0,
-            'doc': 0,
-            'stan': 0,
-            'liz': 0
-        };
-        
-        // Dialogues
-        const dialogues = {
-            'trisha': {
-                name: "Trisha Hargrave",
-                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png", 
-                lines: [
-                    "He was finally going to listen to me! I thought... I thought he was going to give me the arcade. But he spent *so* much time with 'Doc' lately. I was worried he'd listen to that old fossil and keep this place a museum!",
-                    "Look, I'm nervous, okay? This place is my future. If Doc convinced him to not upgrade to a LAN hall, I... I don't know what I'd do. But I didn't kill him."
-                ]
-            },
-            'lacey': {
-                name: "Lacey Collins",
-                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png",
-                lines: [
-                    "I... I can't believe he's gone. We were... close. He told me he was leaving the arcade to Trisha, to his *family*. I just... I just wanted us to run it together. But he said I wasn't 'family.'",
-                    "He promised me we'd be partners. 50/50. He was just stringing me along. I gave him everything... and he was just going to toss me aside for that brat."
-                ]
-            },
-            'doc': {
-                name: "'Doc' Shaw",
-                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png",
-                lines: [
-                    "Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. Couldn't have been me, I was... fixing this board!",
-                    "That cashier, Liz... she's a weird one. Always sneaking out back. Comes back covered in gray and black fur. What's that about? Me? I'm just... busy. Building... uh... *fixing* something new."
-                ]
-            },
-            'stan': {
-                name: "Stan 'the man' Thompson",
-                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png", // Corrected URL
-                lines: [
-                    "Liz Harding works for me, yeah. She's my girl. She told me Ace was going to sell, but then changed his mind to give it to his bratty niece. Messed up my plans to buy it.",
-                    "Between you and me, Liz has... cash problems. Big time. Always donating to those animal charities. I know for a fact she was skimming from Ace's registers. Maybe he found out?"
-                ]
-            },
-            'liz': {
-                name: "Liz Harding",
-                imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png",
-                lines: [
-                    "I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.",
-                    "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."
-                ]
-            }
-        };
-        
-        const modal = document.getElementById('modal'); // Main center modal
-        const modalTitle = document.getElementById('modal-title');
-        const modalText = document.getElementById('modal-text');
-        const modalPortraitContainer = document.getElementById('modal-portrait-container');
-        
+    let currentView = 'view-start';
+    
+    // --- DIALOGUES & STATES ---
+    let interviewState = { 'trisha': 0, 'lacey': 0, 'doc': 0, 'stan': 0, 'liz': 0 };
+    const dialogues = {
+        'trisha': { name: "Trisha Hargrave", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png", lines: ["He was finally going to listen to me! I thought... I thought he was going to give me the arcade. But he spent *so* much time with 'Doc' lately. I was worried he'd listen to that old fossil and keep this place a museum!", "Look, I'm nervous, okay? This place is my future. If Doc convinced him to not upgrade to a LAN hall, I... I don't know what I'd do. But I didn't kill him."] },
+        'lacey': { name: "Lacey Collins", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png", lines: ["I... I can't believe he's gone. We were... close. He told me he was leaving the arcade to Trisha, to his *family*. I just... I just wanted us to run it together. But he said I wasn't 'family.'", "He promised me we'd be partners. 50/50. He was just stringing me along. I gave him everything... and he was just going to toss me aside for that brat."] },
+        'doc': { name: "'Doc' Shaw", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png", lines: ["Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. Couldn't have been me, I was... fixing this board!", "That cashier, Liz... she's a weird one. Always sneaking out back. Comes back covered in gray and black fur. What's that about? Me? I'm just... busy. Building... uh... *fixing* something new."] },
+        'stan': { name: "Stan 'the man' Thompson", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png", lines: ["Liz Harding works for me, yeah. She's my girl. She told me Ace was going to sell, but then changed his mind to give it to his bratty niece. Messed up my plans to buy it.", "Between you and me, Liz has... cash problems. Big time. Always donating to those animal charities. I know for a fact she was skimming from Ace's registers. Maybe he found out?"] },
+        'liz': { name: "Liz Harding", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png", lines: ["I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.", "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."] }
+    };
 
-        // --- View Navigation ---
-        function showView(viewId) {
-            const oldView = document.getElementById(currentView);
-            if (oldView) {
-                oldView.classList.remove('active');
-            }
-            
-            const newView = document.getElementById(viewId);
-            if (newView) {
-                newView.classList.add('active');
-            }
-            
-            currentView = viewId;
+    // --- NEW DIALOGUE PANEL LOGIC ---
+    const dialoguePanel = document.getElementById('dialogue-panel');
+    let typingTimeout; // To control the typing effect
+
+    function displayMessage(title, text, imgSrc, type = 'default') {
+        clearTimeout(typingTimeout);
+        dialoguePanel.innerHTML = ''; // Clear previous content
+        dialoguePanel.style.display = 'flex';
+        dialoguePanel.classList.remove('hidden');
+
+        const titleEl = document.createElement('h3');
+        const portraitContainer = document.createElement('div');
+        const textEl = document.createElement('p');
+        const closeBtn = document.createElement('button');
+
+        titleEl.className = 'font-pixel text-2xl font-bold mb-4';
+        titleEl.textContent = title;
+
+        if (imgSrc) {
+            portraitContainer.className = 'w-24 h-24 mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container self-center';
+            portraitContainer.innerHTML = `<img src="${imgSrc}" alt="${title}" class="w-full h-full object-cover">`;
         }
-        
-        // --- NEW Puzzle Logic ---
+        textEl.className = 'text-lg mb-auto';
+        closeBtn.className = 'btn-mystery-sm mt-6';
+        closeBtn.textContent = 'Close';
+        closeBtn.onclick = () => { dialoguePanel.style.display = 'none'; };
 
-        // Prize Puzzle
-        function checkPrizePuzzle(selectedElement, isCorrect) {
-            if (isCorrect) {
-                selectedElement.classList.add('border-green-500');
-                document.getElementById('clue-prize-text').classList.remove('hidden');
-                // Disable all prize buttons
-                document.querySelectorAll('.prize-item').forEach(el => el.onclick = null);
-                // Optionally add clue to input box
-                addClueToInput('8');
+        let textColor = 'text-cyan-300', textShadow = '0 0 5px #0ff';
+        if (type === 'error') { textColor = 'text-red-400'; textShadow = '0 0 7px #f44'; } 
+        else if (type === 'success') { textColor = 'text-green-400'; textShadow = '0 0 7px #4f4'; } 
+        else if (type === 'interview') { textColor = 'text-fuchsia-300'; textShadow = '0 0 7px #f0f'; }
+
+        [titleEl, textEl].forEach(el => {
+            el.classList.add(textColor);
+            el.style.textShadow = textShadow;
+        });
+
+        dialoguePanel.appendChild(titleEl);
+        if (imgSrc) dialoguePanel.appendChild(portraitContainer);
+        dialoguePanel.appendChild(textEl);
+        dialoguePanel.appendChild(closeBtn);
+
+        let i = 0;
+        textEl.innerHTML = ''; // Ensure it's empty before typing
+        function typeWriter() {
+            if (i < text.length) {
+                textEl.innerHTML += text.charAt(i);
+                i++;
+                typingTimeout = setTimeout(typeWriter, 20); // Typing speed
+            }
+        }
+        typeWriter();
+    }
+    
+    function showInterview(suspect) {
+        const suspectData = dialogues[suspect];
+        if (!suspectData) return;
+        const dialogue = (interviewState[suspect] === 0) ? suspectData.lines[0] : suspectData.lines[1];
+        if (interviewState[suspect] === 0) interviewState[suspect]++;
+        displayMessage(`Interview: ${suspectData.name}`, dialogue, suspectData.imgSrc, 'interview');
+    }
+
+    // --- VIEW NAVIGATION ---
+    function showView(viewId) {
+        document.getElementById(currentView)?.classList.remove('active');
+        document.getElementById(viewId)?.classList.add('active');
+        currentView = viewId;
+    }
+    
+    // --- PUZZLE LOGIC ---
+    function checkSafeCode() {
+        const answer = document.getElementById('safe-code').value.trim();
+        const correctCode = "1358";
+        if (answer === correctCode) {
+            document.getElementById('clue-locked').style.display = 'none';
+            document.getElementById('clue-unlocked').style.display = 'block';
+            displayMessage('Success!', 'The safe clicks open. You found a crucial document!', null, 'success'); 
+        } else {
+            displayMessage('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)', null, 'error');
+        }
+    }
+
+    function checkPrizePuzzle(selectedElement, isCorrect) {
+        if (isCorrect) {
+            selectedElement.classList.add('border-green-500');
+            document.getElementById('clue-prize-text').classList.remove('hidden');
+            document.querySelectorAll('.prize-item').forEach(el => el.onclick = null);
+        } else {
+            displayMessage('Wrong Prize', 'That\'s not it. Try again.', null, 'error');
+        }
+    }
+
+    let switchStates = [0, 0, 0, 0];
+    function toggleSwitchBtn(btn, num) {
+        let index = num - 1;
+        switchStates[index] = 1 - switchStates[index]; // Flips between 0 and 1
+        btn.textContent = switchStates[index] === 1 ? 'ON' : 'OFF';
+        btn.classList.toggle('bg-red-600/80', switchStates[index] === 0);
+        btn.classList.toggle('border-red-400', switchStates[index] === 0);
+        btn.classList.toggle('bg-green-600/80', switchStates[index] === 1);
+        btn.classList.toggle('border-green-400', switchStates[index] === 1);
+    }
+    
+    function checkRepairPuzzle() {
+        if (switchStates.join('') === '0011') {
+            document.getElementById('clue-repair-text').classList.remove('hidden');
+            document.querySelector('#view-room-repair button.btn-mystery-sm').disabled = true;
+            document.querySelectorAll('#view-room-repair button[id^="switch"]').forEach(btn => btn.disabled = true);
+        } else {
+            displayMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null, 'error');
+        }
+    }
+
+    let comboInput = "";
+    function enterCombo(move) {
+        if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) return;
+        comboInput += move;
+        document.getElementById('combo-display').textContent = comboInput;
+        if (comboInput.length >= 8) {
+            if (comboInput === "UUDDLRLR") {
+                document.getElementById('clue-versus-text').classList.remove('hidden');
+                document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = true);
             } else {
-                selectedElement.classList.add('border-red-500');
-                showMessageInternal('Wrong Prize', 'That\'s not it. Try again.', null, 'error');
-                setTimeout(() => {
-                    selectedElement.classList.remove('border-red-500');
-                }, 1000);
+                displayMessage('Wrong Combo', 'Trisha laughs. "Not even close!"', null, 'error');
             }
-        }
-
-        // Repair Puzzle
-        let switchStates = [0, 0, 0, 0];
-        function toggleSwitchBtn(btn, num) {
-            let index = num - 1;
-            if (switchStates[index] === 0) {
-                switchStates[index] = 1;
-                btn.textContent = 'ON';
-                btn.classList.remove('bg-red-600/80', 'border-red-400');
-                btn.classList.add('bg-green-600/80', 'border-green-400');
-            } else {
-                switchStates[index] = 0;
-                btn.textContent = 'OFF';
-                btn.classList.add('bg-red-600/80', 'border-red-400');
-                btn.classList.remove('bg-green-600/80', 'border-green-400');
-            }
-        }
-        
-        function checkRepairPuzzle() {
-            const combo = switchStates.join('');
-            
-            // Correct combo is 0011 (binary for 3)
-            if (combo === '0011') {
-                document.getElementById('clue-repair-text').classList.remove('hidden');
-                // Disable check button
-                const checkBtn = document.querySelector('#view-room-repair .btn-mystery-sm');
-                checkBtn.disabled = true;
-                checkBtn.classList.add('btn-disabled');
-                // Disable switches
-                document.querySelectorAll('#view-room-repair button[id^="switch"]').forEach(btn => btn.disabled = true);
-                // Optionally add clue to input box
-                addClueToInput('3');
-            } else {
-                showMessageInternal('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null, 'error');
-            }
-        }
-
-        // Versus Puzzle
-        let comboInput = "";
-        const correctCombo = "UUDDLRLR"; // Contra Code
-        
-        function enterCombo(move) {
-            if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) {
-                showMessageInternal('Already Found', 'You already solved this puzzle.', null);
-                return;
-            }
-            
-            comboInput += move;
-            document.getElementById('combo-display').textContent = comboInput;
-            
-            if (comboInput.length >= 8) { // Check for 8 moves
-                if (comboInput === correctCombo) {
-                    document.getElementById('clue-versus-text').classList.remove('hidden');
-                    // Disable buttons
-                    document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = true);
-                    // Optionally add clue to input box
-                    addClueToInput('1');
-                } else {
-                    showMessageInternal('Wrong Combo', 'Trisha laughs. "Not even close!"', null, 'error');
-                }
-                comboInput = "";
-                setTimeout(() => {
-                    if (document.getElementById('clue-versus-text').classList.contains('hidden')) {
-                        document.getElementById('combo-display').textContent = "";
-                    }
-                }, 1000);
-            }
-        }
-
-        // Breakroom Puzzle logic
-        let clockHour = 12;
-        let clockMinute = 0;
-        let breakroomPuzzleSolved = false;
-
-        function adjustTime(part) {
-            if (breakroomPuzzleSolved) return;
-
-            if (part === 'hour') {
-                clockHour++;
-                if (clockHour > 12) {
-                    clockHour = 1;
-                }
-            } else if (part === 'minute') {
-                clockMinute += 10;
-                if (clockMinute > 50) {
-                    clockMinute = 0;
-                }
-            }
-            updateClockDisplay();
-        }
-
-        function updateClockDisplay() {
-            const hoursEl = document.getElementById('clock-hours');
-            const minutesEl = document.getElementById('clock-minutes');
-
-            if (!hoursEl || !minutesEl) return;
-
-            hoursEl.textContent = String(clockHour).padStart(2, '0');
-            minutesEl.textContent = String(clockMinute).padStart(2, '0');
-            
-            checkClockSolution();
-        }
-        
-        function checkClockSolution() {
-            // Check for 5:00
-            if (clockHour === 5 && clockMinute === 0 && !breakroomPuzzleSolved) {
-                breakroomPuzzleSolved = true;
-                
-                const hoursEl = document.getElementById('clock-hours');
-                const minutesEl = document.getElementById('clock-minutes');
-                const colonEl = document.querySelector('#view-room-breakroom .text-6xl:nth-child(2)');
-
-                // Change color to green
-                if (hoursEl && minutesEl && colonEl) {
-                    [hoursEl, minutesEl, colonEl].forEach(el => {
-                        el.classList.remove('text-gray-500');
-                        el.classList.add('text-green-400');
-                    });
-                }
-                
-                // Show clue
-                document.getElementById('clue-breakroom-text').classList.remove('hidden');
-                
-                // Disable buttons
-                document.querySelectorAll('#clock-controls button').forEach(btn => {
-                    btn.disabled = true;
-                    btn.classList.add('btn-disabled');
-                });
-                // Optionally add clue to input box
-                addClueToInput('5');
-            }
-        }
-
-        // --- Safe Puzzle Logic ---
-        function checkSafeCode() {
-            const safeCodeInput = document.getElementById('safe-code');
-            const answer = safeCodeInput.value.trim();
-            
-            // The answer is the 4 clues sorted
-            const correctCode = "1358"; // This should be '1358' based on the clues (1 from Versus, 3 from Repair, 5 from Breakroom, 8 from Prize)
-            
-            if (answer === correctCode) {
-                document.getElementById('clue-locked').style.display = 'none';
-                document.getElementById('clue-unlocked').style.display = 'block';
-                // Using the main modal for success message
-                showMessageInternal('Success!', 'The safe clicks open. You found a crucial document!', null, 'success'); 
-            } else {
-                // Using the main modal for "Locked" with error styling
-                showMessageInternal('Locked', 'The safe remains firmly shut. Wrong code. (Hint: Try sorting the clues you found.)', null, 'error');
-            }
-        }
-
-        // --- Clue Input Boxes Logic ---
-        function addClueToInput(clueDigit) {
-            for (let i = 1; i <= 4; i++) {
-                const input = document.getElementById(`clue-input-${i}`);
-                if (input && input.value === '') {
-                    input.value = clueDigit;
-                    break;
-                }
-            }
-        }
-
-        // --- Main Center Modal Logic ---
-        /**
-         * Shows an interview modal with a portrait
-         */
-        function showInterview(suspect) {
-            let dialogue = "";
-            let title = "";
-            let imgSrc = "";
-            
-            // Get data from dialogue object
-            const suspectData = dialogues[suspect];
-            if (!suspectData) return;
-            
-            // Determine which dialogue to show
-            if (interviewState[suspect] === 0) {
-                dialogue = suspectData.lines[0];
-                interviewState[suspect]++; // Increment count
-            } else {
-                dialogue = suspectData.lines[1]; // Show second dialogue
-            }
-            
-            title = `Interview: ${suspectData.name}`;
-            imgSrc = suspectData.imgSrc;
-
-            showMessageInternal(title, dialogue, imgSrc);
-        }
-
-        /**
-         * Internal function to show any modal.
-         * Shows portrait if imgSrc is provided, otherwise hides it.
-         * Applies color coding based on the message 'type'.
-         */
-        function showMessageInternal(title, text, imgSrc, type = 'default') {
-            const modalContent = modal.querySelector('.modal-content');
-
-            // Reset colors on every call to handle all cases
-            modalContent.classList.remove('border-red-500/70', 'border-green-500/70');
-            modalTitle.classList.remove('text-red-400', 'text-green-400');
-            // Ensure the default color is reapplied if the last modal was an error/success
-            modalTitle.classList.add('text-fuchsia-400');
-
-
-            // Apply new styles based on the message type
-            if (type === 'error') {
-                modalContent.classList.add('border-red-500/70');
-                modalTitle.classList.add('text-red-400');
-                modalTitle.classList.remove('text-fuchsia-400'); // Remove default color
-            } else if (type === 'success') {
-                modalContent.classList.add('border-green-500/70');
-                modalTitle.classList.add('text-green-400');
-                modalTitle.classList.remove('text-fuchsia-400'); // Remove default color
-            }
-            // If type is 'default', no extra classes are added, so it uses the standard fuchsia style.
-
-            modalTitle.textContent = title;
-            modalText.innerHTML = text; // Use innerHTML for potential line breaks
-            
-            if (imgSrc) {
-                modalPortraitContainer.innerHTML = `<img src="${imgSrc}" alt="${title}" class="w-full h-full object-cover">`;
-                modalPortraitContainer.style.display = '';
-            } else {
-                modalPortraitContainer.innerHTML = '';
-                modalPortraitContainer.style.display = 'none';
-            }
-            
-            modal.classList.remove('hidden');
-            setTimeout(() => modal.classList.remove('opacity-0'), 10);
-        }
-
-        function closeModal() {
-            modal.classList.add('opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-        
-        // --- Solution Modal Logic ---
-        function showSolution(isCorrect, text) {
-            let titleText = "";
-            let buttonText = "";
-            let buttonAction;
-            let titleClass = "font-pixel text-2xl font-bold mb-4 ";
-            
-            if(isCorrect) {
-                titleText = "Case Solved!";
-                titleClass += "text-green-400";
-                buttonText = "Start New Game";
-                buttonAction = restartGame; 
-            } else {
-                titleText = "Game Over"; 
-                titleClass += "text-red-400";
-                text = "You accused the wrong person. The real killer gets away.<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>"; 
-                buttonText = "Try Again";
-                buttonAction = () => {
-                    closeModal(); // Close the solution modal
-                    showView('view-hub'); // Go back to hub, don't restart
-                };
-            }
-            
-            modalTitle.className = titleClass;
-            modalTitle.textContent = titleText;
-            modalText.innerHTML = text; // Use innerHTML for the line break and span
-            modalPortraitContainer.style.display = 'none'; // No portrait for solution
-            
-            // Assuming the main modal's close button will be dynamically changed for solution
-            const mainModalCloseButton = modal.querySelector('.btn-mystery-sm');
-            if (mainModalCloseButton) {
-                mainModalCloseButton.textContent = buttonText;
-                mainModalCloseButton.onclick = buttonAction;
-            }
-
-            modal.classList.remove('hidden');
-            setTimeout(() => modal.classList.remove('opacity-0'), 10);
-        }
-
-
-        function restartGame() {
-            // Hide main modal (used for solution)
-            closeModal();
-            
-            // Reset safe
-            document.getElementById('clue-locked').style.display = 'block';
-            document.getElementById('clue-unlocked').style.display = 'none';
-            document.getElementById('safe-code').value = '';
-
-            // Reset clue inputs
-            for (let i = 1; i <= 4; i++) {
-                const input = document.getElementById(`clue-input-${i}`);
-                if (input) input.value = '';
-            }
-            
-            // --- UPDATED: Reset Puzzles ---
-            
-            // 1. Prize Puzzle
-            document.querySelectorAll('.prize-item').forEach(el => {
-                el.classList.remove('border-green-500');
-                let isCorrect = el.querySelector('span').textContent === '📖'; // Check if it's the book
-                el.onclick = () => checkPrizePuzzle(el, isCorrect);
-            });
-            document.getElementById('clue-prize-text').classList.add('hidden');
-            
-            // 2. Repair Puzzle
-            switchStates = [0, 0, 0, 0];
-            const switchBtns = document.querySelectorAll('#view-room-repair .btn-mystery-sm');
-            switchBtns.forEach((btn, index) => {
-                if (btn.id.startsWith('switch')) { // Only the 4 toggle buttons
-                    btn.textContent = 'OFF';
-                    btn.classList.add('bg-red-600/80', 'border-red-400');
-                    btn.classList.remove('bg-green-600/80', 'border-green-400');
-                    btn.disabled = false;
-                } else if(btn.textContent === 'Check Switches') { // The 'Check Switches' button
-                    btn.disabled = false;
-                    btn.classList.remove('btn-disabled');
-                }
-            });
-            document.getElementById('clue-repair-text').classList.add('hidden');
-
-            // 3. Versus Puzzle
             comboInput = "";
-            const comboDisplay = document.getElementById('combo-display');
-            if (comboDisplay) {
-                comboDisplay.textContent = "";
-            }
-            document.getElementById('clue-versus-text').classList.add('hidden');
-            document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = false);
-            
-            // 4. Breakroom Puzzle
-            breakroomPuzzleSolved = false;
-            clockHour = 12;
-            clockMinute = 0;
-            
-            const hoursEl = document.getElementById('clock-hours');
-            const minutesEl = document.getElementById('clock-minutes');
-            const colonEl = document.querySelector('#view-room-breakroom .text-6xl:nth-child(2)');
-            
-            if (hoursEl && minutesEl && colonEl) {
-                [hoursEl, minutesEl, colonEl].forEach(el => {
-                    el.classList.add('text-gray-500');
-                    el.classList.remove('text-green-400');
-                });
-                hoursEl.textContent = '12';
-                minutesEl.textContent = '00';
-            }
-            
-            document.querySelectorAll('#clock-controls button').forEach(btn => {
-                btn.disabled = false;
-                btn.classList.remove('btn-disabled');
-            });
-            document.getElementById('clue-breakroom-text').classList.add('hidden');
-
-
-            // Reset interview states
-            interviewState = {
-                'trisha': 0,
-                'lacey': 0,
-                'doc': 0,
-                'stan': 0,
-                'liz': 0
-            };
-            
-            // Go to start
-            showView('view-start');
+            setTimeout(() => { if (document.getElementById('clue-versus-text').classList.contains('hidden')) document.getElementById('combo-display').textContent = ""; }, 1000);
         }
+    }
+    
+    let clockHour = 12, clockMinute = 0, breakroomPuzzleSolved = false;
+    function adjustTime(part) {
+        if (breakroomPuzzleSolved) return;
+        if (part === 'hour') clockHour = (clockHour % 12) + 1;
+        else if (part === 'minute') clockMinute = (clockMinute + 10) % 60;
+        updateClockDisplay();
+    }
+    function updateClockDisplay() {
+        document.getElementById('clock-hours').textContent = String(clockHour).padStart(2, '0');
+        document.getElementById('clock-minutes').textContent = String(clockMinute).padStart(2, '0');
+        if (clockHour === 5 && clockMinute === 0 && !breakroomPuzzleSolved) {
+            breakroomPuzzleSolved = true;
+            document.querySelectorAll('#view-room-breakroom .text-6xl').forEach(el => el.classList.replace('text-gray-500', 'text-green-400'));
+            document.getElementById('clue-breakroom-text').classList.remove('hidden');
+            document.querySelectorAll('#clock-controls button').forEach(btn => btn.disabled = true);
+        }
+    }
+    
+    // --- FINAL SOLUTION MODAL ---
+    const solutionModal = document.getElementById('solution-modal');
+    function showSolution(isCorrect, explanationText) {
+        const title = solutionModal.querySelector('#solution-title');
+        const text = solutionModal.querySelector('#solution-text');
+        const button = solutionModal.querySelector('#solution-button');
 
-    </script>
+        if (isCorrect) {
+            title.textContent = "Case Solved!";
+            title.className = 'font-pixel text-2xl font-bold mb-4 text-green-400';
+            text.innerHTML = explanationText;
+            button.textContent = "Start New Game";
+            button.onclick = restartGame;
+        } else {
+            title.textContent = "Game Over";
+            title.className = 'font-pixel text-2xl font-bold mb-4 text-red-400';
+            text.innerHTML = `You accused the wrong person. ${explanationText}<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>`;
+            button.textContent = "Try Again";
+            button.onclick = closeSolutionModal;
+        }
+        solutionModal.classList.remove('hidden');
+        setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
+    }
+    function closeSolutionModal() {
+        solutionModal.classList.add('opacity-0');
+        setTimeout(() => solutionModal.classList.add('hidden'), 300);
+    }
+
+    // --- GAME RESTART ---
+    function restartGame() {
+        // This function is complex. For now, we'll just reload the page for a clean reset.
+        window.location.reload();
+    }
+</script>
 </body>
 </html>
