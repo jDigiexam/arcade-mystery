@@ -189,13 +189,12 @@
                     <div class="prize-item" onclick="checkPrizePuzzle(this, false)"><span class="text-4xl">👄</span><p>Wax Lips</p></div>
                     <div class="prize-item" onclick="checkPrizePuzzle(this, false)"><span class="text-4xl">🤖</span><p>Toy Robot</p></div>
                 </div>
-                <p id="clue-prize-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You point to the book. Liz nods. "Oh... right." You look at the price tag for the book. It's <strong class="text-xl">8</strong>00 tickets. The first digit, '<strong class="text-xl">8</strong>', is circled.</p>
                 <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
             </div>
 
             <div id="view-room-repair" class="view p-8 md:p-12">
                 <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">Repair Shop</h2>
-                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps."</p>
+                <p class="text-gray-300 mb-6">'Doc's shop is a mess. On his workbench is a custom power supply unit with 4 dip switches. A note says: "Set to 3 Amps (Binary)."</p>
                 <div class="flex justify-center space-x-4 my-8 p-4 bg-gray-800 rounded-lg">
                     <button id="switch1" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 1)">OFF</button>
                     <button id="switch2" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 2)">OFF</button>
@@ -203,7 +202,6 @@
                     <button id="switch4" class="btn-mystery-sm bg-red-600/80 border-red-400 w-20" onclick="toggleSwitchBtn(this, 4)">OFF</button>
                 </div>
                 <div class="flex justify-center"><button onclick="checkRepairPuzzle()" class="btn-mystery-sm">Check Switches</button></div>
-                <p id="clue-repair-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for <strong class="text-xl">3</strong>.</p>
                 <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
             </div>
 
@@ -217,7 +215,6 @@
                     <button class="combo-btn" onclick="enterCombo('D')">🔽</button>
                     <button class="combo-btn" onclick="enterCombo('R')">▶️</button>
                 </div>
-                <p id="clue-versus-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player <strong class="text-xl">1</strong>.'</p>
                 <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
             </div>
 
@@ -233,8 +230,8 @@
                 <div id="clock-controls" class="flex justify-center space-x-4">
                     <button onclick="adjustTime('hour')" class="btn-mystery-sm">Hour +</button>
                     <button onclick="adjustTime('minute')" class="btn-mystery-sm">Minute +</button>
+                    <button onclick="checkClockSolution()" class="btn-mystery-sm !bg-fuchsia-600/80 !border-fuchsia-400 hover:!bg-fuchsia-500">Set Time</button>
                 </div>
-                <p id="clue-breakroom-text" class="text-fuchsia-400 italic text-lg mt-4 hidden">As you set the clock to <strong class="text-xl">5</strong>:00, the display stops flickering and glows a steady green. The time must have been <strong class="text-xl">5</strong> PM.</p>
                 <button onclick="showView('view-hub')" class="btn-mystery-sm mt-8">Back to Arcade Floor</button>
             </div>
 
@@ -278,7 +275,7 @@
         'liz': { name: "Liz Harding", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png", lines: ["I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.", "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."] }
     };
 
-    // --- NEW DIALOGUE PANEL LOGIC ---
+    // --- DIALOGUE PANEL LOGIC ---
     const dialoguePanel = document.getElementById('dialogue-panel');
     let typingTimeout; // To control the typing effect
 
@@ -361,10 +358,11 @@
     }
 
     function checkPrizePuzzle(selectedElement, isCorrect) {
+        if (document.querySelectorAll('.prize-item.border-green-500').length > 0) return;
         if (isCorrect) {
             selectedElement.classList.add('border-green-500');
-            document.getElementById('clue-prize-text').classList.remove('hidden');
             document.querySelectorAll('.prize-item').forEach(el => el.onclick = null);
+            displayMessage('Clue Found!', "You point to the book. Liz nods. 'Oh... right.' You look at the price tag for the book. It's 800 tickets. The first digit, '8', is circled.", null, 'success');
         } else {
             displayMessage('Wrong Prize', 'That\'s not it. Try again.', null, 'error');
         }
@@ -382,10 +380,13 @@
     }
     
     function checkRepairPuzzle() {
+        if (document.querySelector('#view-room-repair button[disabled]')) return;
         if (switchStates.join('') === '0011') {
-            document.getElementById('clue-repair-text').classList.remove('hidden');
-            document.querySelector('#view-room-repair button.btn-mystery-sm').disabled = true;
-            document.querySelectorAll('#view-room-repair button[id^="switch"]').forEach(btn => btn.disabled = true);
+            document.querySelectorAll('#view-room-repair button.btn-mystery-sm').forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('btn-disabled');
+            });
+            displayMessage('Clue Found!', "You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for 3.", null, 'success');
         } else {
             displayMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null, 'error');
         }
@@ -393,18 +394,18 @@
 
     let comboInput = "";
     function enterCombo(move) {
-        if (document.getElementById('clue-versus-text').classList.contains('hidden') === false) return;
+        if (document.querySelectorAll('.combo-btn[disabled]').length > 0) return;
         comboInput += move;
         document.getElementById('combo-display').textContent = comboInput;
         if (comboInput.length >= 8) {
             if (comboInput === "UUDDLRLR") {
-                document.getElementById('clue-versus-text').classList.remove('hidden');
                 document.querySelectorAll('.combo-btn').forEach(btn => btn.disabled = true);
+                displayMessage('Clue Found!', "You punch in the classic 8-button code. The screen flashes! 'WINNER!' appears. On the winner screen, a small message appears in the corner: 'Ready Player 1.'", null, 'success');
             } else {
                 displayMessage('Wrong Combo', 'Trisha laughs. "Not even close!"', null, 'error');
             }
             comboInput = "";
-            setTimeout(() => { if (document.getElementById('clue-versus-text').classList.contains('hidden')) document.getElementById('combo-display').textContent = ""; }, 1000);
+            setTimeout(() => { if (document.querySelectorAll('.combo-btn[disabled]').length === 0) document.getElementById('combo-display').textContent = ""; }, 1000);
         }
     }
     
@@ -418,11 +419,20 @@
     function updateClockDisplay() {
         document.getElementById('clock-hours').textContent = String(clockHour).padStart(2, '0');
         document.getElementById('clock-minutes').textContent = String(clockMinute).padStart(2, '0');
-        if (clockHour === 5 && clockMinute === 0 && !breakroomPuzzleSolved) {
+    }
+
+    function checkClockSolution() {
+        if (breakroomPuzzleSolved) return;
+        if (clockHour === 5 && clockMinute === 0) {
             breakroomPuzzleSolved = true;
             document.querySelectorAll('#view-room-breakroom .text-6xl').forEach(el => el.classList.replace('text-gray-500', 'text-green-400'));
-            document.getElementById('clue-breakroom-text').classList.remove('hidden');
-            document.querySelectorAll('#clock-controls button').forEach(btn => btn.disabled = true);
+            document.querySelectorAll('#clock-controls button').forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('btn-disabled');
+            });
+            displayMessage('Clue Found!', "As you set the clock to 5:00, the display stops flickering and glows a steady green. The time must have been 5 PM.", null, 'success');
+        } else {
+            displayMessage('No Change', "Nothing happens. That doesn't seem to be the right time.", null, 'error');
         }
     }
     
@@ -456,7 +466,6 @@
 
     // --- GAME RESTART ---
     function restartGame() {
-        // This function is complex. For now, we'll just reload the page for a clean reset.
         window.location.reload();
     }
 </script>
