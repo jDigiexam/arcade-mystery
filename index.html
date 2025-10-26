@@ -10,7 +10,12 @@
         
         body {
             font-family: 'VT323', monospace;
-            background-color: #0d0d0d;
+            /* UPDATED: Add your full image URL here */
+            background-image: url('https://github.com/jDigiexam/halloween2025/blob/main/arcade%20floor.jpg');
+            background-color: #0d0d0d; /* Fallback color */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #e0e0e0;
             font-size: 1.1rem; /* VT323 is small, so we upsize it */
             line-height: 1.6;
@@ -101,10 +106,10 @@
             background-color: #374151; /* gray-700 */
         }
 
-        .pixel-art-container svg {
+        .pixel-art-container img { /* UPDATED from svg to img */
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover; /* Use cover to fill the box */
         }
 
     </style>
@@ -178,40 +183,45 @@
                 
                 <!-- Trisha -->
                 <div class="text-center">
-                    <div class="w-24 h-24 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#FFC0CB" /><rect x="5" y="6" width="2" height="2" fill="#0000FF" /><rect x="9" y="6" width="2" height="2" fill="#0000FF" /><rect x="6" y="9" width="4" height="1" fill="#8B0000" /><rect x="3" y="2" width="10" height="2" fill="#800080" /><rect x="3" y="4" width="1" height="6" fill="#800080" /><rect x="12" y="4" width="1" height="6" fill="#800080" /></svg>
+                    <!-- UPDATED: 128px (w-32) and img tag -->
+                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
+                        <img src="https://placehold.co/128x128/FFC0CB/800080?text=Trisha" alt="Trisha" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('trisha')" class="btn-mystery-sm w-full">Trisha</button>
                 </div>
                 
                 <!-- Lacey -->
                 <div class="text-center">
-                    <div class="w-24 h-24 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#F5DEB3" /><rect x="5" y="6" width="2" height="2" fill="#006400" /><rect x="9" y="6" width="2" height="2" fill="#006400" /><rect x="6" y="9" width="4" height="1" fill="#FF0000" /><rect x="3" y="2" width="10" height="2" fill="#FFFF00" /><rect x="3" y="4" width="1" height="7" fill="#FFFF00" /><rect x="12" y="4" width="1" height="7" fill="#FFFF00" /></svg>
+                    <!-- UPDATED: 128px (w-32) and img tag -->
+                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
+                        <img src="https://placehold.co/128x128/F5DEB3/FFFF00?text=Lacey" alt="Lacey" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('lacey')" class="btn-mystery-sm w-full">Lacey</button>
                 </div>
                 
                 <!-- Doc -->
                 <div class="text-center">
-                    <div class="w-24 h-24 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#D2B48C" /><rect x="5" y="6" width="2" height="2" fill="#A52A2A" /><rect x="9" y="6" width="2" height="2" fill="#A52A2A" /><rect x="5" y="9" width="6" height="1" fill="#000000" /><rect x="3" y="2" width="10" height="2" fill="#FFFFFF" /><rect x="4" y="10" width="8" height="2" fill="#808080" /></svg>
+                    <!-- UPDATED: 128px (w-32) and img tag -->
+                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
+                        <img src="https://placehold.co/128x128/D2B48C/FFFFFF?text=Doc" alt="Doc" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('doc')" class="btn-mystery-sm w-full">'Doc' Shaw</button>
                 </div>
                 
                 <!-- Stan -->
                 <div class="text-center">
-                    <div class="w-24 h-24 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#F0E68C" /><rect x="4" y="6" width="3" height="2" fill="#000000" /><rect x="9" y="6" width="3" height="2" fill="#000000" /><rect x="5" y="9" width="6" height="1" fill="#E6E6FA" /><rect x="3" y="2" width="10" height="2" fill="#A52A2A" /></svg>
+                    <!-- UPDATED: 128px (w-32) and img tag -->
+                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
+                        <img src="https://placehold.co/128x128/F0E68C/A52A2A?text=Stan" alt="Stan" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('stan')" class="btn-mystery-sm w-full">Stan</button>
                 </div>
                 
                 <!-- Liz -->
                 <div class="text-center">
-                    <div class="w-24 h-24 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
-                        <svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#FFE4E1" /><rect x="5" y="6" width="2" height="2" fill="#4682B4" /><rect x="9" y="6" width="2" height="2" fill="#4682B4" /><rect x="7" y="9" width="2" height="1" fill="#8B0000" /><rect x="3" y="2" width="10" height="2" fill="#2F4F4F" /><rect x="3" y="4" width="1" height="6" fill="#2F4F4F" /><rect x="12" y="4" width="1" height="6" fill="#2F4F4F" /></svg>
+                    <!-- UPDATED: 128px (w-32) and img tag -->
+                    <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
+                        <img src="https://placehold.co/128x128/FFE4E1/2F4F4F?text=Liz" alt="Liz" class="w-full h-full object-cover">
                     </div>
                     <button onclick="showInterview('liz')" class="btn-mystery-sm w-full">Liz</button>
                 </div>
@@ -222,15 +232,15 @@
         </div>
 
         <!-- =================================================================
-        VIEW 5: CRIME SCENE (With Safe Puzzle)
+        MODAL for messages
         ================================================================== -->
-        <div id="view-scene" class="view p-8 md:p-12">
-            <h2 class="font-pixel text-3xl font-bold text-cyan-400 mb-6" style="text-shadow: 0 0 10px #0ff;">The Crime Scene: The Back Office</h2>
-            <p class="text-gray-300 mb-6">
-                The office is cluttered. On the floor, you see a spilled bag of prize tokens and 'Ace' Hargrave's body. Nearby lies a bloody shard of plexiglass.
-            </p>
-            <p class="text-gray-300 mb-6">
-                Under the desk is a large, heavy safe, locked with a 4-digit keypad. You'll need to find the combination.
+        <div id="modal" class="modal hidden opacity-0" onclick="closeModal()">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <!-- NEW: Portrait container -->
+                <div id="modal-portrait-container" class="w-32 h-32 mx-auto mb-4 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container">
+                    <!-- Image will be injected here by JS -->
+                </div>
+                <h3 id="modal-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
             </p>
             
             <!-- This is the interactive part! -->
@@ -420,7 +430,7 @@
         const dialogues = {
             'trisha': {
                 name: "Trisha Hargrave",
-                svg: `<svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#FFC0CB" /><rect x="5" y="6" width="2" height="2" fill="#0000FF" /><rect x="9" y="6" width="2" height="2" fill="#0000FF" /><rect x="6" y="9" width="4" height="1" fill="#8B0000" /><rect x="3" y="2" width="10" height="2" fill="#800080" /><rect x="3" y="4" width="1" height="6" fill="#800080" /><rect x="12" y="4" width="1" height="6" fill="#800080" /></svg>`,
+                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/trisha.png", // UPDATED from svg
                 lines: [
                     "He was finally going to listen to me! I thought... I thought he was going to give me the arcade. But he spent *so* much time with 'Doc' lately. I was worried he'd listen to that old fossil and keep this place a museum!",
                     "Look, I'm nervous, okay? This place is my future. If Doc convinced him to not upgrade to a LAN hall, I... I don't know what I'd do. But I didn't kill him."
@@ -428,7 +438,7 @@
             },
             'lacey': {
                 name: "Lacey Collins",
-                svg: `<svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#F5DEB3" /><rect x="5" y="6" width="2" height="2" fill="#006400" /><rect x="9" y="6" width="2" height="2" fill="#006400" /><rect x="6" y="9" width="4" height="1" fill="#FF0000" /><rect x="3" y="2" width="10" height="2" fill="#FFFF00" /><rect x="3" y="4" width="1" height="7" fill="#FFFF00" /><rect x="12" y="4" width="1" height="7" fill="#FFFF00" /></svg>`,
+                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/lacey.png", // UPDATED from svg
                 lines: [
                     "I... I can't believe he's gone. We were... close. He told me he was leaving the arcade to Trisha, to his *family*. I just... I just wanted us to run it together. But he said I wasn't 'family.'",
                     "He promised me we'd be partners. 50/50. He was just stringing me along. I gave him everything... and he was just going to toss me aside for that brat."
@@ -436,7 +446,7 @@
             },
             'doc': {
                 name: "'Doc' Shaw",
-                svg: `<svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#D2B48C" /><rect x="5" y="6" width="2" height="2" fill="#A52A2A" /><rect x="9" y="6" width="2" height="2" fill="#A52A2A" /><rect x="5" y="9" width="6" height="1" fill="#000000" /><rect x="3" y="2" width="10" height="2" fill="#FFFFFF" /><rect x="4" y="10" width="8" height="2" fill="#808080" /></svg>`,
+                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/doc.png", // UPDATED from svg
                 lines: [
                     "Heard Ace and Lacey arguing up a storm last night. She was yelling about 'getting what she deserved'. Sounded nasty. Couldn't have been me, I was... fixing this board!",
                     "That cashier, Liz... she's a weird one. Always sneaking out back. Comes back covered in gray and black fur. What's that about? Me? I'm just... busy. Building... uh... *fixing* something new."
@@ -444,7 +454,7 @@
             },
             'stan': {
                 name: "Stan 'the man' Thompson",
-                svg: `<svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#F0E68C" /><rect x="4" y="6" width="3" height="2" fill="#000000" /><rect x="9" y="6" width="3" height="2" fill="#000000" /><rect x="5" y="9" width="6" height="1" fill="#E6E6FA" /><rect x="3" y="2" width="10" height="2" fill="#A52A2A" /></svg>`,
+                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/stan.png", // UPDATED from svg
                 lines: [
                     "Liz Harding works for me, yeah. She's my girl. She told me Ace was going to sell, but then changed his mind to give it to his bratty niece. Messed up my plans to buy it.",
                     "Between you and me, Liz has... cash problems. Big time. Always donating to those animal charities. I know for a fact she was skimming from Ace's registers. Maybe he found out?"
@@ -452,7 +462,7 @@
             },
             'liz': {
                 name: "Liz Harding",
-                svg: `<svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" fill="#FFE4E1" /><rect x="5" y="6" width="2" height="2" fill="#4682B4" /><rect x="9" y="6" width="2" height="2" fill="#4682B4" /><rect x="7" y="9" width="2" height="1" fill="#8B0000" /><rect x="3" y="2" width="10" height="2" fill="#2F4F4F" /><rect x="3" y="4" width="1" height="6" fill="#2F4F4F" /><rect x="12" y="4" width="1" height="6" fill="#2F4F4F" /></svg>`,
+                imgSrc: "https://github.com/jDigiexam/halloween2025/blob/main/liz.png", // UPDATED from svg
                 lines: [
                     "I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.",
                     "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."
@@ -662,7 +672,7 @@
         function showInterview(suspect) {
             let dialogue = "";
             let title = "";
-            let svg = ""; // NEW
+            let imgSrc = ""; // UPDATED
             
             // Get data from dialogue object
             const suspectData = dialogues[suspect];
@@ -677,11 +687,11 @@
             }
             
             title = `Interview: ${suspectData.name}`;
-            svg = suspectData.svg; // NEW
+            imgSrc = suspectData.imgSrc; // UPDATED
 
             // Inject into modal
-            if (modalPortraitContainer) { // NEW
-                modalPortraitContainer.innerHTML = svg;
+            if (modalPortraitContainer) { // UPDATED
+                modalPortraitContainer.innerHTML = `<img src="${imgSrc}" alt="${suspectData.name}" class="w-full h-full object-cover">`;
             }
             showMessage(title, dialogue);
         }
@@ -827,6 +837,3 @@
     </script>
 </body>
 </html>
-
-
-
