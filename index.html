@@ -77,7 +77,6 @@
         }
         
         .clue-input {
-            /* CORRECTED: Replaced flex properties with text-center */
             @apply w-6 h-6 bg-gray-300 border-2 border-fuchsia-500 text-black rounded-md text-center text-2xl font-pixel focus:outline-none focus:ring-2 focus:ring-cyan-400;
             caret-color: black;
         }
@@ -156,23 +155,23 @@
                 <p class="text-gray-300 mb-8">Who do you want to speak to?</p>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover"></div>
+                        <div onclick="showInterview('trisha')" class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container cursor-pointer hover:border-fuchsia-400 transition-all"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/trisha.png" alt="Trisha" class="w-full h-full object-cover"></div>
                         <button onclick="showInterview('trisha')" class="btn-mystery-sm w-full">Trisha</button>
                     </div>
                     <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover"></div>
+                        <div onclick="showInterview('lacey')" class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container cursor-pointer hover:border-fuchsia-400 transition-all"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/lacey.png" alt="Lacey" class="w-full h-full object-cover"></div>
                         <button onclick="showInterview('lacey')" class="btn-mystery-sm w-full">Lacey</button>
                     </div>
                     <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover"></div>
+                        <div onclick="showInterview('doc')" class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container cursor-pointer hover:border-fuchsia-400 transition-all"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/doc.png" alt="Doc" class="w-full h-full object-cover"></div>
                         <button onclick="showInterview('doc')" class="btn-mystery-sm w-full">'Doc' Shaw</button>
                     </div>
                     <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png" alt="Stan" class="w-full h-full object-cover"></div>
+                        <div onclick="showInterview('stan')" class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container cursor-pointer hover:border-fuchsia-400 transition-all"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/stan.png" alt="Stan" class="w-full h-full object-cover"></div>
                         <button onclick="showInterview('stan')" class="btn-mystery-sm w-full">Stan</button>
                     </div>
                     <div class="text-center">
-                        <div class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover"></div>
+                        <div onclick="showInterview('liz')" class="w-32 h-32 mx-auto mb-2 bg-gray-800 rounded-lg overflow-hidden border-4 border-fuchsia-500 pixel-art-container cursor-pointer hover:border-fuchsia-400 transition-all"><img src="https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png" alt="Liz" class="w-full h-full object-cover"></div>
                         <button onclick="showInterview('liz')" class="btn-mystery-sm w-full">Liz</button>
                     </div>
                 </div>
