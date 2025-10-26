@@ -62,7 +62,7 @@
         .modal-content {
             /* UPDATED: Solid black background for maximum readability */
             background-color: rgba(0, 0, 0, 0.98); /* Almost completely black */
-            @apply p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
+            @apply p-6 rounded-lg shadow-2xl max-w-sm w-full border-2 border-fuchsia-500/70 flex flex-col items-center;
             backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
         }
@@ -287,7 +287,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="solution-title" class="font-pixel text-2xl font-bold text-fuchsia-400 mb-4"></h3>
             <p id="solution-text" class="text-gray-300 mb-6"></p>
-            <button id="solution-button" class="btn-mystery-sm">Close</button>
+            <button id="solution-button" class="btn-mystery-sm"></button>
         </div>
     </div>
     
