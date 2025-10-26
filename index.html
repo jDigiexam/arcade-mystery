@@ -447,27 +447,31 @@
     
     // --- FINAL SOLUTION MODAL ---
     const solutionModal = document.getElementById('solution-modal');
-    function showSolution(isCorrect, explanationText) {
-        const title = solutionModal.querySelector('#solution-title');
-        const text = solutionModal.querySelector('#solution-text');
-        const button = solutionModal.querySelector('#solution-button');
+function showSolution(isCorrect, explanationText) {
+    const title = solutionModal.querySelector('#solution-title');
+    const text = solutionModal.querySelector('#solution-text');
+    const button = solutionModal.querySelector('#solution-button');
 
-        if (isCorrect) {
-            title.textContent = "Case Solved!";
-            title.className = 'font-pixel text-2xl font-bold mb-4 text-green-400';
-            text.innerHTML = explanationText;
-            button.textContent = "Start New Game";
-            button.onclick = restartGame;
-        } else {
-            title.textContent = "Game Over";
-            title.className = 'font-pixel text-2xl font-bold mb-4 text-red-400';
-            text.innerHTML = `You accused the wrong person. ${explanationText}<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>`;
-            button.textContent = "Try Again";
-            button.onclick = closeSolutionModal;
-        }
-        solutionModal.classList.remove('hidden');
-        setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
+    if (isCorrect) {
+        title.textContent = "Case Solved!";
+        title.className = 'font-pixel text-2xl font-bold mb-4 text-green-400';
+        text.innerHTML = explanationText;
+        button.textContent = "Start New Game";
+        button.onclick = restartGame;
+    } else {
+        title.textContent = "Game Over";
+        title.className = 'font-pixel text-2xl font-bold mb-4 text-red-400';
+        text.innerHTML = `You accused the wrong person. ${explanationText}<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>`;
+        // UPDATED: Button text and action
+        button.textContent = "Return to Investigation";
+        button.onclick = () => {
+            closeSolutionModal();
+            showView('view-hub');
+        };
     }
+    solutionModal.classList.remove('hidden');
+    setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
+}
     function closeSolutionModal() {
         solutionModal.classList.add('opacity-0');
         setTimeout(() => solutionModal.classList.add('hidden'), 300);
