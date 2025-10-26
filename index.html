@@ -386,18 +386,22 @@
         btn.classList.toggle('border-green-400', switchStates[index] === 1);
     }
     
-    function checkRepairPuzzle() {
-        if (document.querySelector('#view-room-repair button[disabled]')) return;
-        if (switchStates.join('') === '0011') {
-            document.querySelectorAll('#view-room-repair button.btn-mystery-sm').forEach(btn => {
-                btn.disabled = true;
-                btn.classList.add('btn-disabled');
-            });
-            displayMessage('Clue Found!', "You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for 3.", null, 'success');
-        } else {
-            displayMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null, 'error');
-        }
+function checkRepairPuzzle() {
+    // This check is now more specific to prevent the function from running if solved.
+    if (document.querySelector('#view-room-repair button[onclick="checkRepairPuzzle()"][disabled]')) return;
+
+    if (switchStates.join('') === '0011') {
+        // CORRECTED: This selector now only targets buttons within a <div> inside the repair view,
+        // leaving the "Back to Arcade Floor" button alone.
+        document.querySelectorAll('#view-room-repair > div button.btn-mystery-sm').forEach(btn => {
+            btn.disabled = true;
+            btn.classList.add('btn-disabled');
+        });
+        displayMessage('Clue Found!', "You flip the last two switches to ON (0011). The power supply hums to life. A small LED on the board, previously unlit, glows, revealing the binary for 3.", null, 'success');
+    } else {
+        displayMessage('No Effect', 'The power supply buzzes, but nothing happens. Wrong combination.', null, 'error');
     }
+}
 
     let comboInput = "";
     function enterCombo(move) {
