@@ -18,6 +18,7 @@
             color: #e0e0e0;
             font-size: 1.1rem;
             line-height: 1.6;
+            transition: background-image 1s ease-in-out; /* Smooth background transition */
         }
 
         .font-pixel {
@@ -94,11 +95,20 @@
             object-fit: cover;
         }
 
+        /* NEW: Blinking animation for the easter egg button */
+        @keyframes blink {
+            50% { opacity: 0.6; box-shadow: 0 0 15px #f0f; }
+        }
+        .blinking-button {
+            animation: blink 1s linear infinite;
+            @apply !bg-fuchsia-600/80 !border-fuchsia-400;
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6">
+    <div id="main-container" class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6 transition-opacity duration-1000">
 
         <div class="md:col-span-3 bg-black/80 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border-2 border-cyan-500/50" style="box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);">
             
@@ -285,7 +295,7 @@
         'liz': { name: "Liz Harding", imgSrc: "https://raw.githubusercontent.com/jDigiexam/halloween2025/main/liz.png", lines: ["I... I've been working for Stan, okay? Just for extra cash! I heard Lacey and Ace yelling. She... she said 'If I can't have this place, no one can!' I was scared.", "That 'Doc' is a creep! Always locked in his shop. I think he's an alcoholic, and he *hates* animals. He's always yelling at me! The fur? Oh... I... I feed the raccoons out back. They're my friends."] }
     };
 
-    // --- DIALOGUE PANEL LOGIC (NOW WITH CUSTOM BUTTONS) ---
+    // --- DIALOGUE PANEL LOGIC ---
     const dialoguePanel = document.getElementById('dialogue-panel');
     let typingTimeout;
 
@@ -298,7 +308,7 @@
         const titleEl = document.createElement('h3');
         const portraitContainer = document.createElement('div');
         const textEl = document.createElement('p');
-        const closeBtn = document.createElement('button');
+        const actionBtn = document.createElement('button');
 
         titleEl.className = 'font-pixel text-2xl font-bold mb-4';
         titleEl.textContent = title;
@@ -308,13 +318,13 @@
             portraitContainer.innerHTML = `<img src="${imgSrc}" alt="${title}" class="w-full h-full object-cover">`;
         }
         textEl.className = 'text-lg mb-auto';
-        closeBtn.className = 'btn-mystery-sm mt-6';
-        closeBtn.textContent = buttonText;
         
+        actionBtn.className = 'btn-mystery-sm mt-6';
+        actionBtn.textContent = buttonText;
         if (buttonAction) {
-            closeBtn.onclick = buttonAction;
+            actionBtn.onclick = buttonAction;
         } else {
-            closeBtn.onclick = () => { dialoguePanel.style.display = 'none'; };
+            actionBtn.onclick = () => { dialoguePanel.style.display = 'none'; };
         }
 
         let textColor = 'text-cyan-300', textShadow = '0 0 5px #0ff';
@@ -330,7 +340,7 @@
         dialoguePanel.appendChild(titleEl);
         if (imgSrc) dialoguePanel.appendChild(portraitContainer);
         dialoguePanel.appendChild(textEl);
-        dialoguePanel.appendChild(closeBtn);
+        dialoguePanel.appendChild(actionBtn);
 
         let i = 0;
         textEl.innerHTML = '';
@@ -363,7 +373,7 @@
         if (isSafeUnlocked) {
             showView('view-accuse');
         } else {
-            displayMessage('Locked', 'You need more evidence. The contents of the safe in the back office might hold the key to the motive.', null, 'error');
+            displayMessage('Not Yet...', 'You need more evidence. The contents of the safe in the back office might hold the key to the motive.', null, 'error');
         }
     }
 
@@ -406,7 +416,7 @@
     function checkRepairPuzzle() {
         if (document.querySelector('#view-room-repair button[onclick="checkRepairPuzzle()"][disabled]')) return;
         if (switchStates.join('') === '0011') {
-            document.querySelectorAll('#view-room-repair > div button.btn-mystery-sm').forEach(btn => {
+            document.querySelectorAll('#view-room-repair > div button').forEach(btn => {
                 btn.disabled = true;
                 btn.classList.add('btn-disabled');
             });
@@ -464,6 +474,14 @@
     const solutionModal = document.getElementById('solution-modal');
     function showSolution(isCorrect, explanationText) {
         if (isCorrect) {
+            // Fade out main game container
+            document.getElementById('main-container').style.opacity = '0';
+            
+            // After fade, change background
+            setTimeout(() => {
+                document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jDigiexam/halloween2025/main/easter%20egg.png')";
+            }, 1000); // Match transition duration
+
             const title = solutionModal.querySelector('#solution-title');
             const text = solutionModal.querySelector('#solution-text');
             const button = solutionModal.querySelector('#solution-button');
@@ -471,13 +489,17 @@
             title.textContent = "Case Solved!";
             title.className = 'font-pixel text-2xl font-bold mb-4 text-green-400';
             text.innerHTML = explanationText;
-            button.textContent = "Start New Game";
-            button.onclick = restartGame;
+            
+            button.textContent = "Doc's Dungeon";
+            button.className = 'btn-mystery-sm blinking-button'; // Add blinking class
+            button.onclick = () => {
+                window.open('https://jdigiexam.github.io/docs-dungeon/', '_blank');
+            };
 
             solutionModal.classList.remove('hidden');
             setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
         } else {
-            const fullText = `You accused the wrong person. ${explanationText}<br><br><span class='text-fuchsia-400 text-xl'>INSERT COIN</span>`;
+            const fullText = `You accused the wrong person. ${explanationText}`;
             const returnAction = () => {
                 dialoguePanel.style.display = 'none';
                 showView('view-hub');
