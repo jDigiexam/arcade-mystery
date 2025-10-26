@@ -59,7 +59,11 @@
         }
         
         .modal-content {
-            @apply bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
+            /* UPDATED: Darker background and blur for readability */
+            @apply bg-black/90 backdrop-blur-sm p-6 rounded-lg shadow-2xl max-w-sm w-full text-center border-2 border-fuchsia-500/70;
+            /* Added explicit backdrop-filter for blur, might need vendor prefixes for wider support */
+            backdrop-filter: blur(4px); 
+            -webkit-backdrop-filter: blur(4px);
         }
         
         /* Prize Puzzle */
@@ -95,7 +99,7 @@
             object-fit: cover;
         }
 
-        /* NEW: Blinking animation for the easter egg button */
+        /* Blinking animation for the easter egg button */
         @keyframes blink {
             50% { opacity: 0.6; box-shadow: 0 0 15px #f0f; }
         }
@@ -500,11 +504,10 @@
             setTimeout(() => solutionModal.classList.remove('opacity-0'), 10);
         } else {
             const fullText = `You accused the wrong person. ${explanationText}`;
-            const returnAction = () => {
+            displayMessage('Game Over', fullText, null, 'error', 'Return to Investigation', () => {
                 dialoguePanel.style.display = 'none';
                 showView('view-hub');
-            };
-            displayMessage('Game Over', fullText, null, 'error', 'Return to Investigation', returnAction);
+            });
         }
     }
     
@@ -513,7 +516,7 @@
         setTimeout(() => solutionModal.classList.add('hidden'), 300);
     }
 
-    // --- GAME RESTART ---
+    // --- GAME RESTART (remains for incorrect answers for now) ---
     function restartGame() {
         window.location.reload();
     }
