@@ -75,9 +75,8 @@
             @apply h-10 bg-gray-900 border border-gray-700 rounded-lg p-2 text-center text-lg text-fuchsia-400 font-pixel tracking-widest;
         }
         
-        /* MODIFIED: Removed the broken @apply rule. We will style the inputs directly in the HTML. */
         .clue-input {
-             caret-color: black; /* This is a standard CSS property that will work */
+             caret-color: black;
         }
 
         .pixel-art-container {
@@ -309,6 +308,11 @@
         dialoguePanel.innerHTML = '';
         dialoguePanel.style.display = 'flex';
         dialoguePanel.classList.remove('hidden');
+
+        // MODIFIED: Add auto-scroll for mobile devices
+        if (window.innerWidth < 768) { // 768px is the 'md' breakpoint in Tailwind
+            dialoguePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         const titleEl = document.createElement('h3');
         const portraitContainer = document.createElement('div');
